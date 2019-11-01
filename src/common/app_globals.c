@@ -1,4 +1,4 @@
-/**
+﻿/**
  * File:   app_globals.c
  * Author: AWTK Develop Team
  * Brief:  app_globals

@@ -70,7 +70,7 @@ user_t* user_repository_find_one(user_repository_t* repo, tk_compare_t cmp, void
 }
 
 user_t* user_repository_find_by_name(user_repository_t* repo, const char* name) {
-  return user_repository_find_one(repo, (tk_compare_t)user_cmp_with_name, name);
+  return user_repository_find_one(repo, (tk_compare_t)user_cmp_with_name, (void*)name);
 }
 
 

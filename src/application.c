@@ -1,4 +1,4 @@
-/**
+﻿/**
  * File:   application.c
  * Author: AWTK Develop Team
  * Brief:  application
