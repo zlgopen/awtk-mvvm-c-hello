@@ -1,0 +1,22 @@
+{
+  "name":"login",
+  "desc":"user login",
+  "props": [
+    {
+      "name":"name",
+      "type":"char*",
+      "desc": "the user name"
+    },
+    {
+      "name":"password",
+      "type":"char*",
+      "desc": "password"
+    }
+  ],
+  "cmds": [
+    {
+      "name":"auth",
+      "desc":"check password and login"
+    }
+  ]
+}
