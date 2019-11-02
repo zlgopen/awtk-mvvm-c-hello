@@ -36,7 +36,7 @@ typedef struct _user_repository_mem_t {
   user_repository_t user_repository;
   darray_t users;
   darray_t matched;
-}user_repository_mem_t;
+} user_repository_mem_t;
 
 /**
  * @method user_repository_mem_create
@@ -53,4 +53,3 @@ user_repository_t* user_repository_mem_create(void);
 END_C_DECLS
 
 #endif /*TK_USER_REPOSITORY_MEM_H*/
-

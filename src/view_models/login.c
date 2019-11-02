@@ -5,7 +5,6 @@
 #include "login.h"
 #include "app_globals.h"
 
-
 /***************login***************/;
 
 static inline login_t* login_create(void) {
@@ -18,14 +17,13 @@ static inline login_t* login_create(void) {
   str_set(&(login->password), "1234");
 
   return login;
-} 
+}
 
 static inline ret_t login_destroy(login_t* login) {
   return_value_if_fail(login != NULL, RET_BAD_PARAMS);
 
   str_reset(&(login->name));
   str_reset(&(login->password));
-
 
   TKMEM_FREE(login);
 
@@ -52,8 +50,8 @@ static ret_t login_auth(login_t* login, const char* args) {
   user_t* user = user_repository_find_by_name(r, login->name.str);
   return_value_if_fail(user != NULL, RET_OK);
 
-  if(user_auth(user, login->password.str) == RET_OK) {
-    if(user_is_admin(user)) {
+  if (user_auth(user, login->password.str) == RET_OK) {
+    if (user_is_admin(user)) {
       navigator_to("admin_home");
     } else {
       login_navigator_to("user_home", user);
@@ -80,10 +78,9 @@ static ret_t login_view_model_set_prop(object_t* obj, const char* name, const va
     log_debug("not found %s\n", name);
     return RET_NOT_FOUND;
   }
-  
+
   return RET_OK;
 }
-
 
 static ret_t login_view_model_get_prop(object_t* obj, const char* name, value_t* v) {
   login_view_model_t* vm = (login_view_model_t*)(obj);
@@ -97,10 +94,9 @@ static ret_t login_view_model_get_prop(object_t* obj, const char* name, value_t*
     log_debug("not found %s\n", name);
     return RET_NOT_FOUND;
   }
-  
+
   return RET_OK;
 }
-
 
 static bool_t login_view_model_can_exec(object_t* obj, const char* name, const char* args) {
   login_view_model_t* vm = (login_view_model_t*)(obj);
@@ -135,15 +131,14 @@ static ret_t login_view_model_on_destroy(object_t* obj) {
 }
 
 static const object_vtable_t s_login_view_model_vtable = {
-  .type = "login",
-  .desc = "user login",
-  .size = sizeof(login_view_model_t),
-  .exec = login_view_model_exec,
-  .can_exec = login_view_model_can_exec,
-  .get_prop = login_view_model_get_prop,
-  .set_prop = login_view_model_set_prop,
-  .on_destroy = login_view_model_on_destroy
-};
+    .type = "login",
+    .desc = "user login",
+    .size = sizeof(login_view_model_t),
+    .exec = login_view_model_exec,
+    .can_exec = login_view_model_can_exec,
+    .get_prop = login_view_model_get_prop,
+    .set_prop = login_view_model_set_prop,
+    .on_destroy = login_view_model_on_destroy};
 
 view_model_t* login_view_model_create(navigator_request_t* req) {
   object_t* obj = object_create(&s_login_view_model_vtable);

@@ -19,7 +19,6 @@
  *
  */
 
-
 #include "app_globals.h"
 
 static app_globals_t s_globals;
@@ -35,8 +34,8 @@ ret_t app_globals_init(user_repository_t* user_repository) {
 
 ret_t app_globals_deinit(void) {
   return_value_if_fail(s_globals.user_repository != NULL, RET_OOM);
-  
-  if(s_globals.current_user != NULL) {
+
+  if (s_globals.current_user != NULL) {
     user_destroy(s_globals.current_user);
     s_globals.current_user = NULL;
   }
@@ -52,7 +51,7 @@ user_repository_t* app_globals_get_user_repository(void) {
 }
 
 ret_t app_globals_set_current_user(user_t* user) {
-  if(s_globals.current_user != NULL) {
+  if (s_globals.current_user != NULL) {
     user_destroy(s_globals.current_user);
   }
 

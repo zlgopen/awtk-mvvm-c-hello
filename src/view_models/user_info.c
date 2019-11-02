@@ -9,7 +9,6 @@ static bool_t user_info_can_exec_change_password(user_t* user_info, const char* 
 }
 
 static ret_t user_info_change_password(user_t* user_info, const char* args) {
-  
   return RET_OBJECT_CHANGED;
 }
 
@@ -26,19 +25,18 @@ static ret_t user_info_view_model_set_prop(object_t* obj, const char* name, cons
   } else if (tk_str_eq("password", name)) {
     str_from_value(&(user_info->password), v);
   } else if (tk_str_eq("registered_time", name)) {
-    user_info->registered_time =  value_uint32(v);
+    user_info->registered_time = value_uint32(v);
   } else if (tk_str_eq("last_login_time", name)) {
-    user_info->last_login_time =  value_uint32(v);
+    user_info->last_login_time = value_uint32(v);
   } else if (tk_str_eq("expired_time", name)) {
-    user_info->expired_time =  value_uint32(v);
+    user_info->expired_time = value_uint32(v);
   } else {
     log_debug("not found %s\n", name);
     return RET_NOT_FOUND;
   }
-  
+
   return RET_OK;
 }
-
 
 static ret_t user_info_view_model_get_prop(object_t* obj, const char* name, value_t* v) {
   user_info_view_model_t* vm = (user_info_view_model_t*)(obj);
@@ -60,10 +58,9 @@ static ret_t user_info_view_model_get_prop(object_t* obj, const char* name, valu
     log_debug("not found %s\n", name);
     return RET_NOT_FOUND;
   }
-  
+
   return RET_OK;
 }
-
 
 static bool_t user_info_view_model_can_exec(object_t* obj, const char* name, const char* args) {
   user_info_view_model_t* vm = (user_info_view_model_t*)(obj);
@@ -98,15 +95,14 @@ static ret_t user_info_view_model_on_destroy(object_t* obj) {
 }
 
 static const object_vtable_t s_user_info_view_model_vtable = {
-  .type = "user_info",
-  .desc = "user info",
-  .size = sizeof(user_info_view_model_t),
-  .exec = user_info_view_model_exec,
-  .can_exec = user_info_view_model_can_exec,
-  .get_prop = user_info_view_model_get_prop,
-  .set_prop = user_info_view_model_set_prop,
-  .on_destroy = user_info_view_model_on_destroy
-};
+    .type = "user_info",
+    .desc = "user info",
+    .size = sizeof(user_info_view_model_t),
+    .exec = user_info_view_model_exec,
+    .can_exec = user_info_view_model_can_exec,
+    .get_prop = user_info_view_model_get_prop,
+    .set_prop = user_info_view_model_set_prop,
+    .on_destroy = user_info_view_model_on_destroy};
 
 view_model_t* user_info_view_model_create(navigator_request_t* req) {
   object_t* obj = object_create(&s_user_info_view_model_vtable);
@@ -114,7 +110,7 @@ view_model_t* user_info_view_model_create(navigator_request_t* req) {
   user_info_view_model_t* user_info_view_model = (user_info_view_model_t*)(vm);
   user_t* user = (user_t*)object_get_prop_pointer(OBJECT(req), REQ_ARG_USER);
 
-  if(user == NULL) {
+  if (user == NULL) {
     user = app_globals_get_current_user();
   }
 

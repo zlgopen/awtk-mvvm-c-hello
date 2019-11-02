@@ -17,7 +17,7 @@ static inline user_add_t* user_add_create(void) {
   str_init(&(user_add->confirm_password), 10);
 
   return user_add;
-} 
+}
 
 static inline ret_t user_add_destroy(user_add_t* user_add) {
   return_value_if_fail(user_add != NULL, RET_BAD_PARAMS);
@@ -27,15 +27,14 @@ static inline ret_t user_add_destroy(user_add_t* user_add) {
   str_reset(&(user_add->password));
   str_reset(&(user_add->confirm_password));
 
-
   TKMEM_FREE(user_add);
 
   return RET_OK;
 }
 
 static bool_t user_add_can_exec_add(user_add_t* user_add, const char* args) {
-  return user_add->name.size > 0 && user_add->password.size > 0 
-    && str_eq(&(user_add->password), user_add->confirm_password.str);
+  return user_add->name.size > 0 && user_add->password.size > 0 &&
+         str_eq(&(user_add->password), user_add->confirm_password.str);
 }
 
 static ret_t user_add_add(user_add_t* user_add, navigator_request_t* req) {
@@ -43,11 +42,11 @@ static ret_t user_add_add(user_add_t* user_add, navigator_request_t* req) {
   user_t* user = NULL;
   user_repository_t* r = app_globals_get_user_repository();
 
-  if(user_repository_find_by_name(r, user_add->name.str) != NULL)  {
+  if (user_repository_find_by_name(r, user_add->name.str) != NULL) {
     navigator_toast("User exist.", 3000);
 
     return RET_OK;
-  } 
+  }
 
   user = user_create();
   value_set_pointer(&v, user);
@@ -81,10 +80,9 @@ static ret_t user_add_view_model_set_prop(object_t* obj, const char* name, const
     log_debug("not found %s\n", name);
     return RET_NOT_FOUND;
   }
-  
+
   return RET_OK;
 }
-
 
 static ret_t user_add_view_model_get_prop(object_t* obj, const char* name, value_t* v) {
   user_add_view_model_t* vm = (user_add_view_model_t*)(obj);
@@ -102,10 +100,9 @@ static ret_t user_add_view_model_get_prop(object_t* obj, const char* name, value
     log_debug("not found %s\n", name);
     return RET_NOT_FOUND;
   }
-  
+
   return RET_OK;
 }
-
 
 static bool_t user_add_view_model_can_exec(object_t* obj, const char* name, const char* args) {
   user_add_view_model_t* vm = (user_add_view_model_t*)(obj);
@@ -140,15 +137,14 @@ static ret_t user_add_view_model_on_destroy(object_t* obj) {
 }
 
 static const object_vtable_t s_user_add_view_model_vtable = {
-  .type = "user_add",
-  .desc = "user add",
-  .size = sizeof(user_add_view_model_t),
-  .exec = user_add_view_model_exec,
-  .can_exec = user_add_view_model_can_exec,
-  .get_prop = user_add_view_model_get_prop,
-  .set_prop = user_add_view_model_set_prop,
-  .on_destroy = user_add_view_model_on_destroy
-};
+    .type = "user_add",
+    .desc = "user add",
+    .size = sizeof(user_add_view_model_t),
+    .exec = user_add_view_model_exec,
+    .can_exec = user_add_view_model_can_exec,
+    .get_prop = user_add_view_model_get_prop,
+    .set_prop = user_add_view_model_set_prop,
+    .on_destroy = user_add_view_model_on_destroy};
 
 view_model_t* user_add_view_model_create(navigator_request_t* req) {
   object_t* obj = object_create(&s_user_add_view_model_vtable);

@@ -12,7 +12,7 @@ BEGIN_C_DECLS
  * change current user password
  *
  */
-typedef struct _change_password_t{
+typedef struct _change_password_t {
   str_t old_password;
   str_t new_password;
   str_t confirm_password;

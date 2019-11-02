@@ -7,7 +7,6 @@
 #include "common/app_globals.h"
 
 static int reload_cmp(const void* data, const void* filter) {
-
   return 0;
 }
 
@@ -24,7 +23,7 @@ static ret_t users_view_model_reload(users_view_model_t* vm) {
   user_repository_find(r, reload_cmp, vm->filter.str, users);
 
   /*TODO:sort*/
-  
+
   view_model_array_notify_items_changed(VIEW_MODEL(vm));
 
   return RET_OK;
@@ -50,13 +49,12 @@ static ret_t user_add_on_result(navigator_request_t* req, const value_t* result)
   users_view_model_t* vm = (users_view_model_t*)object_get_prop_pointer(OBJECT(req), "requester");
   user_t* user = (user_t*)value_pointer(result);
 
-  if(user_repository_add(r, user) != RET_OK) {
+  if (user_repository_add(r, user) != RET_OK) {
     log_debug("add user failed.\n");
   }
 
   return RET_OK;
 }
-
 
 /***************users_view_model***************/
 
@@ -81,21 +79,21 @@ ret_t users_view_model_add(view_model_t* view_model, user_t* user) {
 
 uint32_t users_view_model_size(view_model_t* view_model) {
   users_view_model_t* user_vm = (users_view_model_t*)(view_model);
-  return_value_if_fail(user_vm != NULL, 0); 
+  return_value_if_fail(user_vm != NULL, 0);
 
   return user_vm->users.size;
 }
 
 ret_t users_view_model_clear(view_model_t* view_model) {
   users_view_model_t* user_vm = (users_view_model_t*)(view_model);
-  return_value_if_fail(user_vm != NULL, 0); 
+  return_value_if_fail(user_vm != NULL, 0);
 
   return darray_clear(&(user_vm->users));
 }
 
 user_t* users_view_model_get(view_model_t* view_model, uint32_t index) {
   users_view_model_t* user_vm = (users_view_model_t*)(view_model);
-  return_value_if_fail(user_vm != NULL, 0); 
+  return_value_if_fail(user_vm != NULL, 0);
 
   return_value_if_fail(user_vm != NULL && index < users_view_model_size(view_model), NULL);
 
@@ -125,21 +123,20 @@ static ret_t users_view_model_set_prop(object_t* obj, const char* name, const va
   } else if (tk_str_eq("password", name)) {
     str_from_value(&(user->password), v);
   } else if (tk_str_eq("registered_time", name)) {
-    user->registered_time =  value_uint32(v);
+    user->registered_time = value_uint32(v);
   } else if (tk_str_eq("last_login_time", name)) {
-    user->last_login_time =  value_uint32(v);
+    user->last_login_time = value_uint32(v);
   } else if (tk_str_eq("expired_time", name)) {
-    user->expired_time =  value_uint32(v);
+    user->expired_time = value_uint32(v);
   } else if (tk_str_eq("filter", name)) {
     //
   } else {
     log_debug("not found %s\n", name);
     return RET_NOT_FOUND;
   }
-  
+
   return RET_OK;
 }
-
 
 static ret_t users_view_model_get_prop(object_t* obj, const char* name, value_t* v) {
   uint32_t index = 0;
@@ -181,10 +178,9 @@ static ret_t users_view_model_get_prop(object_t* obj, const char* name, value_t*
     log_debug("not found %s\n", name);
     return RET_NOT_FOUND;
   }
-  
+
   return RET_OK;
 }
-
 
 static bool_t users_view_model_can_exec(object_t* obj, const char* name, const char* args) {
   uint32_t index = tk_atoi(args);
@@ -235,8 +231,10 @@ static ret_t users_view_model_exec(object_t* obj, const char* name, const char* 
     return user_detail(user);
   } else if (tk_str_eq("sort", name)) {
   } else {
-    log_debug("not found %s\
-", name);
+    log_debug(
+        "not found %s\
+",
+        name);
     return RET_NOT_FOUND;
   }
 }
@@ -245,7 +243,7 @@ static ret_t users_view_model_on_destroy(object_t* obj) {
   user_repository_t* r = app_globals_get_user_repository();
   users_view_model_t* vm = (users_view_model_t*)(obj);
   return_value_if_fail(vm != NULL, RET_BAD_PARAMS);
-  
+
   users_view_model_clear(VIEW_MODEL(obj));
   darray_deinit(&(vm->users));
   str_reset(&(vm->filter));
@@ -256,16 +254,15 @@ static ret_t users_view_model_on_destroy(object_t* obj) {
 }
 
 static const object_vtable_t s_users_view_model_vtable = {
-  .type = "user",
-  .desc = "user manager",
-  .is_collection = TRUE,
-  .size = sizeof(users_view_model_t),
-  .exec = users_view_model_exec,
-  .can_exec = users_view_model_can_exec,
-  .get_prop = users_view_model_get_prop,
-  .set_prop = users_view_model_set_prop,
-  .on_destroy = users_view_model_on_destroy
-};
+    .type = "user",
+    .desc = "user manager",
+    .is_collection = TRUE,
+    .size = sizeof(users_view_model_t),
+    .exec = users_view_model_exec,
+    .can_exec = users_view_model_can_exec,
+    .get_prop = users_view_model_get_prop,
+    .set_prop = users_view_model_set_prop,
+    .on_destroy = users_view_model_on_destroy};
 
 static ret_t users_view_model_reload_async(const idle_info_t* info) {
   users_view_model_t* user_vm = (users_view_model_t*)(info->ctx);
@@ -279,7 +276,7 @@ static ret_t users_view_model_reload_async(const idle_info_t* info) {
 static ret_t users_view_model_on_repository_changed(void* ctx, event_t* e) {
   users_view_model_t* user_vm = (users_view_model_t*)(ctx);
 
-  if(user_vm->reload_id == TK_INVALID_ID) {
+  if (user_vm->reload_id == TK_INVALID_ID) {
     idle_queue(users_view_model_reload_async, ctx);
   }
 
@@ -297,9 +294,10 @@ view_model_t* users_view_model_create(navigator_request_t* req) {
   str_init(&(user_vm->filter), 100);
   str_init(&(user_vm->sort_by), 100);
   darray_init(&(user_vm->users), 100, NULL, NULL);
-  
+
   users_view_model_reload(user_vm);
-  user_vm->event_id = user_repository_on(r, EVT_PROP_CHANGED, users_view_model_on_repository_changed, vm);
+  user_vm->event_id =
+      user_repository_on(r, EVT_PROP_CHANGED, users_view_model_on_repository_changed, vm);
 
   return vm;
 }

@@ -12,7 +12,7 @@ BEGIN_C_DECLS
  * user add
  *
  */
-typedef struct _user_add_t{
+typedef struct _user_add_t {
   str_t name;
   str_t nick_name;
   str_t password;

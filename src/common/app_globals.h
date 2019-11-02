@@ -19,7 +19,6 @@
  *
  */
 
-
 #ifndef TK_APP_GLOBALS_H
 #define TK_APP_GLOBALS_H
 
@@ -36,7 +35,7 @@ BEGIN_C_DECLS
 typedef struct _app_globals_t {
   user_t* current_user;
   user_repository_t* user_repository;
-}app_globals_t;
+} app_globals_t;
 
 /**
  * @method app_globals_init
@@ -84,4 +83,3 @@ ret_t app_globals_set_current_user(user_t* user);
 END_C_DECLS
 
 #endif /*TK_APP_GLOBALS_H*/
-

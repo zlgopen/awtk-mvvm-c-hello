@@ -12,7 +12,7 @@ BEGIN_C_DECLS
  * user login
  *
  */
-typedef struct _login_t{
+typedef struct _login_t {
   str_t name;
   str_t password;
 } login_t;

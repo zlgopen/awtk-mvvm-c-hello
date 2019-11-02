@@ -36,7 +36,8 @@ typedef ret_t (*user_repository_load_t)(user_repository_t* repo);
 typedef ret_t (*user_repository_add_t)(user_repository_t* repo, const user_t* user);
 typedef ret_t (*user_repository_update_t)(user_repository_t* repo, const user_t* user);
 typedef ret_t (*user_repository_remove_t)(user_repository_t* repo, tk_compare_t cmp, void* ctx);
-typedef ret_t (*user_repository_find_t)(user_repository_t* repo, tk_compare_t cmp, void* ctx, darray_t* users);
+typedef ret_t (*user_repository_find_t)(user_repository_t* repo, tk_compare_t cmp, void* ctx,
+                                        darray_t* users);
 typedef user_t* (*user_repository_find_one_t)(user_repository_t* repo, tk_compare_t cmp, void* ctx);
 typedef ret_t (*user_repository_destroy_t)(user_repository_t* repo);
 
@@ -115,7 +116,7 @@ ret_t user_repository_remove(user_repository_t* repo, tk_compare_t cmp, void* ct
 /**
  * @method user_repository_find
  * 查找满足条件User对象。
- * 
+ *
  *> 调用者需要调用darray_reset释放users数组。
  *
  * @param {user_repository_t*} repo User持久化对象。
@@ -130,7 +131,7 @@ ret_t user_repository_find(user_repository_t* repo, tk_compare_t cmp, void* ctx,
 /**
  * @method user_repository_find_one
  * 查找第一个满足条件User对象。
- * 
+ *
  * @param {user_repository_t*} repo User持久化对象。
  * @param {tk_compare_t} cmp 比较函数。
  * @param {void*} ctx 比较函数的上下文。
@@ -142,7 +143,7 @@ user_t* user_repository_find_one(user_repository_t* repo, tk_compare_t cmp, void
 /**
  * @method user_repository_find_by_name
  * 查找第一个满足条件User对象。
- * 
+ *
  * @param {user_repository_t*} repo User持久化对象。
  * @param {const char*} name User名称。
  *
@@ -160,7 +161,8 @@ user_t* user_repository_find_by_name(user_repository_t* repo, const char* name);
  *
  * @return {uint32_t} 返回id，用于user_repository_off。
  */
-uint32_t user_repository_on(user_repository_t* repo, uint32_t etype, event_func_t handler, void* ctx);
+uint32_t user_repository_on(user_repository_t* repo, uint32_t etype, event_func_t handler,
+                            void* ctx);
 
 /**
  * @method user_repository_off
@@ -190,4 +192,3 @@ int user_cmp_with_name(user_t* user, const char* name);
 END_C_DECLS
 
 #endif /*TK_USER_REPOSITORY_H*/
-

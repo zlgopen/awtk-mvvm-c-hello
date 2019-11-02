@@ -30,14 +30,14 @@ static ret_t user_repository_mem_gen(user_repository_t* repo) {
   user_t* admin = user_create();
   user_t* awtk = user_create();
 
-  if(admin != NULL) {
+  if (admin != NULL) {
     str_set(&(admin->name), "admin");
     str_set(&(admin->password), "1234");
     str_set(&(admin->nick_name), "Administrator");
     darray_push(&(r->users), admin);
   }
-  
-  if(awtk != NULL) {
+
+  if (awtk != NULL) {
     str_set(&(awtk->name), "awtk");
     str_set(&(awtk->password), "1234");
     str_set(&(awtk->nick_name), "awtk");
@@ -51,7 +51,7 @@ static ret_t user_repository_mem_load(user_repository_t* repo) {
   user_repository_mem_t* r = USER_REPOSITORY_MEM(repo);
 
   darray_clear(&(r->users));
-  
+
   return user_repository_mem_gen(repo);
 }
 
@@ -81,7 +81,8 @@ static ret_t user_repository_mem_remove(user_repository_t* repo, tk_compare_t cm
   return darray_remove_all(&(r->users), cmp, ctx);
 }
 
-static ret_t user_repository_mem_find(user_repository_t* repo, tk_compare_t cmp, void* ctx, darray_t* users) {
+static ret_t user_repository_mem_find(user_repository_t* repo, tk_compare_t cmp, void* ctx,
+                                      darray_t* users) {
   user_repository_mem_t* r = USER_REPOSITORY_MEM(repo);
   return_value_if_fail(r != NULL && users != NULL, RET_BAD_PARAMS);
 
@@ -95,7 +96,7 @@ static user_t* user_repository_mem_find_one(user_repository_t* repo, tk_compare_
   darray_clear(&(r->matched));
   darray_find_all(&(r->users), cmp, ctx, &(r->matched));
 
-  if(r->matched.size > 0) {
+  if (r->matched.size > 0) {
     return (user_t*)(r->matched.elms[0]);
   } else {
     return NULL;
@@ -128,4 +129,3 @@ user_repository_t* user_repository_mem_create(void) {
 
   return USER_REPOSITORY(repo);
 }
-

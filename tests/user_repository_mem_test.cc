@@ -19,16 +19,16 @@ TEST(UserRepository, basic) {
   darray_clear(&matched);
   ASSERT_EQ(user_repository_find(r, compare_always_equal, NULL, &matched), RET_OK);
   ASSERT_EQ(matched.size, 1);
-  
+
   ASSERT_EQ(user_repository_add(r, u2), RET_OK);
   darray_clear(&matched);
   ASSERT_EQ(user_repository_find(r, compare_always_equal, NULL, &matched), RET_OK);
   ASSERT_EQ(matched.size, 2);
- 
+
   ASSERT_EQ(user_repository_find_by_name(r, "admin") != NULL, true);
   ASSERT_EQ(user_repository_find_by_name(r, "awtk") != NULL, true);
   ASSERT_EQ(user_repository_find_by_name(r, "not exist") == NULL, true);
-  
+
   ASSERT_EQ(user_repository_remove(r, (tk_compare_t)user_cmp_with_name, (void*)"admin"), RET_OK);
   ASSERT_EQ(user_repository_find_by_name(r, "admin") == NULL, true);
 
@@ -47,17 +47,16 @@ TEST(UserRepository, update) {
 
   ASSERT_EQ(user_repository_add(r, u1), RET_OK);
   ASSERT_EQ(user_repository_find_by_name(r, "admin") != NULL, true);
-  
+
   str_set(&(u1->nick_name), "hello world");
   ASSERT_EQ(user_repository_update(r, u1), RET_OK);
-  
+
   user = user_repository_find_by_name(r, "admin");
   ASSERT_EQ(user != NULL, true);
   ASSERT_EQ(user_equal(user, u1), TRUE);
 
   user_destroy(u1);
 }
-
 
 TEST(UserRepository, load) {
   darray_t matched;
@@ -67,7 +66,7 @@ TEST(UserRepository, load) {
 
   ASSERT_EQ(user_repository_find(r, compare_always_equal, NULL, &matched), RET_OK);
   ASSERT_EQ(matched.size, 0);
-  
+
   ASSERT_EQ(user_repository_load(r), RET_OK);
   ASSERT_EQ(user_repository_find(r, compare_always_equal, NULL, &matched), RET_OK);
   ASSERT_EQ(matched.size, 2);
