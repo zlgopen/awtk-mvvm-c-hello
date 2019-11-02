@@ -1,41 +1,14 @@
 ﻿#include "tkc/mem.h"
 #include "tkc/utils.h"
 #include "mvvm/base/utils.h"
-#include "user_info.h"
+#include "common/app_globals.h"
+#include "view_models/user_info.h"
 
-
-/***************user_info***************/;
-
-static inline user_info_t* user_info_create(void) {
-  user_info_t* user_info = TKMEM_ZALLOC(user_info_t);
-  return_value_if_fail(user_info != NULL, NULL);
-
-  str_init(&(user_info->name), 10);
-  str_init(&(user_info->nick_name), 10);
-  str_init(&(user_info->password), 10);
-
-
-  return user_info;
-} 
-
-static inline ret_t user_info_destroy(user_info_t* user_info) {
-  return_value_if_fail(user_info != NULL, RET_BAD_PARAMS);
-
-  str_reset(&(user_info->name));
-  str_reset(&(user_info->nick_name));
-  str_reset(&(user_info->password));
-
-
-  TKMEM_FREE(user_info);
-
-  return RET_OK;
-}
-
-static bool_t user_info_can_exec_change_password(user_info_t* user_info, const char* args) {
+static bool_t user_info_can_exec_change_password(user_t* user_info, const char* args) {
   return TRUE;
 }
 
-static ret_t user_info_change_password(user_info_t* user_info, const char* args) {
+static ret_t user_info_change_password(user_t* user_info, const char* args) {
   
   return RET_OBJECT_CHANGED;
 }
@@ -44,7 +17,7 @@ static ret_t user_info_change_password(user_info_t* user_info, const char* args)
 
 static ret_t user_info_view_model_set_prop(object_t* obj, const char* name, const value_t* v) {
   user_info_view_model_t* vm = (user_info_view_model_t*)(obj);
-  user_info_t* user_info = vm->user_info;
+  user_t* user_info = vm->user_info;
 
   if (tk_str_eq("name", name)) {
     str_from_value(&(user_info->name), v);
@@ -69,7 +42,7 @@ static ret_t user_info_view_model_set_prop(object_t* obj, const char* name, cons
 
 static ret_t user_info_view_model_get_prop(object_t* obj, const char* name, value_t* v) {
   user_info_view_model_t* vm = (user_info_view_model_t*)(obj);
-  user_info_t* user_info = vm->user_info;
+  user_t* user_info = vm->user_info;
 
   if (tk_str_eq("name", name)) {
     value_set_str(v, user_info->name.str);
@@ -94,7 +67,7 @@ static ret_t user_info_view_model_get_prop(object_t* obj, const char* name, valu
 
 static bool_t user_info_view_model_can_exec(object_t* obj, const char* name, const char* args) {
   user_info_view_model_t* vm = (user_info_view_model_t*)(obj);
-  user_info_t* user_info = vm->user_info;
+  user_t* user_info = vm->user_info;
 
   if (tk_str_eq("change_password", name)) {
     return user_info_can_exec_change_password(user_info, args);
@@ -105,7 +78,7 @@ static bool_t user_info_view_model_can_exec(object_t* obj, const char* name, con
 
 static ret_t user_info_view_model_exec(object_t* obj, const char* name, const char* args) {
   user_info_view_model_t* vm = (user_info_view_model_t*)(obj);
-  user_info_t* user_info = vm->user_info;
+  user_t* user_info = vm->user_info;
 
   if (tk_str_eq("change_password", name)) {
     return user_info_change_password(user_info, args);
@@ -119,7 +92,7 @@ static ret_t user_info_view_model_on_destroy(object_t* obj) {
   user_info_view_model_t* vm = (user_info_view_model_t*)(obj);
   return_value_if_fail(vm != NULL, RET_BAD_PARAMS);
 
-  user_info_destroy(vm->user_info);
+  user_destroy(vm->user_info);
 
   return view_model_deinit(VIEW_MODEL(obj));
 }
@@ -139,10 +112,15 @@ view_model_t* user_info_view_model_create(navigator_request_t* req) {
   object_t* obj = object_create(&s_user_info_view_model_vtable);
   view_model_t* vm = view_model_init(VIEW_MODEL(obj));
   user_info_view_model_t* user_info_view_model = (user_info_view_model_t*)(vm);
+  user_t* user = (user_t*)object_get_prop_pointer(OBJECT(req), REQ_ARG_USER);
 
-  return_value_if_fail(vm != NULL, NULL);
+  if(user == NULL) {
+    user = app_globals_get_current_user();
+  }
 
-  user_info_view_model->user_info = user_info_create();
+  return_value_if_fail(vm != NULL && user != NULL, NULL);
+
+  user_info_view_model->user_info = user_dup(user);
   ENSURE(user_info_view_model->user_info != NULL);
 
   return vm;

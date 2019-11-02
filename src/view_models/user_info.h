@@ -2,24 +2,10 @@
 #ifndef TK_USER_INFO_H
 #define TK_USER_INFO_H
 
+#include "user.h"
 #include "mvvm/base/view_model.h"
 
 BEGIN_C_DECLS
-
-/**
- * @class user_info_t
- *
- * user info
- *
- */
-typedef struct _user_info_t{
-  str_t name;
-  str_t nick_name;
-  str_t password;
-  uint32_t registered_time;
-  uint32_t last_login_time;
-  uint32_t expired_time;
-} user_info_t;
 
 /**
  * @class user_info_view_model_t
@@ -31,7 +17,7 @@ typedef struct _user_info_view_model_t {
   view_model_t view_model;
 
   /*model object*/
-  user_info_t* user_info;
+  user_t* user_info;
 } user_info_view_model_t;
 
 /**

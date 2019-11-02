@@ -78,6 +78,8 @@ user_t* app_globals_get_current_user(void);
  */
 ret_t app_globals_set_current_user(user_t* user);
 
+#define REQ_ARG_USER "user"
+
 END_C_DECLS
 
 #endif /*TK_APP_GLOBALS_H*/

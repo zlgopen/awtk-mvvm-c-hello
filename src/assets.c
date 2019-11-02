@@ -58,6 +58,7 @@
 #include "assets/default/inc/images/edit_clear_p.res"
 #include "assets/default/inc/images/empty.res"
 #include "assets/default/inc/images/en.res"
+#include "assets/default/inc/images/invisible.res"
 #include "assets/default/inc/images/more.res"
 #include "assets/default/inc/images/radio_checked.res"
 #include "assets/default/inc/images/radio_unchecked.res"
@@ -65,6 +66,7 @@
 #include "assets/default/inc/images/shifton.res"
 #include "assets/default/inc/images/switch.res"
 #include "assets/default/inc/images/unchecked.res"
+#include "assets/default/inc/images/visible.res"
 #include "assets/default/inc/images/zh.res"
 #else
 #include "assets/default/inc/images/arrow_down_n.data"
@@ -93,6 +95,7 @@
 #include "assets/default/inc/images/edit_clear_p.data"
 #include "assets/default/inc/images/empty.data"
 #include "assets/default/inc/images/en.data"
+#include "assets/default/inc/images/invisible.data"
 #include "assets/default/inc/images/more.data"
 #include "assets/default/inc/images/radio_checked.data"
 #include "assets/default/inc/images/radio_unchecked.data"
@@ -100,6 +103,7 @@
 #include "assets/default/inc/images/shifton.data"
 #include "assets/default/inc/images/switch.data"
 #include "assets/default/inc/images/unchecked.data"
+#include "assets/default/inc/images/visible.data"
 #include "assets/default/inc/images/zh.data"
 #endif/*WITH_STB_IMAGE*/
 #ifdef WITH_VGCANVAS
@@ -143,6 +147,7 @@ ret_t assets_init(void) {
   assets_manager_add(am, image_edit_clear_p);
   assets_manager_add(am, image_empty);
   assets_manager_add(am, image_en);
+  assets_manager_add(am, image_invisible);
   assets_manager_add(am, image_more);
   assets_manager_add(am, image_radio_checked);
   assets_manager_add(am, image_radio_unchecked);
@@ -150,6 +155,7 @@ ret_t assets_init(void) {
   assets_manager_add(am, image_shifton);
   assets_manager_add(am, image_switch);
   assets_manager_add(am, image_unchecked);
+  assets_manager_add(am, image_visible);
   assets_manager_add(am, image_zh);
   assets_manager_add(am, strings_en_US);
   assets_manager_add(am, strings_zh_CN);

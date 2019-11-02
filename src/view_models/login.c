@@ -36,6 +36,17 @@ static bool_t login_can_exec_auth(login_t* login, const char* args) {
   return login->name.size > 0 && login->password.size > 0;
 }
 
+static ret_t login_navigator_to(const char* target, user_t* user) {
+  navigator_request_t* req = navigator_request_create(target, NULL);
+  return_value_if_fail(req != NULL, RET_OOM);
+
+  object_set_prop_pointer(OBJECT(req), REQ_ARG_USER, user);
+  navigator_to_ex(req);
+  object_unref(OBJECT(req));
+
+  return RET_OK;
+}
+
 static ret_t login_auth(login_t* login, const char* args) {
   user_repository_t* r = app_globals_get_user_repository();
   user_t* user = user_repository_find_by_name(r, login->name.str);
@@ -45,7 +56,7 @@ static ret_t login_auth(login_t* login, const char* args) {
     if(user_is_admin(user)) {
       navigator_to("admin_home");
     } else {
-      navigator_to("user_detail");
+      login_navigator_to("user_home", user);
     }
     app_globals_set_current_user(user);
   } else {
