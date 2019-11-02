@@ -30,11 +30,6 @@
       "desc": "the time of user last time login"
     },
     {
-      "name":"expired_time",
-      "type":"uint32_t",
-      "desc": "expired time"
-    },
-    {
       "name":"filter",
       "type":"char*",
       "desc": "filter"

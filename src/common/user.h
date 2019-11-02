@@ -17,9 +17,8 @@ typedef struct _user_t {
   str_t name;
   str_t nick_name;
   str_t password;
-  uint32_t registered_time;
-  uint32_t last_login_time;
-  uint32_t expired_time;
+  time_t registered_time;
+  time_t last_login_time;
 } user_t;
 
 static inline user_t* user_create(void) {
@@ -36,9 +35,12 @@ static inline user_t* user_create(void) {
 static inline user_t* user_copy(user_t* user, const user_t* other) {
   return_value_if_fail(user != NULL && other != NULL, NULL);
 
+  if (user == other) {
+    return user;
+  }
+
   user->registered_time = other->registered_time;
   user->last_login_time = other->last_login_time;
-  user->expired_time = other->expired_time;
 
   str_set(&(user->name), other->name.str);
   str_set(&(user->nick_name), other->nick_name.str);
@@ -71,7 +73,7 @@ static inline bool_t user_equal(user_t* user, user_t* other) {
 
   return user->registered_time == other->registered_time &&
          user->last_login_time == other->last_login_time &&
-         user->expired_time == other->expired_time && str_eq(&(user->name), other->name.str) &&
+         str_eq(&(user->name), other->name.str) &&
          str_eq(&(user->nick_name), other->nick_name.str) &&
          str_eq(&(user->password), other->password.str);
 }

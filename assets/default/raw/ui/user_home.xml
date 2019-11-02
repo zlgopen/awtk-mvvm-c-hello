@@ -5,9 +5,6 @@
   <label text="Nick Name:"/>
   <label v-data:text="{nick_name}"/>
   
-  <label text="Expire Time:"/>
-  <label v-data:text="{expired_time, converter=datetime_str}"/>
-
   <label text="Registered Time:"/>
   <label v-data:text="{registered_time, converter=datetime_str}"/>
 

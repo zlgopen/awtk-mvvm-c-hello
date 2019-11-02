@@ -34,6 +34,8 @@ static ret_t user_repository_mem_gen(user_repository_t* repo) {
     str_set(&(admin->name), "admin");
     str_set(&(admin->password), "1234");
     str_set(&(admin->nick_name), "Administrator");
+    admin->registered_time = time(0);
+
     darray_push(&(r->users), admin);
   }
 
@@ -41,6 +43,7 @@ static ret_t user_repository_mem_gen(user_repository_t* repo) {
     str_set(&(awtk->name), "awtk");
     str_set(&(awtk->password), "1234");
     str_set(&(awtk->nick_name), "awtk");
+    awtk->registered_time = time(0);
     darray_push(&(r->users), awtk);
   }
 
@@ -126,6 +129,7 @@ user_repository_t* user_repository_mem_create(void) {
   repo->user_repository.remove = user_repository_mem_remove;
   repo->user_repository.find = user_repository_mem_find;
   repo->user_repository.find_one = user_repository_mem_find_one;
+  repo->user_repository.destroy = user_repository_mem_destroy;
 
   return USER_REPOSITORY(repo);
 }

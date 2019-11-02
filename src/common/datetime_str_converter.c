@@ -23,10 +23,14 @@
 #include "mvvm/base/value_converter_delegate.h"
 
 static ret_t to_view(const value_t* from, value_t* to) {
-  uint32_t dt = value_uint32(from);
+  char str[64];
+  struct tm* time_info = NULL;
+  time_t t = value_uint32(from);
 
-  /*FIXME*/
-  value_dup_str(to, "2019-11-02 12:00:00");
+  time_info = localtime(&t);
+  strftime(str, sizeof(str), "%F %H:%M:%S", time_info);
+
+  value_dup_str(to, str);
 
   return RET_OK;
 }

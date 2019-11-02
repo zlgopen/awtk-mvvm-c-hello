@@ -28,8 +28,6 @@ static ret_t user_info_view_model_set_prop(object_t* obj, const char* name, cons
     user_info->registered_time = value_uint32(v);
   } else if (tk_str_eq("last_login_time", name)) {
     user_info->last_login_time = value_uint32(v);
-  } else if (tk_str_eq("expired_time", name)) {
-    user_info->expired_time = value_uint32(v);
   } else {
     log_debug("not found %s\n", name);
     return RET_NOT_FOUND;
@@ -52,8 +50,6 @@ static ret_t user_info_view_model_get_prop(object_t* obj, const char* name, valu
     value_set_uint32(v, user_info->registered_time);
   } else if (tk_str_eq("last_login_time", name)) {
     value_set_uint32(v, user_info->last_login_time);
-  } else if (tk_str_eq("expired_time", name)) {
-    value_set_uint32(v, user_info->expired_time);
   } else {
     log_debug("not found %s\n", name);
     return RET_NOT_FOUND;

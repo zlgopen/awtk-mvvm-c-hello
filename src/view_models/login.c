@@ -1,6 +1,7 @@
 ﻿#include "tkc/mem.h"
 #include "tkc/utils.h"
 #include "mvvm/base/utils.h"
+#include "mvvm/base/navigator.h"
 
 #include "login.h"
 #include "app_globals.h"
@@ -51,12 +52,14 @@ static ret_t login_auth(login_t* login, const char* args) {
   return_value_if_fail(user != NULL, RET_OK);
 
   if (user_auth(user, login->password.str) == RET_OK) {
+    user->last_login_time = time(0);
     if (user_is_admin(user)) {
       navigator_to("admin_home");
     } else {
       login_navigator_to("user_home", user);
     }
     app_globals_set_current_user(user);
+    user_repository_update(r, user);
   } else {
     navigator_toast("Invalid user or password!", 3000);
   }

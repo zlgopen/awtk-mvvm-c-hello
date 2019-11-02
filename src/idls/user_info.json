@@ -27,11 +27,6 @@
       "name":"last_login_time",
       "type":"uint32_t",
       "desc": "the time of user last time login"
-    },
-    {
-      "name":"expired_time",
-      "type":"uint32_t",
-      "desc": "expired time"
     }
   ],
   "cmds": [

@@ -2,8 +2,9 @@
 #include "tkc/utils.h"
 #include "base/idle.h"
 #include "mvvm/base/utils.h"
-#include "users.h"
+#include "mvvm/base/navigator.h"
 
+#include "users.h"
 #include "common/app_globals.h"
 
 static int reload_cmp(const void* data, const void* filter) {
@@ -126,8 +127,6 @@ static ret_t users_view_model_set_prop(object_t* obj, const char* name, const va
     user->registered_time = value_uint32(v);
   } else if (tk_str_eq("last_login_time", name)) {
     user->last_login_time = value_uint32(v);
-  } else if (tk_str_eq("expired_time", name)) {
-    user->expired_time = value_uint32(v);
   } else if (tk_str_eq("filter", name)) {
     //
   } else {
@@ -168,8 +167,6 @@ static ret_t users_view_model_get_prop(object_t* obj, const char* name, value_t*
     value_set_uint32(v, user->registered_time);
   } else if (tk_str_eq("last_login_time", name)) {
     value_set_uint32(v, user->last_login_time);
-  } else if (tk_str_eq("expired_time", name)) {
-    value_set_uint32(v, user->expired_time);
   } else if (tk_str_eq("filter", name)) {
     //
   } else if (tk_str_eq("style", name)) {
