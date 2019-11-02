@@ -1,0 +1,18 @@
+<window anim_hint="htranslate" text="User Home" v-model="user_info" children_layout="default(h=40,c=2,m=5,s=10)">
+  <label text="Name:"/>
+  <label v-data:text="{name}"/>
+
+  <label text="Nick Name:"/>
+  <label v-data:text="{nick_name}"/>
+  
+  <label text="Expire Time:"/>
+  <label v-data:text="{expired_time, converter=datetime_str}"/>
+
+  <label text="Registered Time:"/>
+  <label v-data:text="{registered_time, converter=datetime_str}"/>
+
+  <label text="Last Login Time:"/>
+  <label v-data:text="{last_login_time, converter=datetime_str}"/>
+
+  <button text="Change Password" x="center" y="bottom:60" w="80%" h="40" floating="true" v-on:click="{navigate, args=change_password}">
+</window>

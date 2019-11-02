@@ -1,0 +1,43 @@
+{
+  "name":"user_info",
+  "desc":"user info",
+  "cmp":"  return strcmp(a->name.str, b->name.str);",
+  "props": [
+    {
+      "name":"name",
+      "type":"char*",
+      "desc": "user name"
+    },
+    {
+      "name":"nick_name",
+      "type":"char*",
+      "desc": "user nick name"
+    },
+    {
+      "name":"password",
+      "type":"char*",
+      "desc": "password"
+    },
+    {
+      "name":"registered_time",
+      "type":"uint32_t",
+      "desc": "the time of user registered"
+    },
+    {
+      "name":"last_login_time",
+      "type":"uint32_t",
+      "desc": "the time of user last time login"
+    },
+    {
+      "name":"expired_time",
+      "type":"uint32_t",
+      "desc": "expired time"
+    }
+  ],
+  "cmds": [
+    {
+      "name":"change_password",
+      "desc":"change user password"
+    }
+  ]
+}

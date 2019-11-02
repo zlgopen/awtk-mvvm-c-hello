@@ -1,4 +1,4 @@
-<window v-model="login">
+<window closable="no" v-model="login">
   <row x="center" y="middle:-100" w="80%" h="40" children_layout="default(r=1,c=2,m=5,s=10)">
     <label text="User Name:"/>
     <edit v-data:text="{name, Trigger=Changing}}"/>
@@ -10,7 +10,7 @@
   
   <row x="center" y="middle:10" w="80%" h="40" children_layout="default(r=1,c=2,m=5,s=10)">
     <button text="Login" v-on:click="{auth}"/>
-    <button text="Quit" v-on:click="{nothing, QuitApp=true}"1/>
+    <button text="Quit" v-on:click="{nothing, QuitApp=true}"/>
   </row>
   </row>
 </window>

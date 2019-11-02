@@ -14,7 +14,8 @@ static inline login_t* login_create(void) {
 
   str_init(&(login->name), 10);
   str_init(&(login->password), 10);
-
+  str_set(&(login->name), "admin");
+  str_set(&(login->password), "1234");
 
   return login;
 } 
@@ -41,7 +42,14 @@ static ret_t login_auth(login_t* login, const char* args) {
   return_value_if_fail(user != NULL, RET_OK);
 
   if(user_auth(user, login->password.str) == RET_OK) {
-
+    if(user_is_admin(user)) {
+      navigator_to("admin_home");
+    } else {
+      navigator_to("user_detail");
+    }
+    app_globals_set_current_user(user);
+  } else {
+    navigator_toast("Invalid user or password!", 3000);
   }
 
   return RET_OK;

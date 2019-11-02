@@ -98,6 +98,12 @@ static inline ret_t user_destroy(user_t* user) {
   return RET_OK;
 }
 
+static inline bool_t user_is_admin(user_t* user) {
+  return_value_if_fail(user != NULL, FALSE);
+
+  return str_eq(&(user->name), "admin");
+}
+
 END_C_DECLS
 
 #endif /*TK_USER_H*/

@@ -22,12 +22,14 @@
 #include "awtk.h"
 #include "mvvm/mvvm.h"
 #include "view_models/login.h"
-#include "common/app_globals.h";
+#include "view_models/user_info.h"
+#include "common/app_globals.h"
 
 ret_t application_init() {
   app_globals_init();
 
   view_model_factory_register("login", login_view_model_create);
+  view_model_factory_register("user_info", user_info_view_model_create);
 
   return navigator_to("login");
 }

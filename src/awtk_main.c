@@ -76,6 +76,7 @@ int main(void) {
 
   assets_init();
   mvvm_init();
+  window_open("system_bar");
   application_init();
 
   tk_run();
