@@ -1,0 +1,32 @@
+{
+  "name":"user_add",
+  "desc":"user add",
+  "props": [
+    {
+      "name":"name",
+      "type":"char*",
+      "desc": "the user name"
+    },
+    {
+      "name":"nick_name",
+      "type":"char*",
+      "desc": "the user nick name"
+    },
+    {
+      "name":"password",
+      "type":"char*",
+      "desc": "password"
+    },
+    {
+      "name":"confirm_password",
+      "type":"char*",
+      "desc": "confirm_password"
+    }
+  ],
+  "cmds": [
+    {
+      "name":"add",
+      "desc":"add this user"
+    }
+  ]
+}

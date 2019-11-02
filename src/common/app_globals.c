@@ -21,15 +21,13 @@
 
 
 #include "app_globals.h"
-#include "common/user_repository_mem.h"
 
 static app_globals_t s_globals;
 
-ret_t app_globals_init(void) {
-  return_value_if_fail(s_globals.user_repository == NULL, RET_FAIL);
+ret_t app_globals_init(user_repository_t* user_repository) {
+  return_value_if_fail(s_globals.user_repository == NULL && user_repository != NULL, RET_FAIL);
 
-  s_globals.user_repository = user_repository_mem_create();
-  return_value_if_fail(s_globals.user_repository != NULL, RET_OOM);
+  s_globals.user_repository = user_repository;
   user_repository_load(s_globals.user_repository);
 
   return RET_OK;

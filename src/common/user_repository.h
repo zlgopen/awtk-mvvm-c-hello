@@ -23,6 +23,7 @@
 #define TK_USER_REPOSITORY_H
 
 #include "tkc/darray.h"
+#include "tkc/emitter.h"
 #include "common/user.h"
 
 BEGIN_C_DECLS
@@ -45,6 +46,8 @@ typedef ret_t (*user_repository_destroy_t)(user_repository_t* repo);
  *
  */
 struct _user_repository_t {
+  emitter_t* emitter;
+
   user_repository_save_t save;
   user_repository_load_t load;
   user_repository_add_t add;
@@ -146,6 +149,28 @@ user_t* user_repository_find_one(user_repository_t* repo, tk_compare_t cmp, void
  * @return {user_t*} 返回User对象。
  */
 user_t* user_repository_find_by_name(user_repository_t* repo, const char* name);
+
+/**
+ * @method user_repository_on
+ * 注册指定事件的处理函数。
+ * @param {user_repository_t*} repo User持久化对象。
+ * @param {uint32_t} type 事件类型。
+ * @param {event_func_t} on_event 事件处理函数。
+ * @param {void*} ctx 事件处理函数上下文。
+ *
+ * @return {uint32_t} 返回id，用于user_repository_off。
+ */
+uint32_t user_repository_on(user_repository_t* repo, uint32_t etype, event_func_t handler, void* ctx);
+
+/**
+ * @method user_repository_off
+ * 注销指定事件的处理函数。
+ * @param {user_repository_t*} repo User持久化对象。
+ * @param {uint32_t} id user_repository_on返回的ID。
+ *
+ * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
+ */
+ret_t user_repository_off(user_repository_t* repo, uint32_t id);
 
 /**
  * @method user_repository_destroy

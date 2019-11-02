@@ -28,6 +28,7 @@
 #include "assets/default/inc/ui/system_bar.data"
 #include "assets/default/inc/ui/system_settings.data"
 #include "assets/default/inc/ui/time_settings.data"
+#include "assets/default/inc/ui/user_add.data"
 #include "assets/default/inc/ui/user_detail.data"
 #include "assets/default/inc/ui/user_home.data"
 #include "assets/default/inc/ui/user_manager.data"
@@ -184,6 +185,7 @@ ret_t assets_init(void) {
   assets_manager_add(am, ui_system_bar);
   assets_manager_add(am, ui_system_settings);
   assets_manager_add(am, ui_time_settings);
+  assets_manager_add(am, ui_user_add);
   assets_manager_add(am, ui_user_detail);
   assets_manager_add(am, ui_user_home);
   assets_manager_add(am, ui_user_manager);

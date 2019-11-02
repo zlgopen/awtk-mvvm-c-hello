@@ -41,10 +41,11 @@ typedef struct _app_globals_t {
 /**
  * @method app_globals_init
  * 初始化。
+ * @param {user_repository_t*} user_repository repository对象。
  *
  * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
  */
-ret_t app_globals_init(void);
+ret_t app_globals_init(user_repository_t* user_repository);
 
 /**
  * @method app_globals_deinit

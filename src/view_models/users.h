@@ -20,6 +20,10 @@ typedef struct _users_view_model_t {
 
   /*model object*/
   darray_t users;
+  str_t filter;
+  str_t sort_by;
+  uint32_t event_id;
+  uint32_t reload_id;
 } users_view_model_t;
 
 /**

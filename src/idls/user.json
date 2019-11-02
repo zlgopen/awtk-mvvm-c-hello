@@ -33,16 +33,21 @@
       "name":"expired_time",
       "type":"uint32_t",
       "desc": "expired time"
+    },
+    {
+      "name":"filter",
+      "type":"char*",
+      "desc": "filter"
     }
   ],
   "cmds": [
     {
-      "name":"view",
-      "desc":"view user info"
+      "name":"detail",
+      "desc":"show user detial"
     },
     {
-      "name":"edit",
-      "desc":"edit user info"
+      "name":"sort",
+      "desc":"sort list"
     }
   ]
 }
