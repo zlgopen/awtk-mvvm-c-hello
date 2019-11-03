@@ -18,7 +18,7 @@
  * 2019-11-02 Li XianJing <xianjimli@hotmail.com> created
  *
  */
-
+#include <time.h>
 #include "datetime_str_converter.h"
 #include "mvvm/base/value_converter_delegate.h"
 
@@ -28,7 +28,7 @@ static ret_t to_view(const value_t* from, value_t* to) {
   time_t t = value_uint32(from);
 
   time_info = localtime(&t);
-  strftime(str, sizeof(str), "%F %H:%M:%S", time_info);
+  strftime(str, sizeof(str), "%Y-%m-%d %H:%M:%S", time_info);
 
   value_dup_str(to, str);
 

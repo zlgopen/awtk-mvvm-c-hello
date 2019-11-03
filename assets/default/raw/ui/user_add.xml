@@ -6,12 +6,12 @@
  <edit v-data:text="{nick_name, Trigger=Changing}}"/>
 
  <label text="Password:"/>
- <edit input_type="password" right_margin="30" v-data:text="{password, Trigger=Changing}">
+ <edit input_type="password" right_margin="30" v-data:text="{password, Trigger=Changing, Validator=password}">
    <check_button style="password_visible" name="visible" x="right" y="0" w="24" h="100%" />
  </edit>   
   
  <label text="Confirm Password:"/>
- <edit input_type="password" right_margin="30" v-data:text="{confirm_password, Trigger=Changing}">
+ <edit input_type="password" right_margin="30" v-data:text="{confirm_password, Trigger=Changing, Validator=password}">
    <check_button style="password_visible" name="visible" x="right" y="0" w="24" h="100%" />
  </edit>   
   

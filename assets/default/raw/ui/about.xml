@@ -1,4 +1,4 @@
-<window text="About..." anim_hint="htranslate">
+<window text="About..." anim_hint="htranslate" v-model="product_info">
   <list_view x="0"  y="30" w="100%" h="-80" item_height="40">
     <scroll_view name="view" x="0"  y="0" w="100%" h="100%">
       <list_item style="odd" children_layout="default(rows=1,cols=0)">
