@@ -59,12 +59,13 @@ static ret_t user_add_on_result(navigator_request_t* req, const value_t* result)
 
 /***************users_view_model***************/
 
-ret_t users_view_model_remove(view_model_t* view_model, uint32_t index) {
-  users_view_model_t* user_vm = (users_view_model_t*)(view_model);
-  return_value_if_fail(user_vm != NULL, RET_BAD_PARAMS);
+ret_t users_view_model_remove(view_model_t* view_model, user_t* user) {
+  user_repository_t* r = app_globals_get_user_repository();
+  user_repository_remove(r, user_cmp_with_name, user->name.str);
 
-  return darray_remove_index(&(user_vm->users), index);
+  return RET_OK;
 }
+
 
 ret_t users_view_model_add(view_model_t* view_model, user_t* user) {
   navigator_request_t* req = navigator_request_create("user_add", user_add_on_result);
@@ -86,11 +87,13 @@ uint32_t users_view_model_size(view_model_t* view_model) {
 }
 
 ret_t users_view_model_clear(view_model_t* view_model) {
-  users_view_model_t* user_vm = (users_view_model_t*)(view_model);
-  return_value_if_fail(user_vm != NULL, 0);
+  user_t* user = app_globals_get_current_user();
+  user_repository_t* r = app_globals_get_user_repository();
+  user_repository_remove(r, user_cmp_with_name_not, user->name.str);
 
-  return darray_clear(&(user_vm->users));
+  return RET_OK;
 }
+
 
 user_t* users_view_model_get(view_model_t* view_model, uint32_t index) {
   users_view_model_t* user_vm = (users_view_model_t*)(view_model);
@@ -241,7 +244,6 @@ static ret_t users_view_model_on_destroy(object_t* obj) {
   users_view_model_t* vm = (users_view_model_t*)(obj);
   return_value_if_fail(vm != NULL, RET_BAD_PARAMS);
 
-  users_view_model_clear(VIEW_MODEL(obj));
   darray_deinit(&(vm->users));
   str_reset(&(vm->filter));
   str_reset(&(vm->sort_by));

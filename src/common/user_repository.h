@@ -188,6 +188,7 @@ ret_t user_repository_destroy(user_repository_t* repo);
 
 /*helper functions*/
 int user_cmp_with_name(user_t* user, const char* name);
+int user_cmp_with_name_not(user_t* user, const char* name);
 
 END_C_DECLS
 

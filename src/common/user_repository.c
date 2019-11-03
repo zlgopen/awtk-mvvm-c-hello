@@ -29,6 +29,12 @@ int user_cmp_with_name(user_t* user, const char* name) {
   return strcmp(user->name.str, name);
 }
 
+int user_cmp_with_name_not(user_t* user, const char* name) {
+  return_value_if_fail(user != NULL && user->name.str != NULL && name != NULL, -1);
+
+  return user_cmp_with_name(user, name) == 0 ? -1 : 0;
+}
+
 ret_t user_repository_save(user_repository_t* repo) {
   return_value_if_fail(repo != NULL && repo->save != NULL, RET_BAD_PARAMS);
 
