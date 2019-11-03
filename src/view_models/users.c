@@ -225,7 +225,7 @@ static ret_t users_view_model_exec(object_t* obj, const char* name, const char* 
   return_value_if_fail(user != NULL, RET_BAD_PARAMS);
 
   if (tk_str_ieq(name, "remove")) {
-    ENSURE(users_view_model_remove(vm, index) == RET_OK);
+    ENSURE(users_view_model_remove(vm, user) == RET_OK);
     return RET_ITEMS_CHANGED;
   } else if (tk_str_eq("detail", name)) {
     return user_detail(user);
