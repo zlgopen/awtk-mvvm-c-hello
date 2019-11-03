@@ -3,6 +3,7 @@
 #include "tkc/date_time.h"
 #include "mvvm/base/utils.h"
 #include "time_settings.h"
+#include "mvvm/base/navigator.h"
 
 /***************time_settings***************/;
 
@@ -116,7 +117,13 @@ static ret_t time_settings_view_model_exec(object_t* obj, const char* name, cons
   time_settings_t* time_settings = vm->time_settings;
 
   if (tk_str_eq("apply", name)) {
-    return time_settings_apply(time_settings, args);
+    if(time_settings_apply(time_settings, args) == RET_OK) {
+      navigator_toast("time changed!", 3000);
+    } else {
+      navigator_toast("change time failed!", 3000);
+    }
+
+    return RET_OK;
   } else {
     log_debug("not found %s\n", name);
     return RET_NOT_FOUND;
