@@ -25,6 +25,7 @@
 #include "view_models/login.h"
 #include "view_models/user_add.h"
 #include "view_models/user_info.h"
+#include "view_models/time_settings.h"
 #include "view_models/change_password.h"
 
 #include "common/app_globals.h"
@@ -39,6 +40,7 @@ ret_t application_init() {
   view_model_factory_register("login", login_view_model_create);
   view_model_factory_register("user_add", user_add_view_model_create);
   view_model_factory_register("user_info", user_info_view_model_create);
+  view_model_factory_register("time_settings", time_settings_view_model_create);
   view_model_factory_register("change_password", change_password_view_model_create);
 
   return navigator_to("login");

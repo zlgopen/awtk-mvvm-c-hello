@@ -37,7 +37,6 @@ TEST(UserRepository, basic) {
 }
 
 TEST(UserRepository, update) {
-  darray_t matched;
   user_t* user = NULL;
   user_t* u1 = user_create();
   user_repository_t* r = user_repository_mem_create();

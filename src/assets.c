@@ -20,6 +20,7 @@
 #include "assets/default/inc/ui/kb_int.data"
 #include "assets/default/inc/ui/kb_hex.data"
 #include "assets/default/inc/ui/user_add.data"
+#include "assets/default/inc/ui/t.data"
 #include "assets/default/inc/ui/system_settings.data"
 #include "assets/default/inc/ui/admin_home.data"
 #include "assets/default/inc/ui/kb_float.data"
@@ -129,6 +130,7 @@ ret_t assets_init(void) {
   assets_manager_add(am, ui_kb_int);
   assets_manager_add(am, ui_kb_hex);
   assets_manager_add(am, ui_user_add);
+  assets_manager_add(am, ui_t);
   assets_manager_add(am, ui_system_settings);
   assets_manager_add(am, ui_admin_home);
   assets_manager_add(am, ui_kb_float);

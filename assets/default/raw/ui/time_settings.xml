@@ -1,23 +1,15 @@
-<window text="Time Settings" anim_hint="htranslate">
-  <list_view x="0"  y="30" w="100%" h="-80" item_height="40">
-    <scroll_view name="view" x="0"  y="0" w="100%" h="100%">
-      <list_item style="odd" children_layout="default(rows=1,cols=0)">
-        <label w="50%" text="Name" />
-        <label w="50%" v-data:text="{name}" />
-      </list_item>
-      <list_item style="odd" children_layout="default(rows=1,cols=0)">
-        <label w="50%" text="Version" />
-        <label w="50%" v-data:text="{version}" />
-      </list_item>
-      <list_item style="odd" children_layout="default(rows=1,cols=0)">
-        <label w="50%" text="Model" />
-        <label w="50%" v-data:text="{model}" />
-      </list_item>
-      <list_item style="odd" children_layout="default(rows=1,cols=0)">
-        <label w="50%" text="Serial Number" />
-        <label w="50%" v-data:text="{serial_no}" />
-      </list_item>
-    </scroll_view>
-    <scroll_bar_m name="bar" x="right" y="0" w="6" h="100%" value="0"/>
-  </list_view>
+<window text="Time Settings" anim_hint="htranslate" v-model="time_settings">
+  <row  x="0" y="middle:-100" w="100%" h="150" children_layout="default(row=1,col=6)">
+    <text_selector options="2000-2050" v-data:value="{year}"/>
+    <text_selector options="1-12-%02d" v-data:value="{month}"/>
+    <text_selector options="1-31-%02d" v-data:value="{day}"/>
+    <text_selector options="0-23-%02d" v-data:value="{hour}"/>
+    <text_selector options="0-59-%02d" v-data:value="{minute}"/>
+    <text_selector options="0-59-%02d" v-data:value="{second}"/>
+  </row>
+
+  <row x="center" y="middle:100" w="80%" h="40" children_layout="default(r=1,c=2,m=5,s=10)">
+    <button text="Apply" v-on:click="{apply}"/>
+    <button text="Cancel" v-on:click="{nothing, CloseWindow=true}"/>
+  </row>
 </window>
