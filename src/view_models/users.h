@@ -43,7 +43,7 @@ user_t* user_create(void);
 
 ret_t users_view_model_clear(view_model_t* view_model);
 uint32_t users_view_model_size(view_model_t* view_model);
-ret_t users_view_model_remove(view_model_t* view_model, uint32_t index);
+ret_t users_view_model_remove(view_model_t* view_model, user_t* user);
 ret_t users_view_model_add(view_model_t* view_model, user_t* user);
 user_t* users_view_model_get(view_model_t* view_model, uint32_t index);
 

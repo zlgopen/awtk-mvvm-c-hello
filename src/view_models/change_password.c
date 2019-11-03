@@ -1,6 +1,8 @@
 ﻿#include "tkc/mem.h"
 #include "tkc/utils.h"
 #include "mvvm/base/utils.h"
+#include "mvvm/base/navigator.h"
+
 #include "change_password.h"
 #include "common/app_globals.h"
 

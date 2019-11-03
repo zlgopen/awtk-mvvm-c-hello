@@ -47,7 +47,6 @@ static ret_t user_detail(user_t* user) {
 
 static ret_t user_add_on_result(navigator_request_t* req, const value_t* result) {
   user_repository_t* r = app_globals_get_user_repository();
-  users_view_model_t* vm = (users_view_model_t*)object_get_prop_pointer(OBJECT(req), "requester");
   user_t* user = (user_t*)value_pointer(result);
 
   if (user_repository_add(r, user) != RET_OK) {
@@ -61,7 +60,7 @@ static ret_t user_add_on_result(navigator_request_t* req, const value_t* result)
 
 ret_t users_view_model_remove(view_model_t* view_model, user_t* user) {
   user_repository_t* r = app_globals_get_user_repository();
-  user_repository_remove(r, user_cmp_with_name, user->name.str);
+  user_repository_remove(r, (tk_compare_t)user_cmp_with_name, user->name.str);
 
   return RET_OK;
 }
@@ -89,7 +88,7 @@ uint32_t users_view_model_size(view_model_t* view_model) {
 ret_t users_view_model_clear(view_model_t* view_model) {
   user_t* user = app_globals_get_current_user();
   user_repository_t* r = app_globals_get_user_repository();
-  user_repository_remove(r, user_cmp_with_name_not, user->name.str);
+  user_repository_remove(r, (tk_compare_t)user_cmp_with_name_not, user->name.str);
 
   return RET_OK;
 }
@@ -230,11 +229,9 @@ static ret_t users_view_model_exec(object_t* obj, const char* name, const char* 
   } else if (tk_str_eq("detail", name)) {
     return user_detail(user);
   } else if (tk_str_eq("sort", name)) {
+    return RET_NOT_FOUND;
   } else {
-    log_debug(
-        "not found %s\
-",
-        name);
+    log_debug("not found %s\n",name);
     return RET_NOT_FOUND;
   }
 }

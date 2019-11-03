@@ -9,4 +9,4 @@ LIB_DIR=os.environ['LIB_DIR'];
 sources = Glob('view_models/*.c') + Glob('common/*.c') + Glob('repository/*.c')
 
 env.Library(os.path.join(LIB_DIR, 'awtk_mvvm_app'), sources);
-env.Program(os.path.join(BIN_DIR, 'awtk_mvvm_app'), Glob('application.c'), LIBS=env['LIBS'] + ['awtk_mvvm_app']);
+env.Program(os.path.join(BIN_DIR, 'awtk_mvvm_app'), Glob('application.c'), LIBS=['awtk_mvvm_app'] + env['LIBS']);

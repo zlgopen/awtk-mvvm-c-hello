@@ -18,7 +18,7 @@
  * 2019-10-29 Li XianJing <xianjimli@hotmail.com> created
  *
  */
-
+#include <time.h>
 #include "user_repository_mem.h"
 
 static ret_t user_repository_mem_save(user_repository_t* repo) {
@@ -68,7 +68,6 @@ static ret_t user_repository_mem_add(user_repository_t* repo, const user_t* user
 
 static ret_t user_repository_mem_update(user_repository_t* repo, const user_t* user) {
   user_t* find = NULL;
-  user_repository_mem_t* r = USER_REPOSITORY_MEM(repo);
   return_value_if_fail(user != NULL && user->name.str != NULL, RET_BAD_PARAMS);
 
   find = user_repository_find_by_name(repo, user->name.str);
