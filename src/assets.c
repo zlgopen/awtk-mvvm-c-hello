@@ -106,15 +106,15 @@
 #include "assets/default/inc/images/unchecked.data"
 #include "assets/default/inc/images/visible.data"
 #include "assets/default/inc/images/zh.data"
-#endif/*WITH_STB_IMAGE*/
+#endif /*WITH_STB_IMAGE*/
 #ifdef WITH_VGCANVAS
-#endif/*WITH_VGCANVAS*/
+#endif /*WITH_VGCANVAS*/
 #if defined(WITH_TRUETYPE_FONT)
 #include "assets/default/inc/fonts/default.res"
-#else/*WITH_TRUETYPE_FONT*/
+#else /*WITH_TRUETYPE_FONT*/
 #include "assets/default/inc/fonts/default.data"
-#endif/*WITH_TRUETYPE_FONT*/
-#endif/*WITH_FS_RES*/
+#endif /*WITH_TRUETYPE_FONT*/
+#endif /*WITH_FS_RES*/
 
 ret_t assets_init(void) {
   assets_manager_t* am = assets_manager();
@@ -192,7 +192,7 @@ ret_t assets_init(void) {
   assets_manager_add(am, ui_user_home);
   assets_manager_add(am, ui_user_manager);
 #ifdef WITH_VGCANVAS
-#endif/*WITH_VGCANVAS*/
+#endif /*WITH_VGCANVAS*/
 #endif
 
   tk_init_assets();

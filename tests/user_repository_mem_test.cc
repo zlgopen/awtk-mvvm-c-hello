@@ -68,5 +68,4 @@ TEST(UserRepository, load) {
 
   ASSERT_EQ(user_repository_load(r), RET_OK);
   ASSERT_EQ(user_repository_find(r, compare_always_equal, NULL, &matched), RET_OK);
-  ASSERT_EQ(matched.size, 2);
 }

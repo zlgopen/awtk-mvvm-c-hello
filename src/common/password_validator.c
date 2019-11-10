@@ -24,7 +24,7 @@
 
 static bool_t is_valid_password(const value_t* value, str_t* msg) {
   const wchar_t* password = value_wstr(value);
-  
+
   return password != NULL && wcslen(password) > 4;
 }
 

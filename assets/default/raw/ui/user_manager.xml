@@ -1,5 +1,10 @@
 <window anim_hint="htranslate" v-model="users" text="User Manager">
-   <label x="0" y="0" w="100%" h="30" v-data:text="{items}"/>
+ <row children_layout="default(rows=1,cols=0,s=4,m=2)", x="0" y="0" w="100%" h="30">
+   <edit w="50%"  v-data:text="{filter, Trigger=Changing}" tips="filter"/>
+   <check_button w="35%" text="ascending" v-data:value="{ascending}"/>
+   <label w="15%" v-data:text="{items}"/>
+ </row>
+
    <list_view x="0"  y="30" w="100%" h="-80" item_height="40">
     <scroll_view name="column" x="0"  y="0" w="100%" h="100%" v-for-items="true">
       <list_item v-data:style="{item.style}" children_layout="default(rows=1,cols=0,s=4)">
@@ -13,8 +18,8 @@
     </scroll_view>
     <scroll_bar_m name="bar" x="right" y="0" w="6" h="100%" value="0"/>
   </list_view>
-  <column  x="0" y="b" w="100%" h="40" children_layout="default(rows=1,cols=2,s=5,m=5)">
+  <row x="0" y="b" w="100%" h="40" children_layout="default(rows=1,cols=2,s=5,m=5)">
     <button text="Add" v-on:click="{add}"/>
     <button text="Clear" v-on:click="{clear}"/>
-  </column>
+  </row>
 </window>

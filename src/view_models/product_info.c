@@ -3,7 +3,6 @@
 #include "mvvm/base/utils.h"
 #include "product_info.h"
 
-
 /***************product_info***************/;
 
 static inline product_info_t* product_info_create(void) {
@@ -15,16 +14,13 @@ static inline product_info_t* product_info_create(void) {
   str_set(&(product_info->model), "awtk-mvvm");
   str_set(&(product_info->serial_no), "111222333444");
 
-
   return product_info;
-} 
-
+}
 
 static inline int product_info_cmp(product_info_t* a, product_info_t* b) {
   return_value_if_fail(a != NULL && b != NULL, -1);
   return strcmp(a->name.str, b->name.str);
 }
-
 
 static inline ret_t product_info_destroy(product_info_t* product_info) {
   return_value_if_fail(product_info != NULL, RET_BAD_PARAMS);
@@ -33,7 +29,6 @@ static inline ret_t product_info_destroy(product_info_t* product_info) {
   str_reset(&(product_info->version));
   str_reset(&(product_info->model));
   str_reset(&(product_info->serial_no));
-
 
   TKMEM_FREE(product_info);
 
@@ -58,10 +53,9 @@ static ret_t product_info_view_model_set_prop(object_t* obj, const char* name, c
     log_debug("not found %s\n", name);
     return RET_NOT_FOUND;
   }
-  
+
   return RET_OK;
 }
-
 
 static ret_t product_info_view_model_get_prop(object_t* obj, const char* name, value_t* v) {
   product_info_view_model_t* vm = (product_info_view_model_t*)(obj);
@@ -79,10 +73,9 @@ static ret_t product_info_view_model_get_prop(object_t* obj, const char* name, v
     log_debug("not found %s\n", name);
     return RET_NOT_FOUND;
   }
-  
+
   return RET_OK;
 }
-
 
 static bool_t product_info_view_model_can_exec(object_t* obj, const char* name, const char* args) {
   return FALSE;
@@ -91,7 +84,6 @@ static bool_t product_info_view_model_can_exec(object_t* obj, const char* name, 
 static ret_t product_info_view_model_exec(object_t* obj, const char* name, const char* args) {
   return RET_NOT_IMPL;
 }
-
 
 static ret_t product_info_view_model_on_destroy(object_t* obj) {
   product_info_view_model_t* vm = (product_info_view_model_t*)(obj);
@@ -103,15 +95,14 @@ static ret_t product_info_view_model_on_destroy(object_t* obj) {
 }
 
 static const object_vtable_t s_product_info_view_model_vtable = {
-  .type = "product_info",
-  .desc = "product_info",
-  .size = sizeof(product_info_view_model_t),
-  .exec = product_info_view_model_exec,
-  .can_exec = product_info_view_model_can_exec,
-  .get_prop = product_info_view_model_get_prop,
-  .set_prop = product_info_view_model_set_prop,
-  .on_destroy = product_info_view_model_on_destroy
-};
+    .type = "product_info",
+    .desc = "product_info",
+    .size = sizeof(product_info_view_model_t),
+    .exec = product_info_view_model_exec,
+    .can_exec = product_info_view_model_can_exec,
+    .get_prop = product_info_view_model_get_prop,
+    .set_prop = product_info_view_model_set_prop,
+    .on_destroy = product_info_view_model_on_destroy};
 
 view_model_t* product_info_view_model_create(navigator_request_t* req) {
   object_t* obj = object_create(&s_product_info_view_model_vtable);

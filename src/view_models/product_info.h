@@ -12,7 +12,7 @@ BEGIN_C_DECLS
  * product_info
  *
  */
-typedef struct _product_info_t{
+typedef struct _product_info_t {
   str_t name;
   str_t version;
   str_t model;

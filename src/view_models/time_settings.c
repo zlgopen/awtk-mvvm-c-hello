@@ -117,7 +117,7 @@ static ret_t time_settings_view_model_exec(object_t* obj, const char* name, cons
   time_settings_t* time_settings = vm->time_settings;
 
   if (tk_str_eq("apply", name)) {
-    if(time_settings_apply(time_settings, args) == RET_OK) {
+    if (time_settings_apply(time_settings, args) == RET_OK) {
       navigator_toast("time changed!", 3000);
     } else {
       navigator_toast("change time failed!", 3000);

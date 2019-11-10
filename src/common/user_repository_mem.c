@@ -26,6 +26,8 @@ static ret_t user_repository_mem_save(user_repository_t* repo) {
 }
 
 static ret_t user_repository_mem_gen(user_repository_t* repo) {
+  uint32_t i = 0;
+  uint32_t nr = 5000;
   user_repository_mem_t* r = USER_REPOSITORY_MEM(repo);
   user_t* admin = user_create();
   user_t* awtk = user_create();
@@ -45,6 +47,18 @@ static ret_t user_repository_mem_gen(user_repository_t* repo) {
     str_set(&(awtk->nick_name), "awtk");
     awtk->registered_time = time(0);
     darray_push(&(r->users), awtk);
+  }
+
+  for (i = 0; i < nr; i++) {
+    char name[32] = {0};
+    user_t* user = user_create();
+
+    tk_snprintf(name, sizeof(name), "user%d", i);
+    str_set(&(user->name), name);
+    str_set(&(user->password), "1234");
+    str_set(&(user->nick_name), name);
+    user->registered_time = time(0);
+    darray_push(&(r->users), user);
   }
 
   return RET_OK;

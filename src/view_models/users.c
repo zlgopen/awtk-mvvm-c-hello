@@ -7,8 +7,32 @@
 #include "users.h"
 #include "common/app_globals.h"
 
-static int reload_cmp(const void* data, const void* filter) {
-  return 0;
+static int reload_cmp(const void* a, const void* b) {
+  const user_t* user = (const user_t*)a;
+  const char* filter = (const char*)b;
+  if (filter == NULL) {
+    return 0;
+  }
+
+  if (strstr(user->name.str, filter) != NULL) {
+    return 0;
+  } else {
+    return -1;
+  }
+}
+
+static int name_cmp_ascending(const void* a, const void* b) {
+  const user_t* user1 = *(const user_t**)a;
+  const user_t* user2 = *(const user_t**)b;
+
+  return strcmp(user1->name.str, user2->name.str);
+}
+
+static int name_cmp_descending(const void* a, const void* b) {
+  const user_t* user1 = *(const user_t**)a;
+  const user_t* user2 = *(const user_t**)b;
+
+  return strcmp(user2->name.str, user1->name.str);
 }
 
 static ret_t users_view_model_reload(users_view_model_t* vm) {
@@ -18,12 +42,14 @@ static ret_t users_view_model_reload(users_view_model_t* vm) {
   return_value_if_fail(vm != NULL, RET_BAD_PARAMS);
 
   users = &(vm->users);
-
   darray_clear(users);
-
   user_repository_find(r, reload_cmp, vm->filter.str, users);
 
-  /*TODO:sort*/
+  if (vm->ascending) {
+    darray_sort(users, name_cmp_ascending);
+  } else {
+    darray_sort(users, name_cmp_descending);
+  }
 
   view_model_array_notify_items_changed(VIEW_MODEL(vm));
 
@@ -60,11 +86,11 @@ static ret_t user_add_on_result(navigator_request_t* req, const value_t* result)
 
 ret_t users_view_model_remove(view_model_t* view_model, user_t* user) {
   user_repository_t* r = app_globals_get_user_repository();
+
   user_repository_remove(r, (tk_compare_t)user_cmp_with_name, user->name.str);
 
   return RET_OK;
 }
-
 
 ret_t users_view_model_add(view_model_t* view_model, user_t* user) {
   navigator_request_t* req = navigator_request_create("user_add", user_add_on_result);
@@ -88,29 +114,40 @@ uint32_t users_view_model_size(view_model_t* view_model) {
 ret_t users_view_model_clear(view_model_t* view_model) {
   user_t* user = app_globals_get_current_user();
   user_repository_t* r = app_globals_get_user_repository();
+
   user_repository_remove(r, (tk_compare_t)user_cmp_with_name_not, user->name.str);
 
   return RET_OK;
 }
 
-
 user_t* users_view_model_get(view_model_t* view_model, uint32_t index) {
   users_view_model_t* user_vm = (users_view_model_t*)(view_model);
   return_value_if_fail(user_vm != NULL, 0);
 
-  return_value_if_fail(user_vm != NULL && index < users_view_model_size(view_model), NULL);
-
-  return (user_t*)(user_vm->users.elms[index]);
+  if (index < users_view_model_size(view_model)) {
+    return (user_t*)(user_vm->users.elms[index]);
+  } else {
+    log_debug("index(%u) >= size(%u)\n", index, users_view_model_size(view_model));
+    return NULL;
+  }
 }
 
 static ret_t users_view_model_set_prop(object_t* obj, const char* name, const value_t* v) {
   uint32_t index = 0;
   user_t* user = NULL;
   view_model_t* vm = VIEW_MODEL(obj);
+  users_view_model_t* user_vm = (users_view_model_t*)(vm);
 
   if (tk_str_eq(VIEW_MODEL_PROP_CURSOR, name)) {
     view_model_array_set_cursor(vm, value_int(v));
-
+    return RET_OK;
+  } else if (tk_str_eq("filter", name)) {
+    str_from_value(&(user_vm->filter), v);
+    users_view_model_reload(user_vm);
+    return RET_OK;
+  } else if (tk_str_eq("ascending", name)) {
+    user_vm->ascending = value_bool(v);
+    users_view_model_reload(user_vm);
     return RET_OK;
   }
 
@@ -129,8 +166,6 @@ static ret_t users_view_model_set_prop(object_t* obj, const char* name, const va
     user->registered_time = value_uint32(v);
   } else if (tk_str_eq("last_login_time", name)) {
     user->last_login_time = value_uint32(v);
-  } else if (tk_str_eq("filter", name)) {
-    //
   } else {
     log_debug("not found %s\n", name);
     return RET_NOT_FOUND;
@@ -143,21 +178,31 @@ static ret_t users_view_model_get_prop(object_t* obj, const char* name, value_t*
   uint32_t index = 0;
   user_t* user = NULL;
   view_model_t* vm = VIEW_MODEL(obj);
+  users_view_model_t* user_vm = (users_view_model_t*)(vm);
 
   if (tk_str_eq(VIEW_MODEL_PROP_ITEMS, name)) {
     value_set_int(v, users_view_model_size(VIEW_MODEL(obj)));
-
     return RET_OK;
   } else if (tk_str_eq(VIEW_MODEL_PROP_CURSOR, name)) {
     value_set_int(v, VIEW_MODEL_ARRAY(obj)->cursor);
-
+    return RET_OK;
+  } else if (tk_str_eq("filter", name)) {
+    value_set_str(v, user_vm->filter.str);
+    return RET_OK;
+  } else if (tk_str_eq("ascending", name)) {
+    value_set_bool(v, user_vm->ascending);
     return RET_OK;
   }
 
   name = destruct_array_prop_name(name, &index);
-  return_value_if_fail(name != NULL, RET_BAD_PARAMS);
+  if (name == NULL) {
+    return RET_FAIL;
+  }
+
   user = users_view_model_get(vm, index);
-  return_value_if_fail(user != NULL, RET_BAD_PARAMS);
+  if (user == NULL) {
+    return RET_FAIL;
+  }
 
   if (tk_str_eq("name", name)) {
     value_set_str(v, user->name.str);
@@ -169,8 +214,6 @@ static ret_t users_view_model_get_prop(object_t* obj, const char* name, value_t*
     value_set_uint32(v, user->registered_time);
   } else if (tk_str_eq("last_login_time", name)) {
     value_set_uint32(v, user->last_login_time);
-  } else if (tk_str_eq("filter", name)) {
-    //
   } else if (tk_str_eq("style", name)) {
     value_set_str(v, index % 2 ? "odd" : "even");
   } else {
@@ -193,15 +236,15 @@ static bool_t users_view_model_can_exec(object_t* obj, const char* name, const c
   }
 
   user = users_view_model_get(vm, index);
-  return_value_if_fail(user != NULL, FALSE);
+  if (user == NULL) {
+    return RET_FAIL;
+  }
 
   if (tk_str_ieq(name, "remove")) {
     user_t* current_user = app_globals_get_current_user();
     return user != NULL && !tk_str_eq(user->name.str, current_user->name.str);
   } else if (tk_str_eq("detail", name)) {
     return user_can_exec_detail(user, args);
-  } else if (tk_str_eq("sort", name)) {
-    return FALSE;
   } else {
     return FALSE;
   }
@@ -221,17 +264,17 @@ static ret_t users_view_model_exec(object_t* obj, const char* name, const char* 
   }
 
   user = users_view_model_get(vm, index);
-  return_value_if_fail(user != NULL, RET_BAD_PARAMS);
+  if (user == NULL) {
+    return RET_FAIL;
+  }
 
   if (tk_str_ieq(name, "remove")) {
     ENSURE(users_view_model_remove(vm, user) == RET_OK);
     return RET_ITEMS_CHANGED;
   } else if (tk_str_eq("detail", name)) {
     return user_detail(user);
-  } else if (tk_str_eq("sort", name)) {
-    return RET_NOT_FOUND;
   } else {
-    log_debug("not found %s\n",name);
+    log_debug("not found %s\n", name);
     return RET_NOT_FOUND;
   }
 }
@@ -243,7 +286,6 @@ static ret_t users_view_model_on_destroy(object_t* obj) {
 
   darray_deinit(&(vm->users));
   str_reset(&(vm->filter));
-  str_reset(&(vm->sort_by));
   user_repository_off(r, vm->event_id);
 
   return view_model_array_deinit(VIEW_MODEL(obj));
@@ -288,7 +330,6 @@ view_model_t* users_view_model_create(navigator_request_t* req) {
   return_value_if_fail(vm != NULL, NULL);
 
   str_init(&(user_vm->filter), 100);
-  str_init(&(user_vm->sort_by), 100);
   darray_init(&(user_vm->users), 100, NULL, NULL);
 
   users_view_model_reload(user_vm);
