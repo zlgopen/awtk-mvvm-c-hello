@@ -22,15 +22,15 @@ static int reload_cmp(const void* a, const void* b) {
 }
 
 static int name_cmp_ascending(const void* a, const void* b) {
-  const user_t* user1 = *(const user_t**)a;
-  const user_t* user2 = *(const user_t**)b;
+  const user_t* user1 = (const user_t*)a;
+  const user_t* user2 = (const user_t*)b;
 
   return strcmp(user1->name.str, user2->name.str);
 }
 
 static int name_cmp_descending(const void* a, const void* b) {
-  const user_t* user1 = *(const user_t**)a;
-  const user_t* user2 = *(const user_t**)b;
+  const user_t* user1 = (const user_t*)a;
+  const user_t* user2 = (const user_t*)b;
 
   return strcmp(user2->name.str, user1->name.str);
 }
