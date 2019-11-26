@@ -24,7 +24,7 @@ MVVM_ROOT = os.path.normpath(os.path.join(APP_ROOT, '../awtk-mvvm'))
 MVVM_LIB_DIR = os.path.join(MVVM_ROOT, 'lib')
 MVVM_SRC_DIR = os.path.join(MVVM_ROOT, 'src')
 
-MVVM_LIBS = ['mvvm', 'jerryscript']
+MVVM_LIBS = ['mvvm', 'jerryscript', 'nfd']
 MVVM_CPPPATH = [MVVM_SRC_DIR]
 MVVM_LIBPATH = [MVVM_LIB_DIR]
 
