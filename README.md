@@ -56,6 +56,16 @@ git clone https://github.com/zlgopen/awtk-mvvm-c-hello.git
 cd awtk-mvvm-c-hello; scons
 ```
 
+> 编译linux-fb版本，请修改SConstruct
+
+```
+#for pc
+#sys.path.insert(0, '../awtk/')
+
+#for linux-fb
+sys.path.insert(0, '../awtk-linux-fb/')
+```
+
 ## 3.运行
 
 ```
