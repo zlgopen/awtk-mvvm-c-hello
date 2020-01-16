@@ -53,7 +53,7 @@ if hasattr(awtk, 'CC'):
     OS_SUBSYSTEM_CONSOLE=awtk.OS_SUBSYSTEM_CONSOLE,
     OS_SUBSYSTEM_WINDOWS=awtk.OS_SUBSYSTEM_WINDOWS)
 else:
-  MVVM_LIBS = ['mvvm', 'jerryscript', 'nfd']
+  MVVM_LIBS = ['mvvm', 'jerryscript']
   DefaultEnvironment(
     LINKFLAGS = awtk.LINKFLAGS,
     CFLAGS    = APP_CFLAGS + awtk.CFLAGS, 
