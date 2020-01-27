@@ -29,8 +29,7 @@ AWTK-MVVM 提供的 demo 功能单一，适合查看特定功能的实现方法�
 ├─scripts           脚本工具
 ├─src               源码
 │  ├─common         公共的代码
-│  ├─idls           用于产生代码的idl定义
-│  └─view_models    ViewModel的实现
+│  └─view_models    自动生成的ViewModel。
 └─tests             测试程序
 ```
 

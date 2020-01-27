@@ -1,0 +1,1221 @@
+[
+  {
+    "type": "class",
+    "methods": [
+      {
+        "params": [],
+        "annotation": {
+          "constructor": true
+        },
+        "desc": "创建user_add对象。",
+        "name": "user_add_create",
+        "return": {
+          "type": "user_add_t*",
+          "desc": "返回user_add对象。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "user_add_t*",
+            "name": "user_add",
+            "desc": "user_add对象。"
+          }
+        ],
+        "annotation": {
+          "destructor": true
+        },
+        "desc": "销毁user_add对象。",
+        "name": "user_add_destroy",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "user_add_t*",
+            "name": "user_add",
+            "desc": "user_add对象。"
+          }
+        ],
+        "annotation": {},
+        "desc": "检查auth命令是否可以执行。",
+        "name": "user_add_can_add",
+        "return": {
+          "type": "bool_t",
+          "desc": "返回FALSE表示不能执行，否则表示可以执行。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "user_add_t*",
+            "name": "user_add",
+            "desc": "user_add对象。"
+          }
+        ],
+        "annotation": {
+          "command": true
+        },
+        "desc": "增加用户。",
+        "name": "user_add_add",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      }
+    ],
+    "events": [],
+    "properties": [
+      {
+        "name": "name",
+        "desc": "用户名。",
+        "type": "str_t",
+        "annotation": {
+          "readable": true,
+          "writable": true
+        }
+      },
+      {
+        "name": "nick_name",
+        "desc": "昵称。",
+        "type": "str_t",
+        "annotation": {
+          "readable": true,
+          "writable": true
+        }
+      },
+      {
+        "name": "password",
+        "desc": "密码。",
+        "type": "str_t",
+        "annotation": {
+          "readable": true,
+          "writable": true
+        }
+      },
+      {
+        "name": "confirm_password",
+        "desc": "确认密码。",
+        "type": "str_t",
+        "annotation": {
+          "readable": true,
+          "writable": true
+        }
+      }
+    ],
+    "header": "common/user_add.h",
+    "desc": "user add",
+    "name": "user_add_t",
+    "annotation": {
+      "model": true
+    },
+    "level": 1
+  },
+  {
+    "type": "class",
+    "methods": [
+      {
+        "params": [
+          {
+            "type": "user_repository_t*",
+            "name": "user_repository",
+            "desc": "repository对象。"
+          }
+        ],
+        "annotation": {},
+        "desc": "初始化。",
+        "name": "app_globals_init",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      },
+      {
+        "params": [],
+        "annotation": {},
+        "desc": "~初始化。",
+        "name": "app_globals_deinit",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      },
+      {
+        "params": [],
+        "annotation": {},
+        "desc": "获取user repository对象。",
+        "name": "app_globals_get_user_repository",
+        "return": {
+          "type": "user_repository_t*",
+          "desc": "返回user repository对象。"
+        }
+      },
+      {
+        "params": [],
+        "annotation": {},
+        "desc": "获取当前登录用户。",
+        "name": "app_globals_get_current_user",
+        "return": {
+          "type": "user_t*",
+          "desc": "返回user对象。"
+        }
+      },
+      {
+        "params": [],
+        "annotation": {},
+        "desc": "设置当前登录用户。",
+        "name": "app_globals_set_current_user",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      }
+    ],
+    "events": [],
+    "properties": [],
+    "header": "common/app_globals.h",
+    "desc": "一些全局单例对象。",
+    "name": "app_globals_t",
+    "level": 1
+  },
+  {
+    "type": "class",
+    "methods": [
+      {
+        "params": [],
+        "annotation": {
+          "constructor": true
+        },
+        "desc": "创建login对象。",
+        "name": "login_create",
+        "return": {
+          "type": "login_t*",
+          "desc": "返回login对象。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "login_t*",
+            "name": "login",
+            "desc": "login对象。"
+          }
+        ],
+        "annotation": {
+          "destructor": true
+        },
+        "desc": "销毁login对象。",
+        "name": "login_destroy",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "login_t*",
+            "name": "login",
+            "desc": "login对象。"
+          }
+        ],
+        "annotation": {},
+        "desc": "检查auth命令是否可以执行。",
+        "name": "login_can_auth",
+        "return": {
+          "type": "bool_t",
+          "desc": "返回FALSE表示不能执行，否则表示可以执行。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "login_t*",
+            "name": "login",
+            "desc": "login对象。"
+          }
+        ],
+        "annotation": {
+          "command": true
+        },
+        "desc": "认证。",
+        "name": "login_auth",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      }
+    ],
+    "events": [],
+    "properties": [
+      {
+        "name": "name",
+        "desc": "用户名。",
+        "type": "str_t",
+        "annotation": {
+          "readable": true,
+          "writable": true
+        }
+      },
+      {
+        "name": "password",
+        "desc": "密码。",
+        "type": "str_t",
+        "annotation": {
+          "readable": true,
+          "writable": true
+        }
+      }
+    ],
+    "header": "common/login.h",
+    "desc": "user login",
+    "name": "login_t",
+    "annotation": {
+      "model": true
+    },
+    "level": 1
+  },
+  {
+    "type": "class",
+    "methods": [
+      {
+        "params": [],
+        "annotation": {
+          "constructor": true
+        },
+        "desc": "创建product_info对象。",
+        "name": "product_info_create",
+        "return": {
+          "type": "product_info_t*",
+          "desc": "返回product_info对象。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "product_info_t*",
+            "name": "product_info",
+            "desc": "product_info对象。"
+          }
+        ],
+        "annotation": {
+          "destructor": true
+        },
+        "desc": "销毁product_info对象。",
+        "name": "product_info_destroy",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      }
+    ],
+    "events": [],
+    "properties": [
+      {
+        "name": "name",
+        "desc": "名称。",
+        "type": "str_t",
+        "annotation": {
+          "readable": true
+        }
+      },
+      {
+        "name": "version",
+        "desc": "用户名。",
+        "type": "str_t",
+        "annotation": {
+          "readable": true
+        }
+      },
+      {
+        "name": "model",
+        "desc": "型号。",
+        "type": "str_t",
+        "annotation": {
+          "readable": true
+        }
+      },
+      {
+        "name": "serial_no",
+        "desc": "序列号。",
+        "type": "str_t",
+        "annotation": {
+          "readable": true
+        }
+      }
+    ],
+    "header": "common/product_info.h",
+    "desc": "product_info",
+    "name": "product_info_t",
+    "annotation": {
+      "model": true
+    },
+    "level": 1
+  },
+  {
+    "type": "class",
+    "methods": [
+      {
+        "params": [],
+        "annotation": {
+          "constructor": true
+        },
+        "desc": "创建time_settings对象。",
+        "name": "time_settings_create",
+        "return": {
+          "type": "time_settings_t*",
+          "desc": "返回time_settings对象。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "time_settings_t*",
+            "name": "time_settings",
+            "desc": "time_settings对象。"
+          }
+        ],
+        "annotation": {
+          "destructor": true
+        },
+        "desc": "销毁time_settings对象。",
+        "name": "time_settings_destroy",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "time_settings_t*",
+            "name": "time_settings",
+            "desc": "time_settings对象。"
+          }
+        ],
+        "annotation": {
+          "command": true
+        },
+        "desc": "保存。",
+        "name": "time_settings_apply",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      }
+    ],
+    "events": [],
+    "properties": [
+      {
+        "name": "year",
+        "desc": "年。",
+        "type": "uint32_t",
+        "annotation": {
+          "readable": true,
+          "writable": true
+        }
+      },
+      {
+        "name": "month",
+        "desc": "月。",
+        "type": "uint32_t",
+        "annotation": {
+          "readable": true,
+          "writable": true
+        }
+      },
+      {
+        "name": "day",
+        "desc": "日。",
+        "type": "uint32_t",
+        "annotation": {
+          "readable": true,
+          "writable": true
+        }
+      },
+      {
+        "name": "hour",
+        "desc": "时。",
+        "type": "uint32_t",
+        "annotation": {
+          "readable": true,
+          "writable": true
+        }
+      },
+      {
+        "name": "minute",
+        "desc": "分。",
+        "type": "uint32_t",
+        "annotation": {
+          "readable": true,
+          "writable": true
+        }
+      },
+      {
+        "name": "second",
+        "desc": "second。",
+        "type": "uint32_t",
+        "annotation": {
+          "readable": true,
+          "writable": true
+        }
+      }
+    ],
+    "header": "common/time_settings.h",
+    "desc": "time settings",
+    "name": "time_settings_t",
+    "annotation": {
+      "model": true
+    },
+    "level": 1
+  },
+  {
+    "type": "class",
+    "methods": [
+      {
+        "params": [],
+        "annotation": {
+          "constructor": true
+        },
+        "desc": "创建change_password对象。",
+        "name": "change_password_create",
+        "return": {
+          "type": "change_password_t*",
+          "desc": "返回change_password对象。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "change_password_t*",
+            "name": "change_password",
+            "desc": "change_password对象。"
+          }
+        ],
+        "annotation": {
+          "destructor": true
+        },
+        "desc": "销毁change_password对象。",
+        "name": "change_password_destroy",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "change_password_t*",
+            "name": "change_password",
+            "desc": "change_password对象。"
+          }
+        ],
+        "annotation": {},
+        "desc": "检查change命令是否可以执行。",
+        "name": "change_password_can_change",
+        "return": {
+          "type": "bool_t",
+          "desc": "返回FALSE表示不能执行，否则表示可以执行。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "change_password_t*",
+            "name": "change_password",
+            "desc": "change_password对象。"
+          }
+        ],
+        "annotation": {
+          "command": true
+        },
+        "desc": "修改密码。",
+        "name": "change_password_change",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      }
+    ],
+    "events": [],
+    "properties": [
+      {
+        "name": "old_password",
+        "desc": "旧密码。",
+        "type": "str_t",
+        "annotation": {
+          "readable": true,
+          "writable": true
+        }
+      },
+      {
+        "name": "new_password",
+        "desc": "新密码。",
+        "type": "str_t",
+        "annotation": {
+          "readable": true,
+          "writable": true
+        }
+      },
+      {
+        "name": "confirm_password",
+        "desc": "确认密码。",
+        "type": "str_t",
+        "annotation": {
+          "readable": true,
+          "writable": true
+        }
+      }
+    ],
+    "header": "common/change_password.h",
+    "desc": "change current user password",
+    "name": "change_password_t",
+    "annotation": {
+      "model": true
+    },
+    "level": 1
+  },
+  {
+    "type": "class",
+    "methods": [
+      {
+        "params": [
+          {
+            "type": "navigator_request_t*",
+            "name": "req",
+            "desc": "req对象。"
+          }
+        ],
+        "annotation": {
+          "constructor": true
+        },
+        "desc": "创建user_info对象。",
+        "name": "user_info_create",
+        "return": {
+          "type": "user_info_t*",
+          "desc": "返回user_info对象。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "user_info_t*",
+            "name": "user_info",
+            "desc": "user_info对象。"
+          }
+        ],
+        "annotation": {
+          "destructor": true
+        },
+        "desc": "销毁user_info对象。",
+        "name": "user_info_destroy",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      }
+    ],
+    "events": [],
+    "properties": [
+      {
+        "name": "name",
+        "desc": "用户名。",
+        "type": "str_t",
+        "annotation": {
+          "readable": true
+        }
+      },
+      {
+        "name": "nick_name",
+        "desc": "昵称。",
+        "type": "str_t",
+        "annotation": {
+          "readable": true
+        }
+      },
+      {
+        "name": "password",
+        "desc": "密码。",
+        "type": "str_t",
+        "annotation": {
+          "readable": true
+        }
+      },
+      {
+        "name": "registered_time",
+        "desc": "注册时间。",
+        "type": "uint64_t",
+        "annotation": {
+          "readable": true
+        }
+      },
+      {
+        "name": "last_login_time",
+        "desc": "最后登录时间。",
+        "type": "uint64_t",
+        "annotation": {
+          "readable": true
+        }
+      }
+    ],
+    "header": "common/user_info.h",
+    "desc": "user_info",
+    "name": "user_info_t",
+    "annotation": {
+      "model": true
+    },
+    "level": 1
+  },
+  {
+    "type": "class",
+    "methods": [
+      {
+        "params": [
+          {
+            "type": "user_repository_t*",
+            "name": "repo",
+            "desc": "User持久化对象。"
+          }
+        ],
+        "annotation": {},
+        "desc": "创建User持久化对象。",
+        "name": "user_repository_mem_create",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      }
+    ],
+    "events": [],
+    "properties": [],
+    "header": "common/user_repository_mem.h",
+    "desc": "基于内存实现user_repository接口。",
+    "name": "user_repository_mem_t",
+    "level": 1
+  },
+  {
+    "type": "class",
+    "methods": [
+      {
+        "params": [
+          {
+            "type": "user_repository_t*",
+            "name": "repo",
+            "desc": "User持久化对象。"
+          }
+        ],
+        "annotation": {},
+        "desc": "保存数据。",
+        "name": "user_repository_save",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "user_repository_t*",
+            "name": "repo",
+            "desc": "User持久化对象。"
+          }
+        ],
+        "annotation": {},
+        "desc": "加载数据。",
+        "name": "user_repository_load",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "user_repository_t*",
+            "name": "repo",
+            "desc": "User持久化对象。"
+          },
+          {
+            "type": "const user_t*",
+            "name": "user",
+            "desc": "User对象。"
+          }
+        ],
+        "annotation": {},
+        "desc": "增加User对象。",
+        "name": "user_repository_add",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "user_repository_t*",
+            "name": "repo",
+            "desc": "User持久化对象。"
+          },
+          {
+            "type": "const user_t*",
+            "name": "user",
+            "desc": "User对象。"
+          }
+        ],
+        "annotation": {},
+        "desc": "更新User对象。",
+        "name": "user_repository_update",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "user_repository_t*",
+            "name": "repo",
+            "desc": "User持久化对象。"
+          },
+          {
+            "type": "tk_compare_t",
+            "name": "cmp",
+            "desc": "比较函数。"
+          },
+          {
+            "type": "void*",
+            "name": "ctx",
+            "desc": "比较函数的上下文。"
+          }
+        ],
+        "annotation": {},
+        "desc": "删除满足条件User对象。",
+        "name": "user_repository_remove",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "user_repository_t*",
+            "name": "repo",
+            "desc": "User持久化对象。"
+          },
+          {
+            "type": "tk_compare_t",
+            "name": "cmp",
+            "desc": "比较函数。"
+          },
+          {
+            "type": "void*",
+            "name": "ctx",
+            "desc": "比较函数的上下文。"
+          },
+          {
+            "type": "darray_t*",
+            "name": "users",
+            "desc": "返回满足条件的User对象接口。"
+          }
+        ],
+        "annotation": {},
+        "desc": "查找满足条件User对象。\n\n> 调用者需要调用darray_reset释放users数组。",
+        "name": "user_repository_find",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "user_repository_t*",
+            "name": "repo",
+            "desc": "User持久化对象。"
+          },
+          {
+            "type": "tk_compare_t",
+            "name": "cmp",
+            "desc": "比较函数。"
+          },
+          {
+            "type": "void*",
+            "name": "ctx",
+            "desc": "比较函数的上下文。"
+          }
+        ],
+        "annotation": {},
+        "desc": "查找第一个满足条件User对象。",
+        "name": "user_repository_find_one",
+        "return": {
+          "type": "user_t*",
+          "desc": "返回User对象。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "user_repository_t*",
+            "name": "repo",
+            "desc": "User持久化对象。"
+          },
+          {
+            "type": "const char*",
+            "name": "name",
+            "desc": "User名称。"
+          }
+        ],
+        "annotation": {},
+        "desc": "查找第一个满足条件User对象。",
+        "name": "user_repository_find_by_name",
+        "return": {
+          "type": "user_t*",
+          "desc": "返回User对象。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "user_repository_t*",
+            "name": "repo",
+            "desc": "User持久化对象。"
+          },
+          {
+            "type": "uint32_t",
+            "name": "type",
+            "desc": "事件类型。"
+          },
+          {
+            "type": "event_func_t",
+            "name": "on_event",
+            "desc": "事件处理函数。"
+          },
+          {
+            "type": "void*",
+            "name": "ctx",
+            "desc": "事件处理函数上下文。"
+          }
+        ],
+        "annotation": {},
+        "desc": "注册指定事件的处理函数。",
+        "name": "user_repository_on",
+        "return": {
+          "type": "uint32_t",
+          "desc": "返回id，用于user_repository_off。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "user_repository_t*",
+            "name": "repo",
+            "desc": "User持久化对象。"
+          },
+          {
+            "type": "uint32_t",
+            "name": "id",
+            "desc": "user_repository_on返回的ID。"
+          }
+        ],
+        "annotation": {},
+        "desc": "注销指定事件的处理函数。",
+        "name": "user_repository_off",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "user_repository_t*",
+            "name": "repo",
+            "desc": "User持久化对象。"
+          }
+        ],
+        "annotation": {},
+        "desc": "销毁User持久化对象。",
+        "name": "user_repository_destroy",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      }
+    ],
+    "events": [],
+    "properties": [],
+    "header": "common/user_repository.h",
+    "desc": "负责User的持久化和查询。",
+    "name": "user_repository_t",
+    "level": 1
+  },
+  {
+    "type": "class",
+    "methods": [
+      {
+        "params": [],
+        "annotation": {
+          "constructor": true
+        },
+        "desc": "创建user对象。",
+        "name": "user_create",
+        "return": {
+          "type": "user_t*",
+          "desc": "返回user对象。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "user_t*",
+            "name": "user",
+            "desc": "user对象。"
+          }
+        ],
+        "annotation": {
+          "destructor": true
+        },
+        "desc": "销毁user对象。",
+        "name": "user_destroy",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      }
+    ],
+    "events": [],
+    "properties": [
+      {
+        "name": "name",
+        "desc": "用户名。",
+        "type": "str_t",
+        "annotation": {
+          "readable": true,
+          "writable": true
+        }
+      },
+      {
+        "name": "nick_name",
+        "desc": "昵称。",
+        "type": "str_t",
+        "annotation": {
+          "readable": true,
+          "writable": true
+        }
+      },
+      {
+        "name": "password",
+        "desc": "密码。",
+        "type": "str_t",
+        "annotation": {
+          "readable": true,
+          "writable": true
+        }
+      },
+      {
+        "name": "registered_time",
+        "desc": "注册时间。",
+        "type": "uint64_t",
+        "annotation": {
+          "readable": true,
+          "writable": true
+        }
+      },
+      {
+        "name": "last_login_time",
+        "desc": "最后登录时间。",
+        "type": "uint64_t",
+        "annotation": {
+          "readable": true,
+          "writable": true
+        }
+      }
+    ],
+    "header": "common/user.h",
+    "desc": "user info",
+    "name": "user_t",
+    "annotation": {
+      "model": true
+    },
+    "level": 1
+  },
+  {
+    "type": "class",
+    "methods": [
+      {
+        "params": [],
+        "annotation": {
+          "constructor": true
+        },
+        "desc": "创建users对象。",
+        "name": "users_create",
+        "return": {
+          "type": "users_t*",
+          "desc": "返回users对象。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "users_t*",
+            "name": "users",
+            "desc": "users对象。"
+          }
+        ],
+        "annotation": {
+          "destructor": true
+        },
+        "desc": "销毁users对象。",
+        "name": "users_destroy",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "users_t*",
+            "name": "users",
+            "desc": "users对象。"
+          }
+        ],
+        "annotation": {
+          "command": true
+        },
+        "desc": "清除全部数据。",
+        "name": "users_clear",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "users_t*",
+            "name": "users",
+            "desc": "users对象。"
+          },
+          {
+            "type": "uint32_t",
+            "name": "index",
+            "desc": "序数。"
+          }
+        ],
+        "annotation": {
+          "command": true
+        },
+        "desc": "显示指定序数用户的详细信息。",
+        "name": "users_detail",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "users_t*",
+            "name": "users",
+            "desc": "users对象。"
+          },
+          {
+            "type": "uint32_t",
+            "name": "index",
+            "desc": "序数。"
+          }
+        ],
+        "annotation": {
+          "command": true
+        },
+        "desc": "删除指定序数的用户。",
+        "name": "users_remove",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "users_t*",
+            "name": "users",
+            "desc": "users对象。"
+          }
+        ],
+        "annotation": {},
+        "desc": "获取用户数。",
+        "name": "users_get_items",
+        "return": {
+          "type": "uint32_t",
+          "desc": "返回用户数。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "users_t*",
+            "name": "users",
+            "desc": "users对象。"
+          },
+          {
+            "type": "uint32_t",
+            "name": "index",
+            "desc": "序数。"
+          }
+        ],
+        "annotation": {},
+        "desc": "获取指定序数的用户。",
+        "name": "users_get",
+        "return": {
+          "type": "user_t*",
+          "desc": "返回user对象。"
+        }
+      }
+    ],
+    "events": [],
+    "properties": [
+      {
+        "name": "filter",
+        "desc": "过滤规则。",
+        "type": "str_t",
+        "annotation": {
+          "readable": true,
+          "writable": true
+        }
+      },
+      {
+        "name": "ascending",
+        "desc": "按升序排列。",
+        "type": "bool_t",
+        "annotation": {
+          "readable": true,
+          "writable": true
+        }
+      },
+      {
+        "name": "items",
+        "desc": "用户数。",
+        "type": "uint32_t",
+        "annotation": {
+          "fake": true,
+          "readable": true
+        }
+      }
+    ],
+    "header": "common/users.h",
+    "desc": "用户管理。",
+    "name": "users_t",
+    "parent": "emitter_t",
+    "annotation": {
+      "collection": "user",
+      "model": true
+    },
+    "level": 2
+  }
+]
