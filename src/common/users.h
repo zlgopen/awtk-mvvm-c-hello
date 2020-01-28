@@ -41,7 +41,6 @@ typedef struct _users_t {
    * 用户数。
    */
 
-  /*model object*/
   darray_t users;
   uint32_t event_id;
   uint32_t reload_id;
