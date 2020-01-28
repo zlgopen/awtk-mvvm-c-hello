@@ -1185,6 +1185,52 @@
             "desc": "users对象。"
           },
           {
+            "type": "const char*",
+            "name": "filter",
+            "desc": "过滤规则。"
+          }
+        ],
+        "annotation": {
+          "command": true
+        },
+        "desc": "设置过滤规则。",
+        "name": "users_set_filter",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "users_t*",
+            "name": "users",
+            "desc": "users对象。"
+          },
+          {
+            "type": "bool_t",
+            "name": "ascending",
+            "desc": "是否为升序。"
+          }
+        ],
+        "annotation": {
+          "command": true
+        },
+        "desc": "设置为升序。",
+        "name": "users_set_ascending",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "users_t*",
+            "name": "users",
+            "desc": "users对象。"
+          },
+          {
             "type": "uint32_t",
             "name": "index",
             "desc": "序数。"

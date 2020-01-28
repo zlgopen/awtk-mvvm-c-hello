@@ -27,7 +27,7 @@ static ret_t user_repository_mem_save(user_repository_t* repo) {
 
 static ret_t user_repository_mem_gen(user_repository_t* repo) {
   uint32_t i = 0;
-  uint32_t nr = 5000;
+  uint32_t nr = 500;
   user_repository_mem_t* r = USER_REPOSITORY_MEM(repo);
   user_t* admin = user_create();
   user_t* awtk = user_create();

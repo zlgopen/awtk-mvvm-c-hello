@@ -143,3 +143,21 @@ users_t* users_create(void) {
 
   return users;
 }
+
+ret_t users_set_filter(users_t* users, const char* filter) {
+  return_value_if_fail(users != NULL, RET_BAD_PARAMS);
+
+  str_set(&(users->filter), filter);
+  users_reload(users);
+
+  return RET_OK;
+}
+
+ret_t users_set_ascending(users_t* users, bool_t ascending) {
+  return_value_if_fail(users != NULL, RET_BAD_PARAMS);
+
+  users->ascending = ascending;
+  users_reload(users);
+
+  return RET_OK;
+}

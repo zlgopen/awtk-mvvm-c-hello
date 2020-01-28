@@ -19,7 +19,7 @@ BEGIN_C_DECLS
  *
  */
 typedef struct _users_t {
-  emitter_t* emitter;
+  emitter_t emitter;
 
   /**
    * @property {str_t} filter
@@ -123,6 +123,30 @@ bool_t users_can_remove(users_t* users, uint32_t index);
  * @return {uint32_t} 返回用户数。
  */
 uint32_t users_get_items(users_t* users);
+
+/**
+ * @method users_set_filter
+ * 设置过滤规则。
+ *
+ * @annotation ["command"]
+ * @param {users_t*} users users对象。
+ * @param {const char*} filter 过滤规则。
+ *
+ * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
+ */
+ret_t users_set_filter(users_t* users, const char* filter);
+
+/**
+ * @method users_set_ascending
+ * 设置为升序。
+ *
+ * @annotation ["command"]
+ * @param {users_t*} users users对象。
+ * @param {bool_t} ascending 是否为升序。
+ *
+ * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
+ */
+ret_t users_set_ascending(users_t* users, bool_t ascending);
 
 /**
  * @method users_get

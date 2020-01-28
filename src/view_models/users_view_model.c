@@ -27,11 +27,11 @@ static ret_t users_view_model_set_prop(object_t* obj, const char* name, const va
   }
 
   if (tk_str_eq("filter", name)) {
-    str_set(&(users->filter), value_str(v));
+    users_set_filter(users, value_str(v));
 
     return RET_OK;
   } else if (tk_str_eq("ascending", name)) {
-    users->ascending = value_bool(v);
+    users_set_ascending(users, value_bool(v));
 
     return RET_OK;
   } else if (tk_str_eq("items", name)) {
@@ -84,6 +84,12 @@ static bool_t users_view_model_can_exec(object_t* obj, const char* name, const c
 
   } else if (tk_str_eq("remove", name)) {
     return users_can_remove(users, tk_atoi(args));
+
+  } else if (tk_str_eq("set_filter", name)) {
+    return TRUE;
+
+  } else if (tk_str_eq("set_ascending", name)) {
+    return TRUE;
   }
 
   view_model = users_view_model_attach(obj, index);
@@ -105,6 +111,12 @@ static ret_t users_view_model_exec(object_t* obj, const char* name, const char* 
 
   } else if (tk_str_eq("remove", name)) {
     return users_remove(users, tk_atoi(args));
+
+  } else if (tk_str_eq("set_filter", name)) {
+    return users_set_filter(users, args);
+
+  } else if (tk_str_eq("set_ascending", name)) {
+    return users_set_ascending(users, tk_atob(args));
   }
 
   view_model = users_view_model_attach(obj, index);
@@ -116,6 +128,7 @@ static ret_t users_view_model_on_destroy(object_t* obj) {
   users_view_model_t* vm = (users_view_model_t*)(obj);
   return_value_if_fail(vm != NULL, RET_BAD_PARAMS);
 
+  emitter_off_by_ctx(EMITTER(vm->users), vm);
   user_view_model_attach(vm->user_view_model, NULL);
   OBJECT_UNREF(vm->user_view_model);
   users_destroy(vm->users);
@@ -144,6 +157,9 @@ view_model_t* users_view_model_create_with(users_t* users) {
 
   users_view_model->users = users;
   ENSURE(users_view_model->users != NULL);
+
+  emitter_on(EMITTER(users), EVT_PROPS_CHANGED, emitter_forward, vm);
+  emitter_on(EMITTER(users), EVT_ITEMS_CHANGED, emitter_forward, vm);
 
   return vm;
 }
