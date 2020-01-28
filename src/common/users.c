@@ -68,6 +68,12 @@ ret_t users_detail(users_t* users, uint32_t index) {
   return RET_OK;
 }
 
+bool_t users_can_remove(users_t* users, uint32_t index) {
+  user_t* user = users_get(users, index);
+
+  return !tk_str_eq(user->name.str, "admin");
+}
+
 ret_t users_remove(users_t* users, uint32_t index) {
   user_t* user = users_get(users, index);
   user_repository_t* r = app_globals_get_user_repository();
@@ -117,21 +123,8 @@ ret_t users_destroy(users_t* users) {
   return RET_OK;
 }
 
-ret_t users_reload_async(const idle_info_t* info) {
-  users_t* users = (users_t*)(info->ctx);
-  users->reload_id = TK_INVALID_ID;
-
-  users_reload(users);
-
-  return RET_REMOVE;
-}
-
 static ret_t users_on_repository_changed(void* ctx, event_t* e) {
-  users_t* users = (users_t*)(ctx);
-
-  if (users->reload_id == TK_INVALID_ID) {
-    idle_queue(users_reload_async, ctx);
-  }
+  users_reload((users_t*)(ctx));
 
   return RET_OK;
 }

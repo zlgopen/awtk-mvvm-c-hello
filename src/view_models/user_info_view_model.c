@@ -10,57 +10,48 @@ static ret_t user_info_view_model_set_prop(object_t* obj, const char* name, cons
   user_info_t* user_info = ((user_info_view_model_t*)(obj))->user_info;
 
   if (tk_str_eq("name", name)) {
-     
-     return RET_OK;
+    return RET_OK;
   } else if (tk_str_eq("nick_name", name)) {
-     
-     return RET_OK;
+    return RET_OK;
   } else if (tk_str_eq("password", name)) {
-     
-     return RET_OK;
+    return RET_OK;
   } else if (tk_str_eq("registered_time", name)) {
-     
-     return RET_OK;
+    return RET_OK;
   } else if (tk_str_eq("last_login_time", name)) {
-     
-     return RET_OK;
+    return RET_OK;
   }
-  
+
   return RET_NOT_FOUND;
 }
-
 
 static ret_t user_info_view_model_get_prop(object_t* obj, const char* name, value_t* v) {
   user_info_t* user_info = ((user_info_view_model_t*)(obj))->user_info;
 
   if (tk_str_eq("name", name)) {
-     value_set_str(v, user_info->name.str);
-     return RET_OK;
+    value_set_str(v, user_info->name.str);
+    return RET_OK;
   } else if (tk_str_eq("nick_name", name)) {
-     value_set_str(v, user_info->nick_name.str);
-     return RET_OK;
+    value_set_str(v, user_info->nick_name.str);
+    return RET_OK;
   } else if (tk_str_eq("password", name)) {
-     value_set_str(v, user_info->password.str);
-     return RET_OK;
+    value_set_str(v, user_info->password.str);
+    return RET_OK;
   } else if (tk_str_eq("registered_time", name)) {
-     value_set_uint64(v, user_info->registered_time);
-     return RET_OK;
+    value_set_uint64(v, user_info->registered_time);
+    return RET_OK;
   } else if (tk_str_eq("last_login_time", name)) {
-     value_set_uint64(v, user_info->last_login_time);
-     return RET_OK;
+    value_set_uint64(v, user_info->last_login_time);
+    return RET_OK;
   }
 
   return RET_NOT_FOUND;
 }
 
-
 static bool_t user_info_view_model_can_exec(object_t* obj, const char* name, const char* args) {
-
   return FALSE;
 }
 
 static ret_t user_info_view_model_exec(object_t* obj, const char* name, const char* args) {
-
   return RET_NOT_FOUND;
 }
 
@@ -74,15 +65,14 @@ static ret_t user_info_view_model_on_destroy(object_t* obj) {
 }
 
 static const object_vtable_t s_user_info_view_model_vtable = {
-  .type = "user_info_view_model_t",
-  .desc = "user_info_view_model_t",
-  .size = sizeof(user_info_view_model_t),
-  .exec = user_info_view_model_exec,
-  .can_exec = user_info_view_model_can_exec,
-  .get_prop = user_info_view_model_get_prop,
-  .set_prop = user_info_view_model_set_prop,
-  .on_destroy = user_info_view_model_on_destroy
-};
+    .type = "user_info_view_model_t",
+    .desc = "user_info_view_model_t",
+    .size = sizeof(user_info_view_model_t),
+    .exec = user_info_view_model_exec,
+    .can_exec = user_info_view_model_can_exec,
+    .get_prop = user_info_view_model_get_prop,
+    .set_prop = user_info_view_model_set_prop,
+    .on_destroy = user_info_view_model_on_destroy};
 
 view_model_t* user_info_view_model_create_with(user_info_t* user_info) {
   object_t* obj = object_create(&s_user_info_view_model_vtable);

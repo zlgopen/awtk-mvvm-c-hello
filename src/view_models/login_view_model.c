@@ -10,36 +10,33 @@ static ret_t login_view_model_set_prop(object_t* obj, const char* name, const va
   login_t* login = ((login_view_model_t*)(obj))->login;
 
   if (tk_str_eq("name", name)) {
-     str_set(&(login->name), value_str(v));
+    str_set(&(login->name), value_str(v));
 
-     return RET_OK;
+    return RET_OK;
   } else if (tk_str_eq("password", name)) {
-     str_set(&(login->password), value_str(v));
+    str_set(&(login->password), value_str(v));
 
-     return RET_OK;
+    return RET_OK;
   }
-  
+
   return RET_NOT_FOUND;
 }
-
 
 static ret_t login_view_model_get_prop(object_t* obj, const char* name, value_t* v) {
   login_t* login = ((login_view_model_t*)(obj))->login;
 
   if (tk_str_eq("name", name)) {
-     value_set_str(v, login->name.str);
-     return RET_OK;
+    value_set_str(v, login->name.str);
+    return RET_OK;
   } else if (tk_str_eq("password", name)) {
-     value_set_str(v, login->password.str);
-     return RET_OK;
+    value_set_str(v, login->password.str);
+    return RET_OK;
   }
 
   return RET_NOT_FOUND;
 }
 
-
 static bool_t login_view_model_can_exec(object_t* obj, const char* name, const char* args) {
- 
   login_view_model_t* vm = (login_view_model_t*)(obj);
   login_t* login = vm->login;
   if (tk_str_eq("auth", name)) {
@@ -49,7 +46,6 @@ static bool_t login_view_model_can_exec(object_t* obj, const char* name, const c
 }
 
 static ret_t login_view_model_exec(object_t* obj, const char* name, const char* args) {
- 
   login_view_model_t* vm = (login_view_model_t*)(obj);
   login_t* login = vm->login;
   if (tk_str_eq("auth", name)) {
@@ -68,15 +64,14 @@ static ret_t login_view_model_on_destroy(object_t* obj) {
 }
 
 static const object_vtable_t s_login_view_model_vtable = {
-  .type = "login_view_model_t",
-  .desc = "login_view_model_t",
-  .size = sizeof(login_view_model_t),
-  .exec = login_view_model_exec,
-  .can_exec = login_view_model_can_exec,
-  .get_prop = login_view_model_get_prop,
-  .set_prop = login_view_model_set_prop,
-  .on_destroy = login_view_model_on_destroy
-};
+    .type = "login_view_model_t",
+    .desc = "login_view_model_t",
+    .size = sizeof(login_view_model_t),
+    .exec = login_view_model_exec,
+    .can_exec = login_view_model_can_exec,
+    .get_prop = login_view_model_get_prop,
+    .set_prop = login_view_model_set_prop,
+    .on_destroy = login_view_model_on_destroy};
 
 view_model_t* login_view_model_create_with(login_t* login) {
   object_t* obj = object_create(&s_login_view_model_vtable);

@@ -21,22 +21,21 @@ static ret_t users_view_model_set_prop(object_t* obj, const char* name, const va
   uint32_t index = 0;
   view_model_t* view_model = VIEW_MODEL(obj);
   users_t* users = ((users_view_model_t*)(obj))->users;
-  
-  if(view_model_array_default_set_prop(view_model, name, v) == RET_OK) {
+
+  if (view_model_array_default_set_prop(view_model, name, v) == RET_OK) {
     return RET_OK;
   }
 
   if (tk_str_eq("filter", name)) {
-     str_set(&(users->filter), value_str(v));
+    str_set(&(users->filter), value_str(v));
 
-     return RET_OK;
+    return RET_OK;
   } else if (tk_str_eq("ascending", name)) {
-     users->ascending = value_bool(v);
+    users->ascending = value_bool(v);
 
-     return RET_OK;
+    return RET_OK;
   } else if (tk_str_eq("items", name)) {
-     
-     return RET_OK;
+    return RET_OK;
   }
 
   name = destruct_array_prop_name(name, &index);
@@ -49,20 +48,20 @@ static ret_t users_view_model_get_prop(object_t* obj, const char* name, value_t*
   uint32_t index = 0;
   view_model_t* view_model = VIEW_MODEL(obj);
   users_t* users = ((users_view_model_t*)(obj))->users;
-  
-  if(view_model_array_default_get_prop(view_model, name, v) == RET_OK) {
+
+  if (view_model_array_default_get_prop(view_model, name, v) == RET_OK) {
     return RET_OK;
   }
 
   if (tk_str_eq("filter", name)) {
-     value_set_str(v, users->filter.str);
-     return RET_OK;
+    value_set_str(v, users->filter.str);
+    return RET_OK;
   } else if (tk_str_eq("ascending", name)) {
-     value_set_bool(v, users->ascending);
-     return RET_OK;
+    value_set_bool(v, users->ascending);
+    return RET_OK;
   } else if (tk_str_eq("items", name)) {
-     value_set_uint32(v, users_get_items(users));
-     return RET_OK;
+    value_set_uint32(v, users_get_items(users));
+    return RET_OK;
   }
 
   name = destruct_array_prop_name(name, &index);
@@ -71,12 +70,10 @@ static ret_t users_view_model_get_prop(object_t* obj, const char* name, value_t*
   return view_model_get_prop(view_model, name, v);
 }
 
-
 static bool_t users_view_model_can_exec(object_t* obj, const char* name, const char* args) {
   uint32_t index = tk_atoi(args);
   view_model_t* view_model = VIEW_MODEL(obj);
 
- 
   users_view_model_t* vm = (users_view_model_t*)(obj);
   users_t* users = vm->users;
   if (tk_str_eq("clear", name)) {
@@ -86,9 +83,9 @@ static bool_t users_view_model_can_exec(object_t* obj, const char* name, const c
     return TRUE;
 
   } else if (tk_str_eq("remove", name)) {
-    return TRUE;
+    return users_can_remove(users, tk_atoi(args));
   }
-  
+
   view_model = users_view_model_attach(obj, index);
 
   return view_model_can_exec(view_model, name, NULL);
@@ -98,7 +95,6 @@ static ret_t users_view_model_exec(object_t* obj, const char* name, const char* 
   uint32_t index = tk_atoi(args);
   view_model_t* view_model = VIEW_MODEL(obj);
 
- 
   users_view_model_t* vm = (users_view_model_t*)(obj);
   users_t* users = vm->users;
   if (tk_str_eq("clear", name)) {
@@ -128,22 +124,21 @@ static ret_t users_view_model_on_destroy(object_t* obj) {
 }
 
 static const object_vtable_t s_users_view_model_vtable = {
-  .type = "users_view_model_t",
-  .desc = "users_view_model_t",
-  .is_collection = TRUE,
-  .size = sizeof(users_view_model_t),
-  .exec = users_view_model_exec,
-  .can_exec = users_view_model_can_exec,
-  .get_prop = users_view_model_get_prop,
-  .set_prop = users_view_model_set_prop,
-  .on_destroy = users_view_model_on_destroy
-};
+    .type = "users_view_model_t",
+    .desc = "users_view_model_t",
+    .is_collection = TRUE,
+    .size = sizeof(users_view_model_t),
+    .exec = users_view_model_exec,
+    .can_exec = users_view_model_can_exec,
+    .get_prop = users_view_model_get_prop,
+    .set_prop = users_view_model_set_prop,
+    .on_destroy = users_view_model_on_destroy};
 
 view_model_t* users_view_model_create_with(users_t* users) {
   object_t* obj = object_create(&s_users_view_model_vtable);
   view_model_t* vm = view_model_array_init(VIEW_MODEL(obj));
   users_view_model_t* users_view_model = (users_view_model_t*)(vm);
-  
+
   users_view_model->user_view_model = user_view_model_create_with(NULL);
   return_value_if_fail(vm != NULL, NULL);
 

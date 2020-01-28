@@ -10,64 +10,61 @@ static ret_t time_settings_view_model_set_prop(object_t* obj, const char* name, 
   time_settings_t* time_settings = ((time_settings_view_model_t*)(obj))->time_settings;
 
   if (tk_str_eq("year", name)) {
-     time_settings->year = value_uint32(v);
+    time_settings->year = value_uint32(v);
 
-     return RET_OK;
+    return RET_OK;
   } else if (tk_str_eq("month", name)) {
-     time_settings->month = value_uint32(v);
+    time_settings->month = value_uint32(v);
 
-     return RET_OK;
+    return RET_OK;
   } else if (tk_str_eq("day", name)) {
-     time_settings->day = value_uint32(v);
+    time_settings->day = value_uint32(v);
 
-     return RET_OK;
+    return RET_OK;
   } else if (tk_str_eq("hour", name)) {
-     time_settings->hour = value_uint32(v);
+    time_settings->hour = value_uint32(v);
 
-     return RET_OK;
+    return RET_OK;
   } else if (tk_str_eq("minute", name)) {
-     time_settings->minute = value_uint32(v);
+    time_settings->minute = value_uint32(v);
 
-     return RET_OK;
+    return RET_OK;
   } else if (tk_str_eq("second", name)) {
-     time_settings->second = value_uint32(v);
+    time_settings->second = value_uint32(v);
 
-     return RET_OK;
+    return RET_OK;
   }
-  
+
   return RET_NOT_FOUND;
 }
-
 
 static ret_t time_settings_view_model_get_prop(object_t* obj, const char* name, value_t* v) {
   time_settings_t* time_settings = ((time_settings_view_model_t*)(obj))->time_settings;
 
   if (tk_str_eq("year", name)) {
-     value_set_uint32(v, time_settings->year);
-     return RET_OK;
+    value_set_uint32(v, time_settings->year);
+    return RET_OK;
   } else if (tk_str_eq("month", name)) {
-     value_set_uint32(v, time_settings->month);
-     return RET_OK;
+    value_set_uint32(v, time_settings->month);
+    return RET_OK;
   } else if (tk_str_eq("day", name)) {
-     value_set_uint32(v, time_settings->day);
-     return RET_OK;
+    value_set_uint32(v, time_settings->day);
+    return RET_OK;
   } else if (tk_str_eq("hour", name)) {
-     value_set_uint32(v, time_settings->hour);
-     return RET_OK;
+    value_set_uint32(v, time_settings->hour);
+    return RET_OK;
   } else if (tk_str_eq("minute", name)) {
-     value_set_uint32(v, time_settings->minute);
-     return RET_OK;
+    value_set_uint32(v, time_settings->minute);
+    return RET_OK;
   } else if (tk_str_eq("second", name)) {
-     value_set_uint32(v, time_settings->second);
-     return RET_OK;
+    value_set_uint32(v, time_settings->second);
+    return RET_OK;
   }
 
   return RET_NOT_FOUND;
 }
 
-
 static bool_t time_settings_view_model_can_exec(object_t* obj, const char* name, const char* args) {
- 
   time_settings_view_model_t* vm = (time_settings_view_model_t*)(obj);
   time_settings_t* time_settings = vm->time_settings;
   if (tk_str_eq("apply", name)) {
@@ -77,7 +74,6 @@ static bool_t time_settings_view_model_can_exec(object_t* obj, const char* name,
 }
 
 static ret_t time_settings_view_model_exec(object_t* obj, const char* name, const char* args) {
- 
   time_settings_view_model_t* vm = (time_settings_view_model_t*)(obj);
   time_settings_t* time_settings = vm->time_settings;
   if (tk_str_eq("apply", name)) {
@@ -96,15 +92,14 @@ static ret_t time_settings_view_model_on_destroy(object_t* obj) {
 }
 
 static const object_vtable_t s_time_settings_view_model_vtable = {
-  .type = "time_settings_view_model_t",
-  .desc = "time_settings_view_model_t",
-  .size = sizeof(time_settings_view_model_t),
-  .exec = time_settings_view_model_exec,
-  .can_exec = time_settings_view_model_can_exec,
-  .get_prop = time_settings_view_model_get_prop,
-  .set_prop = time_settings_view_model_set_prop,
-  .on_destroy = time_settings_view_model_on_destroy
-};
+    .type = "time_settings_view_model_t",
+    .desc = "time_settings_view_model_t",
+    .size = sizeof(time_settings_view_model_t),
+    .exec = time_settings_view_model_exec,
+    .can_exec = time_settings_view_model_can_exec,
+    .get_prop = time_settings_view_model_get_prop,
+    .set_prop = time_settings_view_model_set_prop,
+    .on_destroy = time_settings_view_model_on_destroy};
 
 view_model_t* time_settings_view_model_create_with(time_settings_t* time_settings) {
   object_t* obj = object_create(&s_time_settings_view_model_vtable);

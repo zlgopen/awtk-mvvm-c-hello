@@ -34,7 +34,7 @@ typedef struct _users_t {
    * 按升序排列。
    */
   bool_t ascending;
-  
+
   /**
    * @property {uint32_t} items
    * @annotation ["fake", "readable"]
@@ -102,6 +102,17 @@ ret_t users_detail(users_t* users, uint32_t index);
  * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
  */
 ret_t users_remove(users_t* users, uint32_t index);
+
+/**
+ * @method users_can_remove
+ * 检查auth命令是否可以执行。
+ *
+ * @param {users_t*} users users对象。
+ * @param {uint32_t} index 序数。
+ *
+ * @return {bool_t} 返回FALSE表示不能执行，否则表示可以执行。
+ */
+bool_t users_can_remove(users_t* users, uint32_t index);
 
 /**
  * @method users_get_items
