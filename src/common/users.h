@@ -43,7 +43,6 @@ typedef struct _users_t {
 
   darray_t users;
   uint32_t event_id;
-  uint32_t reload_id;
 } users_t;
 
 /**
@@ -104,7 +103,7 @@ ret_t users_remove(users_t* users, uint32_t index);
 
 /**
  * @method users_can_remove
- * 检查auth命令是否可以执行。
+ * 检查remove命令是否可以执行。
  *
  * @param {users_t*} users users对象。
  * @param {uint32_t} index 序数。
