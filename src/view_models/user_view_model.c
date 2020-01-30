@@ -7,26 +7,26 @@
 #include "user_view_model.h"
 
 static ret_t user_view_model_set_prop(object_t* obj, const char* name, const value_t* v) {
-  user_t* user = ((user_view_model_t*)(obj))->user;
+  user_t* auser = ((user_view_model_t*)(obj))->auser;
 
-  if (tk_str_eq("name", name)) {
-    str_set(&(user->name), value_str(v));
-
-    return RET_OK;
-  } else if (tk_str_eq("nick_name", name)) {
-    str_set(&(user->nick_name), value_str(v));
+  if (tk_str_ieq("name", name)) {
+    str_set(&(auser->name), value_str(v));
 
     return RET_OK;
-  } else if (tk_str_eq("password", name)) {
-    str_set(&(user->password), value_str(v));
+  } else if (tk_str_ieq("nick_name", name)) {
+    str_set(&(auser->nick_name), value_str(v));
 
     return RET_OK;
-  } else if (tk_str_eq("registered_time", name)) {
-    user->registered_time = value_uint64(v);
+  } else if (tk_str_ieq("password", name)) {
+    str_set(&(auser->password), value_str(v));
 
     return RET_OK;
-  } else if (tk_str_eq("last_login_time", name)) {
-    user->last_login_time = value_uint64(v);
+  } else if (tk_str_ieq("registered_time", name)) {
+    auser->registered_time = value_uint64(v);
+
+    return RET_OK;
+  } else if (tk_str_ieq("last_login_time", name)) {
+    auser->last_login_time = value_uint64(v);
 
     return RET_OK;
   }
@@ -35,22 +35,22 @@ static ret_t user_view_model_set_prop(object_t* obj, const char* name, const val
 }
 
 static ret_t user_view_model_get_prop(object_t* obj, const char* name, value_t* v) {
-  user_t* user = ((user_view_model_t*)(obj))->user;
+  user_t* auser = ((user_view_model_t*)(obj))->auser;
 
-  if (tk_str_eq("name", name)) {
-    value_set_str(v, user->name.str);
+  if (tk_str_ieq("name", name)) {
+    value_set_str(v, auser->name.str);
     return RET_OK;
-  } else if (tk_str_eq("nick_name", name)) {
-    value_set_str(v, user->nick_name.str);
+  } else if (tk_str_ieq("nick_name", name)) {
+    value_set_str(v, auser->nick_name.str);
     return RET_OK;
-  } else if (tk_str_eq("password", name)) {
-    value_set_str(v, user->password.str);
+  } else if (tk_str_ieq("password", name)) {
+    value_set_str(v, auser->password.str);
     return RET_OK;
-  } else if (tk_str_eq("registered_time", name)) {
-    value_set_uint64(v, user->registered_time);
+  } else if (tk_str_ieq("registered_time", name)) {
+    value_set_uint64(v, auser->registered_time);
     return RET_OK;
-  } else if (tk_str_eq("last_login_time", name)) {
-    value_set_uint64(v, user->last_login_time);
+  } else if (tk_str_ieq("last_login_time", name)) {
+    value_set_uint64(v, auser->last_login_time);
     return RET_OK;
   }
 
@@ -69,7 +69,7 @@ static ret_t user_view_model_on_destroy(object_t* obj) {
   user_view_model_t* vm = (user_view_model_t*)(obj);
   return_value_if_fail(vm != NULL, RET_BAD_PARAMS);
 
-  user_destroy(vm->user);
+  user_destroy(vm->auser);
 
   return view_model_deinit(VIEW_MODEL(obj));
 }
@@ -83,30 +83,30 @@ static const object_vtable_t s_user_view_model_vtable = {.type = "user_view_mode
                                                          .set_prop = user_view_model_set_prop,
                                                          .on_destroy = user_view_model_on_destroy};
 
-view_model_t* user_view_model_create_with(user_t* user) {
+view_model_t* user_view_model_create_with(user_t* auser) {
   object_t* obj = object_create(&s_user_view_model_vtable);
   view_model_t* vm = view_model_init(VIEW_MODEL(obj));
   user_view_model_t* user_view_model = (user_view_model_t*)(vm);
 
   return_value_if_fail(vm != NULL, NULL);
 
-  user_view_model->user = user;
+  user_view_model->auser = auser;
 
   return vm;
 }
 
-ret_t user_view_model_attach(view_model_t* vm, user_t* user) {
+ret_t user_view_model_attach(view_model_t* vm, user_t* auser) {
   user_view_model_t* user_view_model = (user_view_model_t*)(vm);
   return_value_if_fail(vm != NULL, RET_BAD_PARAMS);
 
-  user_view_model->user = user;
+  user_view_model->auser = auser;
 
   return RET_OK;
 }
 
 view_model_t* user_view_model_create(navigator_request_t* req) {
-  user_t* user = user_create();
-  return_value_if_fail(user != NULL, NULL);
+  user_t* auser = user_create();
+  return_value_if_fail(auser != NULL, NULL);
 
-  return user_view_model_create_with(user);
+  return user_view_model_create_with(auser);
 }

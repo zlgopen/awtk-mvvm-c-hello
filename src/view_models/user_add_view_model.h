@@ -18,7 +18,7 @@ typedef struct _user_add_view_model_t {
   view_model_t view_model;
 
   /*model object*/
-  user_add_t* user_add;
+  user_add_t* auser_add;
 } user_add_view_model_t;
 
 /**
@@ -37,11 +37,11 @@ view_model_t* user_add_view_model_create(navigator_request_t* req);
  * 创建user_add view model对象。
  *
  * @annotation ["constructor"]
- * @param {user_add_t*}  user_add user_add对象。
+ * @param {user_add_t*}  auser_add user_add对象。
  *
  * @return {view_model_t} 返回view_model_t对象。
  */
-view_model_t* user_add_view_model_create_with(user_add_t* user_add);
+view_model_t* user_add_view_model_create_with(user_add_t* auser_add);
 
 /**
  * @method user_add_view_model_attach
@@ -52,7 +52,7 @@ view_model_t* user_add_view_model_create_with(user_add_t* user_add);
  *
  * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
  */
-ret_t user_add_view_model_attach(view_model_t* vm, user_add_t* user_add);
+ret_t user_add_view_model_attach(view_model_t* vm, user_add_t* auser_add);
 
 END_C_DECLS
 

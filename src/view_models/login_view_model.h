@@ -18,7 +18,7 @@ typedef struct _login_view_model_t {
   view_model_t view_model;
 
   /*model object*/
-  login_t* login;
+  login_t* alogin;
 } login_view_model_t;
 
 /**
@@ -37,11 +37,11 @@ view_model_t* login_view_model_create(navigator_request_t* req);
  * 创建login view model对象。
  *
  * @annotation ["constructor"]
- * @param {login_t*}  login login对象。
+ * @param {login_t*}  alogin login对象。
  *
  * @return {view_model_t} 返回view_model_t对象。
  */
-view_model_t* login_view_model_create_with(login_t* login);
+view_model_t* login_view_model_create_with(login_t* alogin);
 
 /**
  * @method login_view_model_attach
@@ -52,7 +52,7 @@ view_model_t* login_view_model_create_with(login_t* login);
  *
  * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
  */
-ret_t login_view_model_attach(view_model_t* vm, login_t* login);
+ret_t login_view_model_attach(view_model_t* vm, login_t* alogin);
 
 END_C_DECLS
 

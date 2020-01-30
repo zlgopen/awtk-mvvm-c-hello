@@ -18,7 +18,7 @@ typedef struct _time_settings_view_model_t {
   view_model_t view_model;
 
   /*model object*/
-  time_settings_t* time_settings;
+  time_settings_t* atime_settings;
 } time_settings_view_model_t;
 
 /**
@@ -37,11 +37,11 @@ view_model_t* time_settings_view_model_create(navigator_request_t* req);
  * 创建time_settings view model对象。
  *
  * @annotation ["constructor"]
- * @param {time_settings_t*}  time_settings time_settings对象。
+ * @param {time_settings_t*}  atime_settings time_settings对象。
  *
  * @return {view_model_t} 返回view_model_t对象。
  */
-view_model_t* time_settings_view_model_create_with(time_settings_t* time_settings);
+view_model_t* time_settings_view_model_create_with(time_settings_t* atime_settings);
 
 /**
  * @method time_settings_view_model_attach
@@ -52,7 +52,7 @@ view_model_t* time_settings_view_model_create_with(time_settings_t* time_setting
  *
  * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
  */
-ret_t time_settings_view_model_attach(view_model_t* vm, time_settings_t* time_settings);
+ret_t time_settings_view_model_attach(view_model_t* vm, time_settings_t* atime_settings);
 
 END_C_DECLS
 

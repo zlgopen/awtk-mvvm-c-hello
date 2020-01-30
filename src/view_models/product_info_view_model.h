@@ -18,7 +18,7 @@ typedef struct _product_info_view_model_t {
   view_model_t view_model;
 
   /*model object*/
-  product_info_t* product_info;
+  product_info_t* aproduct_info;
 } product_info_view_model_t;
 
 /**
@@ -37,11 +37,11 @@ view_model_t* product_info_view_model_create(navigator_request_t* req);
  * 创建product_info view model对象。
  *
  * @annotation ["constructor"]
- * @param {product_info_t*}  product_info product_info对象。
+ * @param {product_info_t*}  aproduct_info product_info对象。
  *
  * @return {view_model_t} 返回view_model_t对象。
  */
-view_model_t* product_info_view_model_create_with(product_info_t* product_info);
+view_model_t* product_info_view_model_create_with(product_info_t* aproduct_info);
 
 /**
  * @method product_info_view_model_attach
@@ -52,7 +52,7 @@ view_model_t* product_info_view_model_create_with(product_info_t* product_info);
  *
  * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
  */
-ret_t product_info_view_model_attach(view_model_t* vm, product_info_t* product_info);
+ret_t product_info_view_model_attach(view_model_t* vm, product_info_t* aproduct_info);
 
 END_C_DECLS
 

@@ -18,7 +18,7 @@ typedef struct _user_info_view_model_t {
   view_model_t view_model;
 
   /*model object*/
-  user_info_t* user_info;
+  user_info_t* auser_info;
 } user_info_view_model_t;
 
 /**
@@ -37,11 +37,11 @@ view_model_t* user_info_view_model_create(navigator_request_t* req);
  * 创建user_info view model对象。
  *
  * @annotation ["constructor"]
- * @param {user_info_t*}  user_info user_info对象。
+ * @param {user_info_t*}  auser_info user_info对象。
  *
  * @return {view_model_t} 返回view_model_t对象。
  */
-view_model_t* user_info_view_model_create_with(user_info_t* user_info);
+view_model_t* user_info_view_model_create_with(user_info_t* auser_info);
 
 /**
  * @method user_info_view_model_attach
@@ -52,7 +52,7 @@ view_model_t* user_info_view_model_create_with(user_info_t* user_info);
  *
  * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
  */
-ret_t user_info_view_model_attach(view_model_t* vm, user_info_t* user_info);
+ret_t user_info_view_model_attach(view_model_t* vm, user_info_t* auser_info);
 
 END_C_DECLS
 

@@ -7,14 +7,14 @@
 #include "login_view_model.h"
 
 static ret_t login_view_model_set_prop(object_t* obj, const char* name, const value_t* v) {
-  login_t* login = ((login_view_model_t*)(obj))->login;
+  login_t* alogin = ((login_view_model_t*)(obj))->alogin;
 
-  if (tk_str_eq("name", name)) {
-    str_set(&(login->name), value_str(v));
+  if (tk_str_ieq("name", name)) {
+    str_set(&(alogin->name), value_str(v));
 
     return RET_OK;
-  } else if (tk_str_eq("password", name)) {
-    str_set(&(login->password), value_str(v));
+  } else if (tk_str_ieq("password", name)) {
+    str_set(&(alogin->password), value_str(v));
 
     return RET_OK;
   }
@@ -23,13 +23,13 @@ static ret_t login_view_model_set_prop(object_t* obj, const char* name, const va
 }
 
 static ret_t login_view_model_get_prop(object_t* obj, const char* name, value_t* v) {
-  login_t* login = ((login_view_model_t*)(obj))->login;
+  login_t* alogin = ((login_view_model_t*)(obj))->alogin;
 
-  if (tk_str_eq("name", name)) {
-    value_set_str(v, login->name.str);
+  if (tk_str_ieq("name", name)) {
+    value_set_str(v, alogin->name.str);
     return RET_OK;
-  } else if (tk_str_eq("password", name)) {
-    value_set_str(v, login->password.str);
+  } else if (tk_str_ieq("password", name)) {
+    value_set_str(v, alogin->password.str);
     return RET_OK;
   }
 
@@ -38,18 +38,18 @@ static ret_t login_view_model_get_prop(object_t* obj, const char* name, value_t*
 
 static bool_t login_view_model_can_exec(object_t* obj, const char* name, const char* args) {
   login_view_model_t* vm = (login_view_model_t*)(obj);
-  login_t* login = vm->login;
-  if (tk_str_eq("auth", name)) {
-    return login_can_auth(login);
+  login_t* alogin = vm->alogin;
+  if (tk_str_ieq("auth", name)) {
+    return login_can_auth(alogin);
   }
   return FALSE;
 }
 
 static ret_t login_view_model_exec(object_t* obj, const char* name, const char* args) {
   login_view_model_t* vm = (login_view_model_t*)(obj);
-  login_t* login = vm->login;
-  if (tk_str_eq("auth", name)) {
-    return login_auth(login);
+  login_t* alogin = vm->alogin;
+  if (tk_str_ieq("auth", name)) {
+    return login_auth(alogin);
   }
   return RET_NOT_FOUND;
 }
@@ -58,7 +58,7 @@ static ret_t login_view_model_on_destroy(object_t* obj) {
   login_view_model_t* vm = (login_view_model_t*)(obj);
   return_value_if_fail(vm != NULL, RET_BAD_PARAMS);
 
-  login_destroy(vm->login);
+  login_destroy(vm->alogin);
 
   return view_model_deinit(VIEW_MODEL(obj));
 }
@@ -73,30 +73,30 @@ static const object_vtable_t s_login_view_model_vtable = {
     .set_prop = login_view_model_set_prop,
     .on_destroy = login_view_model_on_destroy};
 
-view_model_t* login_view_model_create_with(login_t* login) {
+view_model_t* login_view_model_create_with(login_t* alogin) {
   object_t* obj = object_create(&s_login_view_model_vtable);
   view_model_t* vm = view_model_init(VIEW_MODEL(obj));
   login_view_model_t* login_view_model = (login_view_model_t*)(vm);
 
   return_value_if_fail(vm != NULL, NULL);
 
-  login_view_model->login = login;
+  login_view_model->alogin = alogin;
 
   return vm;
 }
 
-ret_t login_view_model_attach(view_model_t* vm, login_t* login) {
+ret_t login_view_model_attach(view_model_t* vm, login_t* alogin) {
   login_view_model_t* login_view_model = (login_view_model_t*)(vm);
   return_value_if_fail(vm != NULL, RET_BAD_PARAMS);
 
-  login_view_model->login = login;
+  login_view_model->alogin = alogin;
 
   return RET_OK;
 }
 
 view_model_t* login_view_model_create(navigator_request_t* req) {
-  login_t* login = login_create();
-  return_value_if_fail(login != NULL, NULL);
+  login_t* alogin = login_create();
+  return_value_if_fail(alogin != NULL, NULL);
 
-  return login_view_model_create_with(login);
+  return login_view_model_create_with(alogin);
 }

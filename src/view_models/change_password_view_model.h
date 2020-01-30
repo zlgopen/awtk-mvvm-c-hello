@@ -18,7 +18,7 @@ typedef struct _change_password_view_model_t {
   view_model_t view_model;
 
   /*model object*/
-  change_password_t* change_password;
+  change_password_t* achange_password;
 } change_password_view_model_t;
 
 /**
@@ -37,11 +37,11 @@ view_model_t* change_password_view_model_create(navigator_request_t* req);
  * 创建change_password view model对象。
  *
  * @annotation ["constructor"]
- * @param {change_password_t*}  change_password change_password对象。
+ * @param {change_password_t*}  achange_password change_password对象。
  *
  * @return {view_model_t} 返回view_model_t对象。
  */
-view_model_t* change_password_view_model_create_with(change_password_t* change_password);
+view_model_t* change_password_view_model_create_with(change_password_t* achange_password);
 
 /**
  * @method change_password_view_model_attach
@@ -52,7 +52,7 @@ view_model_t* change_password_view_model_create_with(change_password_t* change_p
  *
  * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
  */
-ret_t change_password_view_model_attach(view_model_t* vm, change_password_t* change_password);
+ret_t change_password_view_model_attach(view_model_t* vm, change_password_t* achange_password);
 
 END_C_DECLS
 

@@ -19,7 +19,7 @@ typedef struct _users_view_model_t {
   view_model_array_t view_model_array;
 
   /*model object*/
-  users_t* users;
+  users_t* ausers;
   view_model_t* user_view_model;
 } users_view_model_t;
 
@@ -39,11 +39,11 @@ view_model_t* users_view_model_create(navigator_request_t* req);
  * 创建users view model对象。
  *
  * @annotation ["constructor"]
- * @param {users_t*}  users users对象。
+ * @param {users_t*}  ausers users对象。
  *
  * @return {view_model_t} 返回view_model_t对象。
  */
-view_model_t* users_view_model_create_with(users_t* users);
+view_model_t* users_view_model_create_with(users_t* ausers);
 
 END_C_DECLS
 

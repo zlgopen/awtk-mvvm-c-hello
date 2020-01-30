@@ -1154,7 +1154,7 @@
           }
         ],
         "annotation": {},
-        "desc": "检查auth命令是否可以执行。",
+        "desc": "检查remove命令是否可以执行。",
         "name": "users_can_remove",
         "return": {
           "type": "bool_t",
