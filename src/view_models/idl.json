@@ -1280,7 +1280,7 @@
     "name": "users_t",
     "parent": "emitter_t",
     "annotation": {
-      "collection": "user",
+      "collection": "user_t",
       "model": true
     },
     "level": 2
