@@ -35,6 +35,7 @@
 #include "common/datetime_str_converter.h"
 
 ret_t application_init() {
+  window_open("system_bar");
   password_validator_init();
   datetime_str_converter_init();
   app_globals_init(user_repository_mem_create());
