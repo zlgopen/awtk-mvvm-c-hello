@@ -23,7 +23,7 @@ os.environ['APP_SRC'] = APP_SRC_DIR;
 APP_CFLAGS = ''
 APP_CCFLAGS = APP_CFLAGS
 
-APP_LIBS = ['assets']
+APP_LIBS = []
 APP_LIBPATH = [APP_LIB_DIR]
 APP_CPPPATH = [APP_SRC_DIR, os.path.join(APP_SRC_DIR, 'common'), 
   os.path.join(APP_SRC_DIR, 'view_models')]

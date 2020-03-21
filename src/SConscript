@@ -7,6 +7,7 @@ BIN_DIR=os.environ['BIN_DIR'];
 LIB_DIR=os.environ['LIB_DIR'];
 
 sources = Glob('models/*.c') + \
+  Glob('assets*.c') + \
   Glob('common/*.c') +  \
   Glob('view_models/*.c') + \
   Glob('repository/*.c') \
