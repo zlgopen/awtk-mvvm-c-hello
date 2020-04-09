@@ -23,7 +23,6 @@ os.environ['APP_SRC'] = APP_SRC_DIR;
 APP_CFLAGS = ''
 APP_CCFLAGS = APP_CFLAGS
 
-APP_LIBS = []
 APP_LIBPATH = [APP_LIB_DIR]
 APP_CPPPATH = [APP_SRC_DIR, os.path.join(APP_SRC_DIR, 'common'), 
   os.path.join(APP_SRC_DIR, 'view_models')]
@@ -34,9 +33,13 @@ MVVM_SRC_DIR = os.path.join(MVVM_ROOT, 'src')
 
 MVVM_CPPPATH = [MVVM_SRC_DIR]
 MVVM_LIBPATH = [MVVM_LIB_DIR]
+MVVM_LIBS = ['mvvm', 'jerryscript']
+
+APP_LIBS = MVVM_LIBS
+APP_CPPPATH = APP_CPPPATH + MVVM_CPPPATH
+APP_LIBPATH = APP_LIBPATH + MVVM_LIBPATH
 
 if hasattr(awtk, 'CC'):
-  MVVM_LIBS = ['mvvm', 'jerryscript']
   DefaultEnvironment(
     CC=awtk.CC,
     CXX=awtk.CXX,
@@ -47,20 +50,19 @@ if hasattr(awtk, 'CC'):
     LINKFLAGS = awtk.LINKFLAGS,
     CFLAGS    = APP_CFLAGS + awtk.CFLAGS, 
     CCFLAGS   = APP_CCFLAGS + awtk.CCFLAGS, 
-    LIBS      = APP_LIBS + MVVM_LIBS + awtk.LIBS,
-    CPPPATH   = APP_CPPPATH + MVVM_CPPPATH + awtk.CPPPATH,
-    LIBPATH   = APP_LIBPATH + MVVM_LIBPATH + awtk.LIBPATH,
+    LIBS      = APP_LIBS + awtk.LIBS,
+    CPPPATH   = APP_CPPPATH + awtk.CPPPATH,
+    LIBPATH   = APP_LIBPATH + awtk.LIBPATH,
     OS_SUBSYSTEM_CONSOLE=awtk.OS_SUBSYSTEM_CONSOLE,
     OS_SUBSYSTEM_WINDOWS=awtk.OS_SUBSYSTEM_WINDOWS)
 else:
-  MVVM_LIBS = ['mvvm', 'jerryscript']
   DefaultEnvironment(
     LINKFLAGS = awtk.LINKFLAGS,
     CFLAGS    = APP_CFLAGS + awtk.CFLAGS, 
     CCFLAGS   = APP_CCFLAGS + awtk.CCFLAGS, 
-    LIBS      = APP_LIBS + MVVM_LIBS + awtk.LIBS,
-    CPPPATH   = APP_CPPPATH + MVVM_CPPPATH + awtk.CPPPATH,
-    LIBPATH   = APP_LIBPATH + MVVM_LIBPATH + awtk.LIBPATH,
+    LIBS      = APP_LIBS + awtk.LIBS,
+    CPPPATH   = APP_CPPPATH + awtk.CPPPATH,
+    LIBPATH   = APP_LIBPATH + awtk.LIBPATH,
     OS_SUBSYSTEM_CONSOLE=awtk.OS_SUBSYSTEM_CONSOLE,
     OS_SUBSYSTEM_WINDOWS=awtk.OS_SUBSYSTEM_WINDOWS)
 
