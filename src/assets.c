@@ -1,13 +1,12 @@
 #include "awtk.h"
 #include "base/assets_manager.h"
-
-#include "assets_default.inc"
+#include "../assets/__assets_default.inc"
 
 #ifndef APP_THEME
 #define APP_THEME "default"
 #endif /*APP_THEME*/
 
-ret_t assets_has_theme(const char* name) {
+bool_t assets_has_theme(const char* name) {
   return_value_if_fail(name != NULL, FALSE);
 
   if (tk_str_eq(name, "default")) {
