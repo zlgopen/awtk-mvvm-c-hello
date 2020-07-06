@@ -1,4 +1,4 @@
-﻿/**
+/**
  * File:   application.c
  * Author: AWTK Develop Team
  * Brief:  application
@@ -51,4 +51,14 @@ ret_t application_init() {
   return navigator_to("login");
 }
 
-#include "awtk_main.c"
+#include "mvvm/mvvm.h"
+
+#define GLOBAL_INIT() mvvm_init()
+#define GLOBAL_EXIT() mvvm_deinit()
+
+ret_t application_exit() {
+  log_debug("application_exit\n");
+  return RET_OK;
+}
+
+#include "awtk_main.inc"
