@@ -28,7 +28,7 @@
 #include "view_models/product_info_view_model.h"
 #include "view_models/time_settings_view_model.h"
 #include "view_models/change_password_view_model.h"
-
+#include "../res/assets_default.inc"
 #include "common/app_globals.h"
 #include "common/password_validator.h"
 #include "common/user_repository_mem.h"
