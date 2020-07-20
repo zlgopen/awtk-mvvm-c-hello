@@ -13,4 +13,4 @@ sources = Glob('models/*.c') + \
   Glob('repository/*.c') \
 
 env.Library(os.path.join(LIB_DIR, 'awtk_mvvm_app'), sources);
-env.Program(os.path.join(BIN_DIR, 'awtk_mvvm_app'), Glob('application.c'), LIBS=['awtk_mvvm_app'] + env['LIBS']);
+env.Program(os.path.join(BIN_DIR, 'demo'), Glob('application.c'), LIBS=['awtk_mvvm_app'] + env['LIBS']);

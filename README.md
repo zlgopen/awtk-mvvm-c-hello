@@ -68,7 +68,7 @@ sys.path.insert(0, '../awtk-linux-fb/')
 ## 3.运行
 
 ```
-./bin/awtk_mvvm_app
+./bin/demo
 ```
 
 > 本文以 Linux/MacOS 为例，Windows 可能会微妙差异，请酌情处理。
