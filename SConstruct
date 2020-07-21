@@ -27,21 +27,33 @@ os.environ['APP_SRC'] = APP_SRC_DIR;
 APP_CFLAGS = ''
 APP_CCFLAGS = APP_CFLAGS
 
-APP_LIBPATH = [APP_LIB_DIR]
-APP_CPPPATH = [APP_SRC_DIR, os.path.join(APP_SRC_DIR, 'common'), 
-  os.path.join(APP_SRC_DIR, 'view_models')]
-
 MVVM_ROOT = os.path.normpath(os.path.join(APP_ROOT, '../awtk-mvvm'))
-MVVM_LIB_DIR = os.path.join(MVVM_ROOT, 'lib')
-MVVM_SRC_DIR = os.path.join(MVVM_ROOT, 'src')
 
-MVVM_CPPPATH = [MVVM_SRC_DIR]
-MVVM_LIBPATH = [MVVM_LIB_DIR]
-MVVM_LIBS = ['mvvm']
+APP_LIBS = ['awtk_mvvm_app', 'mvvm']
 
-APP_LIBS = MVVM_LIBS
-APP_CPPPATH = APP_CPPPATH + MVVM_CPPPATH
-APP_LIBPATH = APP_LIBPATH + MVVM_LIBPATH
+APP_CPPPATH = [
+  APP_SRC_DIR,
+  os.path.join(APP_SRC_DIR, 'common'), 
+  os.path.join(APP_SRC_DIR, 'view_models'),
+  os.path.join(MVVM_ROOT, 'src') 
+]
+
+APP_LIBPATH = [
+  os.path.join(APP_ROOT, 'lib'), 
+  os.path.join(APP_ROOT, 'bin'), 
+  os.path.join(MVVM_ROOT, 'lib'), 
+  os.path.join(MVVM_ROOT, 'bin') 
+]
+
+if awtk.isBuildShared():
+  AWTK_LIBS = awtk.SHARED_LIBS
+  awtk.copySharedLib(AWTK_ROOT, APP_BIN_DIR, 'awtk');
+  awtk.copySharedLib(MVVM_ROOT, APP_BIN_DIR, 'mvvm');
+
+  if awtk.OS_NAME == 'Linux':
+    APP_LINKFLAGS += ' -Wl,-rpath=' + APP_BIN_DIR + ' '
+else:
+  AWTK_LIBS = awtk.STATIC_LIBS
 
 if hasattr(awtk, 'CC'):
   DefaultEnvironment(
@@ -54,7 +66,7 @@ if hasattr(awtk, 'CC'):
     LINKFLAGS = awtk.LINKFLAGS,
     CFLAGS    = APP_CFLAGS + awtk.CFLAGS, 
     CCFLAGS   = APP_CCFLAGS + awtk.CCFLAGS, 
-    LIBS      = APP_LIBS + awtk.LIBS,
+    LIBS      = APP_LIBS + AWTK_LIBS,
     CPPPATH   = APP_CPPPATH + awtk.CPPPATH,
     LIBPATH   = APP_LIBPATH + awtk.LIBPATH,
     OS_SUBSYSTEM_CONSOLE=awtk.OS_SUBSYSTEM_CONSOLE,
@@ -64,7 +76,7 @@ else:
     LINKFLAGS = awtk.LINKFLAGS,
     CFLAGS    = APP_CFLAGS + awtk.CFLAGS, 
     CCFLAGS   = APP_CCFLAGS + awtk.CCFLAGS, 
-    LIBS      = APP_LIBS + awtk.LIBS,
+    LIBS      = APP_LIBS + AWTK_LIBS,
     CPPPATH   = APP_CPPPATH + awtk.CPPPATH,
     LIBPATH   = APP_LIBPATH + awtk.LIBPATH,
     OS_SUBSYSTEM_CONSOLE=awtk.OS_SUBSYSTEM_CONSOLE,
