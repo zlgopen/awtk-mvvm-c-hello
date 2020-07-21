@@ -41,6 +41,7 @@ APP_CPPPATH = [
 APP_LIBPATH = [
   os.path.join(APP_ROOT, 'lib'), 
   os.path.join(APP_ROOT, 'bin'), 
+  os.path.join(MVVM_ROOT, 'lib'), 
   os.path.join(MVVM_ROOT, 'bin') 
 ]
 
