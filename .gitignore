@@ -29,3 +29,4 @@ bin/image*
 bin/hello*
 .vscode
 .vs
+res
