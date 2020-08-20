@@ -50,20 +50,35 @@ cd awtk-mvvm; scons
 ```
 
 2. 获取 awtk-mvvm-c-hello 并编译
+
 ```
 git clone https://github.com/zlgopen/awtk-mvvm-c-hello.git
-cd awtk-mvvm-c-hello; scons
+cd awtk-mvvm-c-hello
 ```
 
-> 编译linux-fb版本，请修改SConstruct
+* 生成资源
 
 ```
-#for pc
-#sys.path.insert(0, '../awtk/')
-
-#for linux-fb
-sys.path.insert(0, '../awtk-linux-fb/')
+python ./scripts/update_res.py all
 ```
+
+> 或者通过 designer 生成资源
+
+
+* 编译PC版本
+
+```
+scons
+```
+
+* 编译LINUX FB版本
+
+```
+scons LINUX_FB=true
+```
+
+> 完整编译选项请参考[编译选项](https://github.com/zlgopen/awtk-widget-generator/blob/master/docs/build_options.md)
+
 
 ## 3.运行
 
