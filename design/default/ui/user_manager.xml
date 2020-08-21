@@ -1,8 +1,8 @@
 <window anim_hint="htranslate" v-model="users" text="User Manager">
  <row children_layout="default(rows=1,cols=0,s=4,m=2)", x="0" y="0" w="100%" h="30">
-   <edit w="40%"  v-data:text="{filter, Trigger=Changing}" tips="filter"/>
-   <check_button w="35%" text="ascending" v-data:value="{ascending}"/>
-   <label w="15%" v-data:text="{items}"/>
+   <edit name="filter" w="40%"  v-data:text="{filter, Trigger=Changing}" tips="filter"/>
+   <check_button name="ascending" w="35%" text="ascending" v-data:value="{ascending}"/>
+   <label name="items" w="15%" v-data:text="{items}"/>
  </row>
 
   <table_view x="0" y="32" w="100%" h="-80">
@@ -27,7 +27,7 @@
   </table_view>
 
   <row x="0" y="b" w="100%" h="40" children_layout="default(rows=1,cols=2,s=5,m=5)">
-    <button text="Add" v-on:click="{navigate, args=user_add}"/>
-    <button text="Clear" v-on:click="{clear}"/>
+    <button name="add" text="Add" v-on:click="{navigate, args=user_add}"/>
+    <button name="clear" text="Clear" v-on:click="{clear}"/>
   </row>
 </window>
