@@ -49,7 +49,40 @@ git clone https://github.com/jerryscript-project/jerryscript.git awtk-mvvm/3rd/j
 cd awtk-mvvm; scons
 ```
 
-2. 获取 awtk-mvvm-c-hello 并编译
+3. 获取 awtk-restful-httpd 并编译
+```
+git clone https://github.com/zlgopen/awtk-restful-httpd.git
+cd awtk-restful-httpd; scons; cd -
+```
+
+4. 获取 awtk-ui-automation 并编译
+```
+git clone https://github.com/zlgopen/awtk-ui-automation.git
+cd awtk-ui-automation; scons
+```
+
+5. 获取 awtk-widget-table-view 并编译
+
+```
+git clone https://github.com/zlgopen/awtk-widget-table-view.git
+cd awtk-widget-table-view; scons; cd -
+```
+
+6. 获取 awtk-widget-table-view-mvvm 并编译
+
+```
+git clone https://github.com/zlgopen/awtk-widget-table-view-mvvm.git
+cd awtk-widget-table-view-mvvm; scons; cd -
+```
+
+7. 获取 awtk-widget-slidable-row 并编译
+
+```
+git clone https://github.com/zlgopen/awtk-widget-slidable-row.git
+cd awtk-widget-slidable-row; scons; cd -
+```
+
+8. 获取 awtk-mvvm-c-hello 并编译
 
 ```
 git clone https://github.com/zlgopen/awtk-mvvm-c-hello.git
@@ -63,7 +96,6 @@ python ./scripts/update_res.py all
 ```
 
 > 或者通过 designer 生成资源
-
 
 * 编译PC版本
 

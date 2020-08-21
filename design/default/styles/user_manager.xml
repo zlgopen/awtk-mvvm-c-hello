@@ -1,0 +1,16 @@
+<table_header>
+  <style name="default">
+    <normal bg_color="#dddddd" />
+  </style>
+</table_header>
+<table_view>
+  <style name="default">
+    <normal border_color="#dddddd" />
+  </style>
+</table_view>
+<confirmable_button>
+  <style name="remove">
+    <normal text_color="white" bg_color="#aa0000" />
+    <over text_color="#ffffff" bg_color="#bb0000"/>
+  </style>
+</confirmable_button>
