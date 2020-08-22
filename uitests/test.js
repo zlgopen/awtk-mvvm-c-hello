@@ -1,14 +1,14 @@
 "use strict";
 
-require("./helpers/setup");
-
-let wd = require("wd"),
-      _ = require('underscore'),
-      Q = require('q'),
-      serverConfigs = require('./helpers/appium-servers');
-let startApp = require("./helpers/start-app").startApp;
+let Q = require('q');
+let wd = require("wd");
+let _ = require('underscore');
+require("awtk-appium-js-helpers/setup.js");
+let serverConfigs = require('awtk-appium-js-helpers/appium-servers');
+let startApp = require("awtk-appium-js-helpers/start-app").startApp;
 
 const appName = '../bin/demo'
+
 describe("awtk simple", function () {
       let driver;
       let allPassed = true;
@@ -17,16 +17,16 @@ describe("awtk simple", function () {
       before(async function () {
             let serverConfig = serverConfigs.local;
             driver = wd.promiseChainRemote(serverConfig);
-            require("./helpers/logging").configure(driver);
+            require("awtk-appium-js-helpers/logging").configure(driver);
 
             await startApp(appName);
 
-            let desired = _.clone(require("./helpers/caps").awtk);
+            let desired = _.clone(require("awtk-appium-js-helpers/caps").awtk);
             return driver.init(desired);
       });
 
       after(function () {
-         return driver.quit()
+            return driver.quit()
       });
 
       afterEach(function () {
