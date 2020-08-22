@@ -1,9 +1,9 @@
 <window anim_hint="htranslate" text="User Home" v-model="user_info" children_layout="default(h=40,c=2,m=5,s=10)">
   <label text="Name:"/>
-  <label v-data:text="{name}"/>
+  <label name="name" v-data:text="{name}"/>
 
   <label text="Nick Name:"/>
-  <label v-data:text="{nick_name}"/>
+  <label name="nick_name" v-data:text="{nick_name}"/>
   
   <label text="Registered Time:"/>
   <label v-data:text="{registered_time, converter=datetime_str}"/>
