@@ -23,6 +23,7 @@
 #include "mvvm/base/value_converter_delegate.h"
 
 static ret_t to_view(const value_t* from, value_t* to) {
+#ifndef AWTK_WEB
   char str[64];
   struct tm* time_info = NULL;
   time_t t = value_uint32(from);
@@ -31,7 +32,9 @@ static ret_t to_view(const value_t* from, value_t* to) {
   strftime(str, sizeof(str), "%Y-%m-%d %H:%M:%S", time_info);
 
   value_dup_str(to, str);
-
+#else
+  value_set_str(to, "2020-01-01 12:12:00");
+#endif
   return RET_OK;
 }
 

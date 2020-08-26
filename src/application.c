@@ -21,6 +21,7 @@
 
 #include "awtk.h"
 #include "mvvm/mvvm.h"
+#include "tkc/socket_helper.h"
 #include "automation_agent/automation_agent.h"
 #include "view_models/users_view_model.h"
 #include "view_models/login_view_model.h"
@@ -29,7 +30,7 @@
 #include "view_models/product_info_view_model.h"
 #include "view_models/time_settings_view_model.h"
 #include "view_models/change_password_view_model.h"
-#include "../res/assets.inc"
+#include "assets.inc"
 #include "common/app_globals.h"
 #include "common/password_validator.h"
 #include "common/user_repository_mem.h"
@@ -40,8 +41,11 @@
 #include "table_client_custom_binder.h"
 
 ret_t application_init() {
+#ifndef AWTK_WEB
   socket_init();
   automation_agent_start(8000);
+#endif/*AWTK_WEB*/
+
   table_view_register();
   slidable_row_register();
   table_client_custom_binder_register();
@@ -72,8 +76,10 @@ ret_t application_init() {
 
 ret_t application_exit() {
   log_debug("application_exit\n");
+#ifndef AWTK_WEB
   automation_agent_stop();
   socket_deinit();
+#endif/*AWTK_WEB*/
   return RET_OK;
 }
 

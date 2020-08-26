@@ -55,6 +55,19 @@
     "../awtk-mvvm/src/mvvm/*.h"
   ],
   "web": {
+  "includes": [
+    ".",
+    "src",
+    "src/common",
+    "src/view_models",
+    "3rd/sqlite3",
+    "../awtk-mvvm/src",
+    "../awtk-ui-automation/src",
+    "../awtk-restful-httpd/src",
+    "../awtk-widget-table-view/src",
+    "../awtk-widget-slidable-row/src",
+    "../awtk-widget-table-view-mvvm/src"
+  ],
     "app_type": "c"
   },
   "android": {
