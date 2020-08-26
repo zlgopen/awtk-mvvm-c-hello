@@ -9,6 +9,10 @@
         <label w="-30" text="About..." />
         <image w="30" image="more" />
       </list_item>
+      <list_item name="back" style="even_clickable" children_layout="default(rows=1,cols=0)" 
+        v-on:click="{nothing, CloseWindow=true}">
+        <label w="-30" text="Back"/>
+      </list_item>
     </scroll_view>
     <scroll_bar_m name="bar" x="right" y="0" w="6" h="100%" value="0"/>
   </list_view>

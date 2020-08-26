@@ -17,6 +17,11 @@
         <label w="50%" text="Serial Number" />
         <label w="50%" v-data:text="{serial_no}" />
       </list_item>
+      <list_item style="odd" children_layout="default(rows=1,m=4,cols=3)">
+        <label/>
+        <button v-on:click="{nothing, CloseWindow=true}" text="Back"/>
+        <label/>
+      </list_item>
     </scroll_view>
     <scroll_bar_m name="bar" x="right" y="0" w="6" h="100%" value="0"/>
   </list_view>

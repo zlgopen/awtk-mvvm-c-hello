@@ -26,8 +26,9 @@
     <scroll_bar_d name="vbar" x="right" y="0" w="12" h="100%" value="0"/>
   </table_view>
 
-  <row x="0" y="b" w="100%" h="40" children_layout="default(rows=1,cols=2,s=5,m=5)">
+  <row x="0" y="b" w="100%" h="40" children_layout="default(rows=1,cols=3,s=5,m=5)">
     <button name="add" text="Add" v-on:click="{navigate, args=user_add}"/>
     <button name="clear" text="Clear" v-on:click="{clear}"/>
+    <button name="back" text="Back" v-on:click="{nothing, CloseWindow=true}"/>
   </row>
 </window>

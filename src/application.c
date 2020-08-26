@@ -48,8 +48,10 @@ ret_t application_init() {
   password_validator_init();
   datetime_str_converter_init();
   app_globals_init(user_repository_mem_create());
-  
+ 
+#if !defined(ANDROID) && !defined(IOS)
   window_open("system_bar");
+#endif
 
   view_model_factory_register("users", users_view_model_create);
   view_model_factory_register("login", login_view_model_create);

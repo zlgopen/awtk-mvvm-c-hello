@@ -1,5 +1,6 @@
 <window  name="admin_home" anim_hint="htranslate" text="Amin Home">
   <button name="settings" x="center" y="middle:-100" w="80%" h="40" text="System Settings" v-on:click="{navigate, args=system_settings}" />
   <button name="usermanager" x="center" y="middle:-50" w="80%" h="40" text="User Manager" v-on:click="{navigate, args=user_manager}" />
-  <button name="user_home" x="center" y="middle0" w="80%" h="40" text="My Profile" v-on:click="{navigate, args=user_home}" />
+  <button name="user_home" x="center" y="middle" w="80%" h="40" text="My Profile" v-on:click="{navigate, args=user_home}" />
+  <button name="back" x="center" y="middle:50" w="80%" h="40" text="Back" v-on:click="{nothing, CloseWindow=true}" />
 </window>
