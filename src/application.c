@@ -21,8 +21,11 @@
 
 #include "awtk.h"
 #include "mvvm/mvvm.h"
-#include "tkc/socket_helper.h"
+
+#ifndef AWTK_WEB
 #include "automation_agent/automation_agent.h"
+#endif/*AWTK_WEB*/
+
 #include "view_models/users_view_model.h"
 #include "view_models/login_view_model.h"
 #include "view_models/user_add_view_model.h"
