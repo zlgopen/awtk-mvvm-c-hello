@@ -1,0 +1,66 @@
+{
+  "name": "hello",
+  "version": "1.0",
+  "assets": "res/assets",
+  "includes": [
+    ".",
+    "src/common",
+    "src/view_models",
+    "3rd/sqlite3",
+    "awtk-mvvm/src",
+    "awtk-ui-automation/src",
+    "awtk-restful-httpd/src",
+    "awtk-widget-table-view/src",
+    "awtk-widget-slidable-row/src",
+    "awtk-widget-table-view-mvvm/src"
+  ],
+  "sources": [
+    "src/*.c",
+    "src/*.h",
+    "src/common/*.c",
+    "src/common/*.h",
+    "src/view_models/*.c",
+    "src/view_models/*.h",
+    "res/assets.inc",
+    "res/assets/__assets_default.inc",
+    "../awtk-restful-httpd/src/httpd/*.c",
+    "../awtk-restful-httpd/src/httpd/*.h",
+    "../awtk-widget-table-view/src/*.c",
+    "../awtk-widget-table-view/src/*.h",
+    "../awtk-widget-table-view/src/table_client/*.c",
+    "../awtk-widget-table-view/src/table_client/*.h",
+    "../awtk-widget-table-view/src/table_header/*.c",
+    "../awtk-widget-table-view/src/table_header/*.h",
+    "../awtk-widget-table-view/src/table_row/*.c",
+    "../awtk-widget-table-view/src/table_row/*.h",
+    "../awtk-widget-table-view/src/table_view/*.c",
+    "../awtk-widget-table-view/src/table_view/*.h",
+    "../awtk-ui-automation/src/automation_agent/*.c",
+    "../awtk-ui-automation/src/automation_agent/*.h",
+    "../awtk-widget-slidable-row/src/*.c",
+    "../awtk-widget-slidable-row/src/*.h",
+    "../awtk-widget-slidable-row/src/confirmable_button/*.c",
+    "../awtk-widget-slidable-row/src/confirmable_button/*.h",
+    "../awtk-widget-slidable-row/src/slidable_row/*.c",
+    "../awtk-widget-slidable-row/src/slidable_row/*.h",
+    "../awtk-widget-table-view-mvvm/src/*.c",
+    "../awtk-widget-table-view-mvvm/src/*.h",
+    "../awtk-mvvm/src/mvvm/base/*.c",
+    "../awtk-mvvm/src/mvvm/base/*.h",
+    "../awtk-mvvm/src/mvvm/awtk/*.c",
+    "../awtk-mvvm/src/mvvm/awtk/*.h",
+    "../awtk-mvvm/src/mvvm/hardware/*.c",
+    "../awtk-mvvm/src/mvvm/hardware/*.h",
+    "../awtk-mvvm/src/mvvm/*.c",
+    "../awtk-mvvm/src/mvvm/*.h"
+  ],
+  "web": {
+    "app_type": "c"
+  },
+  "android": {
+    "app_name": "org.zlgopen.mvvmhello"
+  },
+  "ios": {
+    "app_name": "org.zlgopen.mvvmhello"
+  }
+}
