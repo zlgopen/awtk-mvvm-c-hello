@@ -24,7 +24,7 @@
 
 #ifndef AWTK_WEB
 #include "automation_agent/automation_agent.h"
-#endif/*AWTK_WEB*/
+#endif /*AWTK_WEB*/
 
 #include "view_models/users_view_model.h"
 #include "view_models/login_view_model.h"
@@ -48,7 +48,7 @@ ret_t application_init() {
 #ifndef AWTK_WEB
   socket_init();
   automation_agent_start(8000);
-#endif/*AWTK_WEB*/
+#endif /*AWTK_WEB*/
 
   table_view_register();
   slidable_row_register();
@@ -56,7 +56,7 @@ ret_t application_init() {
   password_validator_init();
   datetime_str_converter_init();
   app_globals_init(user_repository_mem_create());
- 
+
 #if !defined(ANDROID) && !defined(IOS)
   window_open("system_bar");
 #endif
@@ -68,7 +68,7 @@ ret_t application_init() {
   view_model_factory_register("product_info", product_info_view_model_create);
   view_model_factory_register("time_settings", time_settings_view_model_create);
   view_model_factory_register("change_password", change_password_view_model_create);
-  
+
   return navigator_to("login");
 }
 
@@ -79,7 +79,7 @@ ret_t application_exit() {
 #ifndef AWTK_WEB
   automation_agent_stop();
   socket_deinit();
-#endif/*AWTK_WEB*/
+#endif /*AWTK_WEB*/
   mvvm_deinit();
   return RET_OK;
 }

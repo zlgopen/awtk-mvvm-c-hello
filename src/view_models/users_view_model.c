@@ -21,22 +21,21 @@ static ret_t users_view_model_set_prop(object_t* obj, const char* name, const va
   uint32_t index = 0;
   view_model_t* view_model = VIEW_MODEL(obj);
   users_t* ausers = ((users_view_model_t*)(obj))->ausers;
-  
-  if(view_model_array_default_set_prop(view_model, name, v) == RET_OK) {
+
+  if (view_model_array_default_set_prop(view_model, name, v) == RET_OK) {
     return RET_OK;
   }
 
   if (tk_str_ieq("filter", name)) {
-     users_set_filter(ausers, value_str(v));
+    users_set_filter(ausers, value_str(v));
 
-     return RET_OK;
+    return RET_OK;
   } else if (tk_str_ieq("ascending", name)) {
-     users_set_ascending(ausers, value_bool(v));
+    users_set_ascending(ausers, value_bool(v));
 
-     return RET_OK;
+    return RET_OK;
   } else if (tk_str_ieq("items", name)) {
-     
-     return RET_OK;
+    return RET_OK;
   }
 
   name = destruct_array_prop_name(name, &index);
@@ -49,20 +48,20 @@ static ret_t users_view_model_get_prop(object_t* obj, const char* name, value_t*
   uint32_t index = 0;
   view_model_t* view_model = VIEW_MODEL(obj);
   users_t* ausers = ((users_view_model_t*)(obj))->ausers;
-  
-  if(view_model_array_default_get_prop(view_model, name, v) == RET_OK) {
+
+  if (view_model_array_default_get_prop(view_model, name, v) == RET_OK) {
     return RET_OK;
   }
 
   if (tk_str_ieq("filter", name)) {
-     value_set_str(v, ausers->filter.str);
-     return RET_OK;
+    value_set_str(v, ausers->filter.str);
+    return RET_OK;
   } else if (tk_str_ieq("ascending", name)) {
-     value_set_bool(v, ausers->ascending);
-     return RET_OK;
+    value_set_bool(v, ausers->ascending);
+    return RET_OK;
   } else if (tk_str_ieq("items", name)) {
-     value_set_uint32(v, users_get_items(ausers));
-     return RET_OK;
+    value_set_uint32(v, users_get_items(ausers));
+    return RET_OK;
   }
 
   name = destruct_array_prop_name(name, &index);
@@ -71,12 +70,10 @@ static ret_t users_view_model_get_prop(object_t* obj, const char* name, value_t*
   return view_model_get_prop(view_model, name, v);
 }
 
-
 static bool_t users_view_model_can_exec(object_t* obj, const char* name, const char* args) {
   uint32_t index = tk_atoi(args);
   view_model_t* view_model = VIEW_MODEL(obj);
 
- 
   users_view_model_t* vm = (users_view_model_t*)(obj);
   users_t* ausers = vm->ausers;
   if (tk_str_ieq("clear", name)) {
@@ -94,7 +91,7 @@ static bool_t users_view_model_can_exec(object_t* obj, const char* name, const c
   } else if (tk_str_ieq("set_ascending", name)) {
     return TRUE;
   }
-  
+
   view_model = users_view_model_attach(obj, index);
 
   return view_model_can_exec(view_model, name, NULL);
@@ -104,7 +101,6 @@ static ret_t users_view_model_exec(object_t* obj, const char* name, const char* 
   uint32_t index = tk_atoi(args);
   view_model_t* view_model = VIEW_MODEL(obj);
 
- 
   users_view_model_t* vm = (users_view_model_t*)(obj);
   users_t* ausers = vm->ausers;
   if (tk_str_ieq("clear", name)) {
@@ -140,35 +136,32 @@ static ret_t users_view_model_on_destroy(object_t* obj) {
   return view_model_array_deinit(VIEW_MODEL(obj));
 }
 
-static const object_vtable_t s_users_view_model_vtable = {
-  "users_view_model_t",
-  "users_view_model_t",
-  sizeof(users_view_model_t),
-  TRUE,
-  users_view_model_on_destroy,
-  NULL,
-  users_view_model_get_prop,
-  users_view_model_set_prop,
-  NULL,
-  NULL,
-  users_view_model_can_exec,
-  users_view_model_exec
-};
+static const object_vtable_t s_users_view_model_vtable = {"users_view_model_t",
+                                                          "users_view_model_t",
+                                                          sizeof(users_view_model_t),
+                                                          TRUE,
+                                                          users_view_model_on_destroy,
+                                                          NULL,
+                                                          users_view_model_get_prop,
+                                                          users_view_model_set_prop,
+                                                          NULL,
+                                                          NULL,
+                                                          users_view_model_can_exec,
+                                                          users_view_model_exec};
 
 view_model_t* users_view_model_create_with(users_t* ausers) {
   object_t* obj = object_create(&s_users_view_model_vtable);
   view_model_t* vm = view_model_array_init(VIEW_MODEL(obj));
   users_view_model_t* users_view_model = (users_view_model_t*)(vm);
-  
+
   users_view_model->user_view_model = user_view_model_create_with(NULL);
   return_value_if_fail(vm != NULL, NULL);
 
   users_view_model->ausers = ausers;
   ENSURE(users_view_model->ausers != NULL);
-  
+
   emitter_on(EMITTER(ausers), EVT_PROPS_CHANGED, (event_func_t)emitter_dispatch, vm);
   emitter_on(EMITTER(ausers), EVT_ITEMS_CHANGED, (event_func_t)emitter_dispatch, vm);
-
 
   return vm;
 }

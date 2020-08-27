@@ -10,50 +10,47 @@ static ret_t user_add_view_model_set_prop(object_t* obj, const char* name, const
   user_add_t* auser_add = ((user_add_view_model_t*)(obj))->auser_add;
 
   if (tk_str_ieq("name", name)) {
-     str_set(&(auser_add->name), value_str(v));
+    str_set(&(auser_add->name), value_str(v));
 
-     return RET_OK;
+    return RET_OK;
   } else if (tk_str_ieq("nick_name", name)) {
-     str_set(&(auser_add->nick_name), value_str(v));
+    str_set(&(auser_add->nick_name), value_str(v));
 
-     return RET_OK;
+    return RET_OK;
   } else if (tk_str_ieq("password", name)) {
-     str_set(&(auser_add->password), value_str(v));
+    str_set(&(auser_add->password), value_str(v));
 
-     return RET_OK;
+    return RET_OK;
   } else if (tk_str_ieq("confirm_password", name)) {
-     str_set(&(auser_add->confirm_password), value_str(v));
+    str_set(&(auser_add->confirm_password), value_str(v));
 
-     return RET_OK;
+    return RET_OK;
   }
-  
+
   return RET_NOT_FOUND;
 }
-
 
 static ret_t user_add_view_model_get_prop(object_t* obj, const char* name, value_t* v) {
   user_add_t* auser_add = ((user_add_view_model_t*)(obj))->auser_add;
 
   if (tk_str_ieq("name", name)) {
-     value_set_str(v, auser_add->name.str);
-     return RET_OK;
+    value_set_str(v, auser_add->name.str);
+    return RET_OK;
   } else if (tk_str_ieq("nick_name", name)) {
-     value_set_str(v, auser_add->nick_name.str);
-     return RET_OK;
+    value_set_str(v, auser_add->nick_name.str);
+    return RET_OK;
   } else if (tk_str_ieq("password", name)) {
-     value_set_str(v, auser_add->password.str);
-     return RET_OK;
+    value_set_str(v, auser_add->password.str);
+    return RET_OK;
   } else if (tk_str_ieq("confirm_password", name)) {
-     value_set_str(v, auser_add->confirm_password.str);
-     return RET_OK;
+    value_set_str(v, auser_add->confirm_password.str);
+    return RET_OK;
   }
 
   return RET_NOT_FOUND;
 }
 
-
 static bool_t user_add_view_model_can_exec(object_t* obj, const char* name, const char* args) {
- 
   user_add_view_model_t* vm = (user_add_view_model_t*)(obj);
   user_add_t* auser_add = vm->auser_add;
   if (tk_str_ieq("add", name)) {
@@ -63,7 +60,6 @@ static bool_t user_add_view_model_can_exec(object_t* obj, const char* name, cons
 }
 
 static ret_t user_add_view_model_exec(object_t* obj, const char* name, const char* args) {
- 
   user_add_view_model_t* vm = (user_add_view_model_t*)(obj);
   user_add_t* auser_add = vm->auser_add;
   if (tk_str_ieq("add", name)) {
@@ -76,26 +72,23 @@ static ret_t user_add_view_model_on_destroy(object_t* obj) {
   user_add_view_model_t* vm = (user_add_view_model_t*)(obj);
   return_value_if_fail(vm != NULL, RET_BAD_PARAMS);
 
-  
   user_add_destroy(vm->auser_add);
 
   return view_model_deinit(VIEW_MODEL(obj));
 }
 
-static const object_vtable_t s_user_add_view_model_vtable = {
-  "user_add_view_model_t",
-  "user_add_view_model_t",
-  sizeof(user_add_view_model_t),
-  FALSE,
-  user_add_view_model_on_destroy,
-  NULL,
-  user_add_view_model_get_prop,
-  user_add_view_model_set_prop,
-  NULL,
-  NULL,
-  user_add_view_model_can_exec,
-  user_add_view_model_exec
-};
+static const object_vtable_t s_user_add_view_model_vtable = {"user_add_view_model_t",
+                                                             "user_add_view_model_t",
+                                                             sizeof(user_add_view_model_t),
+                                                             FALSE,
+                                                             user_add_view_model_on_destroy,
+                                                             NULL,
+                                                             user_add_view_model_get_prop,
+                                                             user_add_view_model_set_prop,
+                                                             NULL,
+                                                             NULL,
+                                                             user_add_view_model_can_exec,
+                                                             user_add_view_model_exec};
 
 view_model_t* user_add_view_model_create_with(user_add_t* auser_add) {
   object_t* obj = object_create(&s_user_add_view_model_vtable);
@@ -105,7 +98,6 @@ view_model_t* user_add_view_model_create_with(user_add_t* auser_add) {
   return_value_if_fail(vm != NULL, NULL);
 
   user_add_view_model->auser_add = auser_add;
-  
 
   return vm;
 }
