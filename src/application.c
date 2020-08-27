@@ -44,6 +44,7 @@
 #include "table_client_custom_binder.h"
 
 ret_t application_init() {
+  mvvm_init();
 #ifndef AWTK_WEB
   socket_init();
   automation_agent_start(8000);
@@ -68,14 +69,10 @@ ret_t application_init() {
   view_model_factory_register("time_settings", time_settings_view_model_create);
   view_model_factory_register("change_password", change_password_view_model_create);
   
-
   return navigator_to("login");
 }
 
 #include "mvvm/mvvm.h"
-
-#define GLOBAL_INIT() mvvm_init()
-#define GLOBAL_EXIT() mvvm_deinit()
 
 ret_t application_exit() {
   log_debug("application_exit\n");
@@ -83,6 +80,7 @@ ret_t application_exit() {
   automation_agent_stop();
   socket_deinit();
 #endif/*AWTK_WEB*/
+  mvvm_deinit();
   return RET_OK;
 }
 
