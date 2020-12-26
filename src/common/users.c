@@ -35,22 +35,26 @@ static int name_cmp_descending(const void* a, const void* b) {
   return strcmp(user2->name.str, user1->name.str);
 }
 
+static ret_t clear_selected(void* ctx, const void* data) {
+  ((user_t*)data)->selected = FALSE;
+
+  return RET_OK;
+}
+
 static ret_t users_reload(users_t* users) {
   darray_t* arr = NULL;
-  user_repository_t* r = app_globals_get_user_repository();
-
   return_value_if_fail(users != NULL, RET_BAD_PARAMS);
 
   arr = &(users->users);
   darray_clear(arr);
-  user_repository_find(r, reload_cmp, users->filter.str, arr);
+  user_repository_find(users->r, reload_cmp, users->filter.str, arr);
 
   if (users->ascending) {
     darray_sort(arr, name_cmp_ascending);
   } else {
     darray_sort(arr, name_cmp_descending);
   }
-
+  darray_foreach(arr, clear_selected, NULL);
   emitter_dispatch_simple_event(EMITTER(users), EVT_ITEMS_CHANGED);
 
   return RET_OK;
@@ -70,15 +74,16 @@ ret_t users_detail(users_t* users, uint32_t index) {
 
 bool_t users_can_remove(users_t* users, uint32_t index) {
   user_t* user = users_get(users, index);
+  return_value_if_fail(users != NULL && user != NULL, RET_BAD_PARAMS);
 
   return !tk_str_eq(user->name.str, "admin");
 }
 
 ret_t users_remove(users_t* users, uint32_t index) {
   user_t* user = users_get(users, index);
-  user_repository_t* r = app_globals_get_user_repository();
+  return_value_if_fail(users != NULL && user != NULL, RET_BAD_PARAMS);
 
-  user_repository_remove(r, (tk_compare_t)user_cmp_with_name, user->name.str);
+  user_repository_remove(users->r, (tk_compare_t)user_cmp_with_name, user->name.str);
 
   return RET_ITEMS_CHANGED;
 }
@@ -89,11 +94,42 @@ uint32_t users_get_items(users_t* users) {
   return users->users.size;
 }
 
+uint32_t users_get_selected_items(users_t* users) {
+  uint32_t i = 0;
+  uint32_t nr = 0;
+  return_value_if_fail(users != NULL, 0);
+
+  for(i = 0; i < users->users.size; i++) {
+    user_t* iter = (user_t*)(users->users.elms[i]);
+    if(iter->selected) {
+      nr++;
+    }
+  }
+
+  return nr;
+}
+
 ret_t users_clear(users_t* users) {
   user_t* user = app_globals_get_current_user();
-  user_repository_t* r = app_globals_get_user_repository();
+  return_value_if_fail(users != NULL, RET_BAD_PARAMS);
 
-  user_repository_remove(r, (tk_compare_t)user_cmp_with_name_not, user->name.str);
+  if(user != NULL) {
+    user_repository_remove(users->r, (tk_compare_t)user_cmp_with_name_not, user->name.str);
+  } else {
+    user_repository_remove(users->r, (tk_compare_t)compare_always_equal, NULL);
+  }
+
+  return RET_ITEMS_CHANGED;
+}
+
+bool_t users_can_remove_selected(users_t* users) {
+  return users_get_selected_items(users) > 0;
+}
+
+ret_t users_remove_selected(users_t* users) {
+  return_value_if_fail(users != NULL, RET_BAD_PARAMS);
+
+  user_repository_remove(users->r, (tk_compare_t)user_cmp_selected, NULL);
 
   return RET_ITEMS_CHANGED;
 }
@@ -110,13 +146,12 @@ user_t* users_get(users_t* users, uint32_t index) {
 }
 
 ret_t users_destroy(users_t* users) {
-  user_repository_t* r = app_globals_get_user_repository();
   return_value_if_fail(users != NULL, RET_BAD_PARAMS);
 
   emitter_deinit(EMITTER(users));
   darray_deinit(&(users->users));
   str_reset(&(users->filter));
-  user_repository_off(r, users->event_id);
+  user_repository_off(users->r, users->event_id);
 
   TKMEM_FREE(users);
 
@@ -129,11 +164,11 @@ static ret_t users_on_repository_changed(void* ctx, event_t* e) {
   return RET_OK;
 }
 
-users_t* users_create(void) {
+users_t* users_create_with_repository(user_repository_t* r) {
   users_t* users = TKMEM_ZALLOC(users_t);
-  user_repository_t* r = app_globals_get_user_repository();
-  return_value_if_fail(users != NULL, NULL);
+  return_value_if_fail(users != NULL && r != NULL, NULL);
 
+  users->r = r;
   emitter_init(EMITTER(users));
   str_init(&(users->filter), 100);
   darray_init(&(users->users), 100, NULL, NULL);
@@ -142,6 +177,10 @@ users_t* users_create(void) {
   users->event_id = user_repository_on(r, EVT_PROP_CHANGED, users_on_repository_changed, users);
 
   return users;
+}
+
+users_t* users_create(void) {
+  return users_create_with_repository(app_globals_get_user_repository());
 }
 
 ret_t users_set_filter(users_t* users, const char* filter) {

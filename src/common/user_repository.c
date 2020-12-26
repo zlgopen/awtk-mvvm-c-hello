@@ -35,6 +35,12 @@ int user_cmp_with_name_not(user_t* user, const char* name) {
   return user_cmp_with_name(user, name) == 0 ? -1 : 0;
 }
 
+int user_cmp_selected(user_t* user, void* unused) {
+  return_value_if_fail(user != NULL, -1);
+
+  return user->selected ? 0 : -1;
+}
+
 ret_t user_repository_save(user_repository_t* repo) {
   return_value_if_fail(repo != NULL && repo->save != NULL, RET_BAD_PARAMS);
 

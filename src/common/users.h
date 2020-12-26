@@ -6,6 +6,7 @@
 #include "tkc/darray.h"
 #include "tkc/emitter.h"
 #include "common/user.h"
+#include "common/user_repository.h"
 
 BEGIN_C_DECLS
 
@@ -41,8 +42,15 @@ typedef struct _users_t {
    * 用户数。
    */
 
+  /**
+   * @property {uint32_t} selected_items
+   * @annotation ["fake", "readable"]
+   * 当前选中的用户数。
+   */
+
   darray_t users;
   uint32_t event_id;
+  user_repository_t* r;
 } users_t;
 
 /**
@@ -54,6 +62,17 @@ typedef struct _users_t {
  * @return {users_t*} 返回users对象。
  */
 users_t* users_create(void);
+
+/**
+ * @method users_create_with_repository
+ * 创建users对象。
+ *
+ * @annotation ["constructor"]
+ * @param {user_repository_t*} r repository对象。
+ *
+ * @return {users_t*} 返回users对象。
+ */
+users_t* users_create_with_repository(user_repository_t* r);
 
 /**
  * @method users_destroy
@@ -76,6 +95,27 @@ ret_t users_destroy(users_t* users);
  * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
  */
 ret_t users_clear(users_t* users);
+
+/**
+ * @method users_remove_selected
+ * 删除选中的数据。
+ *
+ * @annotation ["command"]
+ * @param {users_t*} users users对象。
+ *
+ * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
+ */
+ret_t users_remove_selected(users_t* users);
+
+/**
+ * @method users_can_remove_selected
+ * 检查remove_selected命令是否可以执行。
+ *
+ * @param {users_t*} users users对象。
+ *
+ * @return {bool_t} 返回FALSE表示不能执行，否则表示可以执行。
+ */
+bool_t users_can_remove_selected(users_t* users);
 
 /**
  * @method users_detail
@@ -121,6 +161,16 @@ bool_t users_can_remove(users_t* users, uint32_t index);
  * @return {uint32_t} 返回用户数。
  */
 uint32_t users_get_items(users_t* users);
+
+/**
+ * @method users_get_selected_items
+ * 获取选中的用户数。
+ *
+ * @param {users_t*} users users对象。
+ *
+ * @return {uint32_t} 返回用户数。
+ */
+uint32_t users_get_selected_items(users_t* users);
 
 /**
  * @method users_set_filter

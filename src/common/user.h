@@ -65,6 +65,13 @@ typedef struct _user_t {
    * 最后登录时间。
    */
   time_t last_login_time;
+  
+  /**
+   * @property {bool_t} selected
+   * @annotation ["readable", "writable"]
+   * 是否被选中。
+   */
+   bool_t selected;
 } user_t;
 
 /**

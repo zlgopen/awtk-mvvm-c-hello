@@ -3,121 +3,6 @@
     "type": "class",
     "methods": [
       {
-        "params": [],
-        "annotation": {
-          "constructor": true
-        },
-        "desc": "创建user_add对象。",
-        "name": "user_add_create",
-        "return": {
-          "type": "user_add_t*",
-          "desc": "返回user_add对象。"
-        }
-      },
-      {
-        "params": [
-          {
-            "type": "user_add_t*",
-            "name": "user_add",
-            "desc": "user_add对象。"
-          }
-        ],
-        "annotation": {
-          "destructor": true
-        },
-        "desc": "销毁user_add对象。",
-        "name": "user_add_destroy",
-        "return": {
-          "type": "ret_t",
-          "desc": "返回RET_OK表示成功，否则表示失败。"
-        }
-      },
-      {
-        "params": [
-          {
-            "type": "user_add_t*",
-            "name": "user_add",
-            "desc": "user_add对象。"
-          }
-        ],
-        "annotation": {},
-        "desc": "检查auth命令是否可以执行。",
-        "name": "user_add_can_add",
-        "return": {
-          "type": "bool_t",
-          "desc": "返回FALSE表示不能执行，否则表示可以执行。"
-        }
-      },
-      {
-        "params": [
-          {
-            "type": "user_add_t*",
-            "name": "user_add",
-            "desc": "user_add对象。"
-          }
-        ],
-        "annotation": {
-          "command": true
-        },
-        "desc": "增加用户。",
-        "name": "user_add_add",
-        "return": {
-          "type": "ret_t",
-          "desc": "返回RET_OK表示成功，否则表示失败。"
-        }
-      }
-    ],
-    "events": [],
-    "properties": [
-      {
-        "name": "name",
-        "desc": "用户名。",
-        "type": "str_t",
-        "annotation": {
-          "readable": true,
-          "writable": true
-        }
-      },
-      {
-        "name": "nick_name",
-        "desc": "昵称。",
-        "type": "str_t",
-        "annotation": {
-          "readable": true,
-          "writable": true
-        }
-      },
-      {
-        "name": "password",
-        "desc": "密码。",
-        "type": "str_t",
-        "annotation": {
-          "readable": true,
-          "writable": true
-        }
-      },
-      {
-        "name": "confirm_password",
-        "desc": "确认密码。",
-        "type": "str_t",
-        "annotation": {
-          "readable": true,
-          "writable": true
-        }
-      }
-    ],
-    "header": "common/user_add.h",
-    "desc": "user add",
-    "name": "user_add_t",
-    "annotation": {
-      "model": true
-    },
-    "level": 1
-  },
-  {
-    "type": "class",
-    "methods": [
-      {
         "params": [
           {
             "type": "user_repository_t*",
@@ -179,6 +64,112 @@
     "header": "common/app_globals.h",
     "desc": "一些全局单例对象。",
     "name": "app_globals_t",
+    "level": 1
+  },
+  {
+    "type": "class",
+    "methods": [
+      {
+        "params": [],
+        "annotation": {
+          "constructor": true
+        },
+        "desc": "创建change_password对象。",
+        "name": "change_password_create",
+        "return": {
+          "type": "change_password_t*",
+          "desc": "返回change_password对象。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "change_password_t*",
+            "name": "change_password",
+            "desc": "change_password对象。"
+          }
+        ],
+        "annotation": {
+          "destructor": true
+        },
+        "desc": "销毁change_password对象。",
+        "name": "change_password_destroy",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "change_password_t*",
+            "name": "change_password",
+            "desc": "change_password对象。"
+          }
+        ],
+        "annotation": {},
+        "desc": "检查change命令是否可以执行。",
+        "name": "change_password_can_change",
+        "return": {
+          "type": "bool_t",
+          "desc": "返回FALSE表示不能执行，否则表示可以执行。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "change_password_t*",
+            "name": "change_password",
+            "desc": "change_password对象。"
+          }
+        ],
+        "annotation": {
+          "command": true
+        },
+        "desc": "修改密码。",
+        "name": "change_password_change",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      }
+    ],
+    "events": [],
+    "properties": [
+      {
+        "name": "old_password",
+        "desc": "旧密码。",
+        "type": "str_t",
+        "annotation": {
+          "readable": true,
+          "writable": true
+        }
+      },
+      {
+        "name": "new_password",
+        "desc": "新密码。",
+        "type": "str_t",
+        "annotation": {
+          "readable": true,
+          "writable": true
+        }
+      },
+      {
+        "name": "confirm_password",
+        "desc": "确认密码。",
+        "type": "str_t",
+        "annotation": {
+          "readable": true,
+          "writable": true
+        }
+      }
+    ],
+    "header": "common/change_password.h",
+    "desc": "change current user password",
+    "name": "change_password_t",
+    "annotation": {
+      "model": true
+    },
     "level": 1
   },
   {
@@ -480,26 +471,26 @@
         "annotation": {
           "constructor": true
         },
-        "desc": "创建change_password对象。",
-        "name": "change_password_create",
+        "desc": "创建user_add对象。",
+        "name": "user_add_create",
         "return": {
-          "type": "change_password_t*",
-          "desc": "返回change_password对象。"
+          "type": "user_add_t*",
+          "desc": "返回user_add对象。"
         }
       },
       {
         "params": [
           {
-            "type": "change_password_t*",
-            "name": "change_password",
-            "desc": "change_password对象。"
+            "type": "user_add_t*",
+            "name": "user_add",
+            "desc": "user_add对象。"
           }
         ],
         "annotation": {
           "destructor": true
         },
-        "desc": "销毁change_password对象。",
-        "name": "change_password_destroy",
+        "desc": "销毁user_add对象。",
+        "name": "user_add_destroy",
         "return": {
           "type": "ret_t",
           "desc": "返回RET_OK表示成功，否则表示失败。"
@@ -508,14 +499,14 @@
       {
         "params": [
           {
-            "type": "change_password_t*",
-            "name": "change_password",
-            "desc": "change_password对象。"
+            "type": "user_add_t*",
+            "name": "user_add",
+            "desc": "user_add对象。"
           }
         ],
         "annotation": {},
-        "desc": "检查change命令是否可以执行。",
-        "name": "change_password_can_change",
+        "desc": "检查auth命令是否可以执行。",
+        "name": "user_add_can_add",
         "return": {
           "type": "bool_t",
           "desc": "返回FALSE表示不能执行，否则表示可以执行。"
@@ -524,16 +515,16 @@
       {
         "params": [
           {
-            "type": "change_password_t*",
-            "name": "change_password",
-            "desc": "change_password对象。"
+            "type": "user_add_t*",
+            "name": "user_add",
+            "desc": "user_add对象。"
           }
         ],
         "annotation": {
           "command": true
         },
-        "desc": "修改密码。",
-        "name": "change_password_change",
+        "desc": "增加用户。",
+        "name": "user_add_add",
         "return": {
           "type": "ret_t",
           "desc": "返回RET_OK表示成功，否则表示失败。"
@@ -543,8 +534,8 @@
     "events": [],
     "properties": [
       {
-        "name": "old_password",
-        "desc": "旧密码。",
+        "name": "name",
+        "desc": "用户名。",
         "type": "str_t",
         "annotation": {
           "readable": true,
@@ -552,8 +543,17 @@
         }
       },
       {
-        "name": "new_password",
-        "desc": "新密码。",
+        "name": "nick_name",
+        "desc": "昵称。",
+        "type": "str_t",
+        "annotation": {
+          "readable": true,
+          "writable": true
+        }
+      },
+      {
+        "name": "password",
+        "desc": "密码。",
         "type": "str_t",
         "annotation": {
           "readable": true,
@@ -570,9 +570,9 @@
         }
       }
     ],
-    "header": "common/change_password.h",
-    "desc": "change current user password",
-    "name": "change_password_t",
+    "header": "common/user_add.h",
+    "desc": "user add",
+    "name": "user_add_t",
     "annotation": {
       "model": true
     },
@@ -1033,6 +1033,15 @@
           "readable": true,
           "writable": true
         }
+      },
+      {
+        "name": "selected",
+        "desc": "是否被选中。",
+        "type": "bool_t",
+        "annotation": {
+          "readable": true,
+          "writable": true
+        }
       }
     ],
     "header": "common/user.h",
@@ -1092,6 +1101,40 @@
         "return": {
           "type": "ret_t",
           "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "users_t*",
+            "name": "users",
+            "desc": "users对象。"
+          }
+        ],
+        "annotation": {
+          "command": true
+        },
+        "desc": "删除选中的数据。",
+        "name": "users_remove_selected",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "users_t*",
+            "name": "users",
+            "desc": "users对象。"
+          }
+        ],
+        "annotation": {},
+        "desc": "检查remove_selected命令是否可以执行。",
+        "name": "users_can_remove_selected",
+        "return": {
+          "type": "bool_t",
+          "desc": "返回FALSE表示不能执行，否则表示可以执行。"
         }
       },
       {
@@ -1172,6 +1215,22 @@
         "annotation": {},
         "desc": "获取用户数。",
         "name": "users_get_items",
+        "return": {
+          "type": "uint32_t",
+          "desc": "返回用户数。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "users_t*",
+            "name": "users",
+            "desc": "users对象。"
+          }
+        ],
+        "annotation": {},
+        "desc": "获取选中的用户数。",
+        "name": "users_get_selected_items",
         "return": {
           "type": "uint32_t",
           "desc": "返回用户数。"
@@ -1268,6 +1327,15 @@
       {
         "name": "items",
         "desc": "用户数。",
+        "type": "uint32_t",
+        "annotation": {
+          "fake": true,
+          "readable": true
+        }
+      },
+      {
+        "name": "selected_items",
+        "desc": "当前选中的用户数。",
         "type": "uint32_t",
         "annotation": {
           "fake": true,
