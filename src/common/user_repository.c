@@ -23,22 +23,25 @@
 
 static ret_t user_repository_dispatch_changed(user_repository_t* repo);
 
-int user_cmp_with_name(user_t* user, const char* name) {
-  return_value_if_fail(user != NULL && user->name.str != NULL && name != NULL, -1);
+int user_cmp_with_name(object_t* user, const char* name) {
+  user_t* user_user = USER(user);
+  return_value_if_fail(user_user != NULL && user_user->name.str != NULL && name != NULL, -1);
 
-  return strcmp(user->name.str, name);
+  return strcmp(user_user->name.str, name);
 }
 
-int user_cmp_with_name_not(user_t* user, const char* name) {
-  return_value_if_fail(user != NULL && user->name.str != NULL && name != NULL, -1);
+int user_cmp_with_name_not(object_t* user, const char* name) {
+  user_t* user_user = USER(user);
+  return_value_if_fail(user_user != NULL && user_user->name.str != NULL && name != NULL, -1);
 
   return user_cmp_with_name(user, name) == 0 ? -1 : 0;
 }
 
-int user_cmp_selected(user_t* user, void* unused) {
-  return_value_if_fail(user != NULL, -1);
+int user_cmp_selected(object_t* user, void* unused) {
+  user_t* user_user = USER(user);
+  return_value_if_fail(user_user != NULL, -1);
 
-  return user->selected ? 0 : -1;
+  return user_user->selected ? 0 : -1;
 }
 
 ret_t user_repository_save(user_repository_t* repo) {
@@ -60,7 +63,7 @@ ret_t user_repository_load(user_repository_t* repo) {
   return ret;
 }
 
-ret_t user_repository_add(user_repository_t* repo, const user_t* user) {
+ret_t user_repository_add(user_repository_t* repo, const object_t* user) {
   ret_t ret = RET_OK;
   return_value_if_fail(repo != NULL && repo->add != NULL && user != NULL, RET_BAD_PARAMS);
 
@@ -73,7 +76,7 @@ ret_t user_repository_add(user_repository_t* repo, const user_t* user) {
   return ret;
 }
 
-ret_t user_repository_update(user_repository_t* repo, const user_t* user) {
+ret_t user_repository_update(user_repository_t* repo, const object_t* user) {
   ret_t ret = RET_OK;
   return_value_if_fail(repo != NULL && repo->update != NULL && user != NULL, RET_BAD_PARAMS);
 
@@ -106,54 +109,46 @@ ret_t user_repository_find(user_repository_t* repo, tk_compare_t cmp, void* ctx,
   return repo->find(repo, cmp, ctx, users);
 }
 
-user_t* user_repository_find_one(user_repository_t* repo, tk_compare_t cmp, void* ctx) {
+object_t* user_repository_find_one(user_repository_t* repo, tk_compare_t cmp, void* ctx) {
   return_value_if_fail(repo != NULL && repo->find_one != NULL, NULL);
 
   return repo->find_one(repo, cmp, ctx);
 }
 
-user_t* user_repository_find_by_name(user_repository_t* repo, const char* name) {
+object_t* user_repository_find_by_name(user_repository_t* repo, const char* name) {
   return user_repository_find_one(repo, (tk_compare_t)user_cmp_with_name, (void*)name);
-}
-
-ret_t user_repository_destroy(user_repository_t* repo) {
-  return_value_if_fail(repo != NULL && repo->destroy != NULL, RET_BAD_PARAMS);
-
-  if (repo->emitter != NULL) {
-    emitter_destroy(repo->emitter);
-    repo->emitter = NULL;
-  }
-
-  return repo->destroy(repo);
 }
 
 uint32_t user_repository_on(user_repository_t* repo, uint32_t etype, event_func_t handler,
                             void* ctx) {
-  return_value_if_fail(repo != NULL && handler != NULL, RET_BAD_PARAMS);
+  object_t* obj = OBJECT(repo);
+  return_value_if_fail(obj != NULL && handler != NULL, RET_BAD_PARAMS);
 
-  if (repo->emitter == NULL) {
-    repo->emitter = emitter_create();
+  if (obj != NULL) {
+    return emitter_on((emitter_t*)obj, etype, handler, ctx);
   }
 
-  return emitter_on(repo->emitter, etype, handler, ctx);
+  return RET_FAIL;
 }
 
 ret_t user_repository_off(user_repository_t* repo, uint32_t id) {
-  return_value_if_fail(repo != NULL, RET_BAD_PARAMS);
+  object_t* obj = OBJECT(repo);
+  return_value_if_fail(obj != NULL, RET_BAD_PARAMS);
 
-  if (repo->emitter != NULL) {
-    return emitter_off(repo->emitter, id);
+  if (obj != NULL) {
+    return emitter_off((emitter_t*)obj, id);
   }
 
   return RET_OK;
 }
 
 static ret_t user_repository_dispatch_changed(user_repository_t* repo) {
+  object_t* obj = OBJECT(repo);
   event_t e = event_init(EVT_PROP_CHANGED, repo);
-  return_value_if_fail(repo != NULL, RET_BAD_PARAMS);
+  return_value_if_fail(obj != NULL, RET_BAD_PARAMS);
 
-  if (repo->emitter != NULL) {
-    return emitter_dispatch(repo->emitter, &e);
+  if (obj != NULL) {
+    return emitter_dispatch((emitter_t*)obj, &e);
   }
 
   return RET_OK;

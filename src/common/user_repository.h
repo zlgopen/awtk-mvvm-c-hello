@@ -23,7 +23,7 @@
 #define TK_USER_REPOSITORY_H
 
 #include "tkc/darray.h"
-#include "tkc/emitter.h"
+#include "tkc/object.h"
 #include "common/user.h"
 
 BEGIN_C_DECLS
@@ -33,13 +33,13 @@ typedef struct _user_repository_t user_repository_t;
 
 typedef ret_t (*user_repository_save_t)(user_repository_t* repo);
 typedef ret_t (*user_repository_load_t)(user_repository_t* repo);
-typedef ret_t (*user_repository_add_t)(user_repository_t* repo, const user_t* user);
-typedef ret_t (*user_repository_update_t)(user_repository_t* repo, const user_t* user);
+typedef ret_t (*user_repository_add_t)(user_repository_t* repo, const object_t* user);
+typedef ret_t (*user_repository_update_t)(user_repository_t* repo, const object_t* user);
 typedef ret_t (*user_repository_remove_t)(user_repository_t* repo, tk_compare_t cmp, void* ctx);
 typedef ret_t (*user_repository_find_t)(user_repository_t* repo, tk_compare_t cmp, void* ctx,
                                         darray_t* users);
-typedef user_t* (*user_repository_find_one_t)(user_repository_t* repo, tk_compare_t cmp, void* ctx);
-typedef ret_t (*user_repository_destroy_t)(user_repository_t* repo);
+typedef object_t* (*user_repository_find_one_t)(user_repository_t* repo, tk_compare_t cmp,
+                                                void* ctx);
 
 /**
  * @class user_repository_t
@@ -47,7 +47,7 @@ typedef ret_t (*user_repository_destroy_t)(user_repository_t* repo);
  *
  */
 struct _user_repository_t {
-  emitter_t* emitter;
+  object_t obj;
 
   user_repository_save_t save;
   user_repository_load_t load;
@@ -56,7 +56,6 @@ struct _user_repository_t {
   user_repository_remove_t remove;
   user_repository_find_t find;
   user_repository_find_one_t find_one;
-  user_repository_destroy_t destroy;
 };
 
 /**
@@ -84,22 +83,22 @@ ret_t user_repository_load(user_repository_t* repo);
  * 增加User对象。
  *
  * @param {user_repository_t*} repo User持久化对象。
- * @param {const user_t*} user User对象。
+ * @param {const object_t*} user User对象。
  *
  * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
  */
-ret_t user_repository_add(user_repository_t* repo, const user_t* user);
+ret_t user_repository_add(user_repository_t* repo, const object_t* user);
 
 /**
  * @method user_repository_update
  * 更新User对象。
  *
  * @param {user_repository_t*} repo User持久化对象。
- * @param {const user_t*} user User对象。
+ * @param {const object_t*} user User对象。
  *
  * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
  */
-ret_t user_repository_update(user_repository_t* repo, const user_t* user);
+ret_t user_repository_update(user_repository_t* repo, const object_t* user);
 
 /**
  * @method user_repository_remove
@@ -136,9 +135,9 @@ ret_t user_repository_find(user_repository_t* repo, tk_compare_t cmp, void* ctx,
  * @param {tk_compare_t} cmp 比较函数。
  * @param {void*} ctx 比较函数的上下文。
  *
- * @return {user_t*} 返回User对象。
+ * @return {object_t*} 返回User对象。
  */
-user_t* user_repository_find_one(user_repository_t* repo, tk_compare_t cmp, void* ctx);
+object_t* user_repository_find_one(user_repository_t* repo, tk_compare_t cmp, void* ctx);
 
 /**
  * @method user_repository_find_by_name
@@ -147,9 +146,9 @@ user_t* user_repository_find_one(user_repository_t* repo, tk_compare_t cmp, void
  * @param {user_repository_t*} repo User持久化对象。
  * @param {const char*} name User名称。
  *
- * @return {user_t*} 返回User对象。
+ * @return {object_t*} 返回User对象。
  */
-user_t* user_repository_find_by_name(user_repository_t* repo, const char* name);
+object_t* user_repository_find_by_name(user_repository_t* repo, const char* name);
 
 /**
  * @method user_repository_on
@@ -174,22 +173,16 @@ uint32_t user_repository_on(user_repository_t* repo, uint32_t etype, event_func_
  */
 ret_t user_repository_off(user_repository_t* repo, uint32_t id);
 
-/**
- * @method user_repository_destroy
- * 销毁User持久化对象。
- *
- * @param {user_repository_t*} repo User持久化对象。
- *
- * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
- */
-ret_t user_repository_destroy(user_repository_t* repo);
-
 #define USER_REPOSITORY(repo) ((user_repository_t*)(repo))
 
 /*helper functions*/
-int user_cmp_with_name(user_t* user, const char* name);
-int user_cmp_with_name_not(user_t* user, const char* name);
-int user_cmp_selected(user_t* user, void* unused);
+/**
+ * @method user_cmp_with_name
+ * export for test only
+ */
+int user_cmp_with_name(object_t* user, const char* name);
+int user_cmp_with_name_not(object_t* user, const char* name);
+int user_cmp_selected(object_t* user, void* unused);
 
 END_C_DECLS
 

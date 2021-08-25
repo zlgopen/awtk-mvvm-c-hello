@@ -40,7 +40,7 @@ bool_t user_add_can_add(user_add_t* user_add) {
 
 ret_t user_add_add(user_add_t* user_add) {
   value_t v;
-  user_t* user = NULL;
+  object_t* user = NULL;
   user_repository_t* r = app_globals_get_user_repository();
 
   if (user_repository_find_by_name(r, user_add->name.str) != NULL) {
@@ -50,15 +50,16 @@ ret_t user_add_add(user_add_t* user_add) {
   }
 
   user = user_create();
+  user_t* user_user = USER(user);
   value_set_pointer(&v, user);
 
-  str_set(&(user->name), user_add->name.str);
-  str_set(&(user->nick_name), user_add->nick_name.str);
-  str_set(&(user->password), user_add->confirm_password.str);
+  str_set(&(user_user->name), user_add->name.str);
+  str_set(&(user_user->nick_name), user_add->nick_name.str);
+  str_set(&(user_user->password), user_add->confirm_password.str);
   if (user_repository_add(r, user) != RET_OK) {
     log_debug("add user failed.\n");
   }
-  user_destroy(user);
+  OBJECT_UNREF(user);
   navigator_back();
 
   return RET_OK;

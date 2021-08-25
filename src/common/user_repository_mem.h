@@ -40,7 +40,7 @@ typedef struct _user_repository_mem_t {
 
 /**
  * @method user_repository_mem_create
- * 创建User持久化对象。
+ * 创建User持久化对象（该对象使用OBJECT_UNREF释放）。
  *
  * @param {user_repository_t*} repo User持久化对象。
  *

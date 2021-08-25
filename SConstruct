@@ -3,11 +3,6 @@ import scripts.app_helper as app
 
 DEPENDS_LIBS = [
   {
-    "root" : '../awtk-mvvm',
-    'shared_libs': ['mvvm'],
-    'static_libs': []
-  },
-  {
     "root" : '../awtk-restful-httpd',
     'shared_libs': ['httpd'],
     'static_libs': []
@@ -23,13 +18,13 @@ DEPENDS_LIBS = [
     'static_libs': []
   },
   {
-    "root" : '../awtk-widget-slidable-row',
-    'shared_libs': ['slidable_row'],
+    "root" : '../awtk-widget-table-view-mvvm',
+    'shared_libs': ['table_view_mvvm'],
     'static_libs': []
   },
   {
-    "root" : '../awtk-widget-table-view-mvvm',
-    'shared_libs': ['table_view_mvvm'],
+    "root" : '../awtk-widget-slidable-row',
+    'shared_libs': ['slidable_row'],
     'static_libs': []
   }
 ]
@@ -40,7 +35,8 @@ APP_CPPPATH = [
   os.path.join(APP_SRC, 'view_models'),
 ]
 
+ARGUMENTS['WITH_MVVM'] = 'true'
 helper = app.Helper(ARGUMENTS);
-helper.set_deps(DEPENDS_LIBS).add_cpppath(APP_CPPPATH).call(DefaultEnvironment)
+helper.set_dll_def('src/app_base.def').set_deps(DEPENDS_LIBS).add_cpppath(APP_CPPPATH).call(DefaultEnvironment)
 
 helper.SConscript(['src/SConscript', 'tests/SConscript'])

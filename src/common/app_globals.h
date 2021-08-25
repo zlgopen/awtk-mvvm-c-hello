@@ -33,7 +33,7 @@ BEGIN_C_DECLS
  *
  */
 typedef struct _app_globals_t {
-  user_t* current_user;
+  object_t* current_user;
   user_repository_t* user_repository;
 } app_globals_t;
 
@@ -66,9 +66,9 @@ user_repository_t* app_globals_get_user_repository(void);
  * @method app_globals_get_current_user
  * 获取当前登录用户。
  *
- * @return {user_t*} 返回user对象。
+ * @return {object_t*} 返回user对象。
  */
-user_t* app_globals_get_current_user(void);
+object_t* app_globals_get_current_user(void);
 
 /**
  * @method app_globals_set_current_user
@@ -76,7 +76,7 @@ user_t* app_globals_get_current_user(void);
  *
  * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
  */
-ret_t app_globals_set_current_user(user_t* user);
+ret_t app_globals_set_current_user(object_t* user);
 
 #define REQ_ARG_USER "user"
 

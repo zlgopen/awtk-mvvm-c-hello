@@ -36,11 +36,10 @@ ret_t app_globals_deinit(void) {
   return_value_if_fail(s_globals.user_repository != NULL, RET_OOM);
 
   if (s_globals.current_user != NULL) {
-    user_destroy(s_globals.current_user);
-    s_globals.current_user = NULL;
+    OBJECT_UNREF(s_globals.current_user);
   }
 
-  user_repository_destroy(s_globals.user_repository);
+  OBJECT_UNREF(s_globals.user_repository);
   memset(&s_globals, 0x00, sizeof(s_globals));
 
   return RET_OK;
@@ -50,9 +49,9 @@ user_repository_t* app_globals_get_user_repository(void) {
   return s_globals.user_repository;
 }
 
-ret_t app_globals_set_current_user(user_t* user) {
+ret_t app_globals_set_current_user(object_t* user) {
   if (s_globals.current_user != NULL) {
-    user_destroy(s_globals.current_user);
+    OBJECT_UNREF(s_globals.current_user);
   }
 
   s_globals.current_user = user_dup(user);
@@ -60,6 +59,6 @@ ret_t app_globals_set_current_user(user_t* user) {
   return RET_OK;
 }
 
-user_t* app_globals_get_current_user(void) {
+object_t* app_globals_get_current_user(void) {
   return s_globals.current_user;
 }

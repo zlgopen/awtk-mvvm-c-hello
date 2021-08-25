@@ -1,16 +1,26 @@
 import os
 import sys
+import platform
 
-env=DefaultEnvironment().Clone()
+env = DefaultEnvironment().Clone()
+BIN_DIR = os.environ['BIN_DIR'];
+LIB_DIR = os.environ['LIB_DIR'];
 
-BIN_DIR=os.environ['BIN_DIR'];
-LIB_DIR=os.environ['LIB_DIR'];
-
-sources = Glob('models/*.c') + \
-  Glob('assets*.c') + \
-  Glob('common/*.c') +  \
+sources = Glob('common/*.c') + \
+  Glob('models/*.c') +  \
   Glob('view_models/*.c') + \
-  Glob('repository/*.c') \
+  Glob('repository/*.c')
 
-env.Library(os.path.join(LIB_DIR, 'awtk_mvvm_app'), sources);
-env.Program(os.path.join(BIN_DIR, 'demo'), Glob('application.c'), LIBS=['awtk_mvvm_app'] + env['LIBS']);
+EXPORT_DEF=''
+OS_NAME = platform.system();
+if OS_NAME == 'Windows':
+  EXPORT_DEF = ' /DEF:"src/app_base.def" '
+print('EXPORT_DEF='+EXPORT_DEF)
+
+if 'BUILD_SHARED' in os.environ and os.environ['BUILD_SHARED'] == 'True':
+  LINKFLAGS=env['LINKFLAGS'] + EXPORT_DEF
+  env.SharedLibrary(os.path.join(BIN_DIR, 'app_base'), sources, LINKFLAGS=LINKFLAGS)
+else:
+  env.Library(os.path.join(LIB_DIR, 'app_base'), sources)
+
+env.Program(os.path.join(BIN_DIR, 'demo'), Glob('*.c'), LIBS=['app_base'] + env['LIBS'])

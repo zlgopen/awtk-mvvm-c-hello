@@ -5,7 +5,7 @@
 
 user_info_t* user_info_create(navigator_request_t* req) {
   user_info_t* user_info = TKMEM_ZALLOC(user_info_t);
-  user_t* user = (user_t*)object_get_prop_pointer(OBJECT(req), REQ_ARG_USER);
+  object_t* user = (object_t*)object_get_prop_pointer(OBJECT(req), REQ_ARG_USER);
 
   return_value_if_fail(user_info != NULL, NULL);
 
@@ -17,11 +17,12 @@ user_info_t* user_info_create(navigator_request_t* req) {
     user = app_globals_get_current_user();
   }
 
-  str_set(&(user_info->name), user->name.str);
-  str_set(&(user_info->nick_name), user->nick_name.str);
-  str_set(&(user_info->password), user->password.str);
-  user_info->registered_time = user->registered_time;
-  user_info->last_login_time = user->last_login_time;
+  user_t* user_user = USER(user);
+  str_set(&(user_info->name), user_user->name.str);
+  str_set(&(user_info->nick_name), user_user->nick_name.str);
+  str_set(&(user_info->password), user_user->password.str);
+  user_info->registered_time = user_user->registered_time;
+  user_info->last_login_time = user_user->last_login_time;
 
   return user_info;
 }

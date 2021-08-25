@@ -32,10 +32,18 @@ ret_t login_destroy(login_t* login) {
 }
 
 bool_t login_can_auth(login_t* login) {
-  return login->name.size > 0 && login->password.size > 0;
+  if (login->name.size > 0 && login->password.size > 0) {
+      user_repository_t* r = app_globals_get_user_repository();
+      object_t* user = user_repository_find_by_name(r, login->name.str);
+      if (user != NULL) {
+          return TRUE;
+      }
+  }
+  
+  return FALSE;
 }
 
-static ret_t login_navigator_to(const char* target, user_t* user) {
+static ret_t login_navigator_to(const char* target, object_t* user) {
   navigator_request_t* req = navigator_request_create(target, NULL);
   return_value_if_fail(req != NULL, RET_OOM);
 
@@ -48,11 +56,12 @@ static ret_t login_navigator_to(const char* target, user_t* user) {
 
 ret_t login_auth(login_t* login) {
   user_repository_t* r = app_globals_get_user_repository();
-  user_t* user = user_repository_find_by_name(r, login->name.str);
-  return_value_if_fail(user != NULL, RET_OK);
+  object_t* user = user_repository_find_by_name(r, login->name.str);
+  user_t* user_user = USER(user);
+  return_value_if_fail(user_user != NULL, RET_OK);
 
   if (user_auth(user, login->password.str) == RET_OK) {
-    user->last_login_time = time(0);
+    user_user->last_login_time = time(0);
     if (user_is_admin(user)) {
       navigator_to("admin_home");
     } else {

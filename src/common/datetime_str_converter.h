@@ -26,6 +26,19 @@
 
 BEGIN_C_DECLS
 
+/**
+ * @class datetime_str_converter_t
+ * @annotation ["scriptable", "fake"]
+ * 日期转换器。
+ */
+
+/**
+ * @method datetime_str_converter_init
+ * 日期转换器初始化。
+ * @annotation ["static", "scriptable"]
+ *
+ * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
+ */
 ret_t datetime_str_converter_init(void);
 
 END_C_DECLS

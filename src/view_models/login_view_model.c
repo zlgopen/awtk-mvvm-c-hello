@@ -5,41 +5,39 @@
 #include "tkc/utils.h"
 #include "mvvm/base/utils.h"
 #include "login_view_model.h"
+#include "common/app_globals.h"
 
 static ret_t login_view_model_set_prop(object_t* obj, const char* name, const value_t* v) {
   login_t* alogin = ((login_view_model_t*)(obj))->alogin;
 
   if (tk_str_ieq("name", name)) {
-     str_set(&(alogin->name), value_str(v));
+    str_set(&(alogin->name), value_str(v));
 
-     return RET_OK;
+    return RET_OK;
   } else if (tk_str_ieq("password", name)) {
-     str_set(&(alogin->password), value_str(v));
+    str_set(&(alogin->password), value_str(v));
 
-     return RET_OK;
+    return RET_OK;
   }
-  
+
   return RET_NOT_FOUND;
 }
-
 
 static ret_t login_view_model_get_prop(object_t* obj, const char* name, value_t* v) {
   login_t* alogin = ((login_view_model_t*)(obj))->alogin;
 
   if (tk_str_ieq("name", name)) {
-     value_set_str(v, alogin->name.str);
-     return RET_OK;
+    value_set_str(v, alogin->name.str);
+    return RET_OK;
   } else if (tk_str_ieq("password", name)) {
-     value_set_str(v, alogin->password.str);
-     return RET_OK;
+    value_set_str(v, alogin->password.str);
+    return RET_OK;
   }
 
   return RET_NOT_FOUND;
 }
 
-
 static bool_t login_view_model_can_exec(object_t* obj, const char* name, const char* args) {
- 
   login_view_model_t* vm = (login_view_model_t*)(obj);
   login_t* alogin = vm->alogin;
   if (tk_str_ieq("auth", name)) {
@@ -49,7 +47,6 @@ static bool_t login_view_model_can_exec(object_t* obj, const char* name, const c
 }
 
 static ret_t login_view_model_exec(object_t* obj, const char* name, const char* args) {
- 
   login_view_model_t* vm = (login_view_model_t*)(obj);
   login_t* alogin = vm->alogin;
   if (tk_str_ieq("auth", name)) {
@@ -62,26 +59,27 @@ static ret_t login_view_model_on_destroy(object_t* obj) {
   login_view_model_t* vm = (login_view_model_t*)(obj);
   return_value_if_fail(vm != NULL, RET_BAD_PARAMS);
 
-  
   login_destroy(vm->alogin);
 
   return view_model_deinit(VIEW_MODEL(obj));
 }
 
-static const object_vtable_t s_login_view_model_vtable = {
-  "login_view_model_t",
-  "login_view_model_t",
-  sizeof(login_view_model_t),
-  FALSE,
-  login_view_model_on_destroy,
-  NULL,
-  login_view_model_get_prop,
-  login_view_model_set_prop,
-  NULL,
-  NULL,
-  login_view_model_can_exec,
-  login_view_model_exec
-};
+static const object_vtable_t s_login_view_model_vtable = {"login_view_model_t",
+                                                          "login_view_model_t",
+                                                          sizeof(login_view_model_t),
+                                                          FALSE,
+                                                          login_view_model_on_destroy,
+                                                          NULL,
+                                                          login_view_model_get_prop,
+                                                          login_view_model_set_prop,
+                                                          NULL,
+                                                          NULL,
+                                                          login_view_model_can_exec,
+                                                          login_view_model_exec};
+
+static ret_t dispatch_props_changed(void* ctx, event_t* e) {
+  return view_model_notify_props_changed(VIEW_MODEL(ctx));
+}
 
 view_model_t* login_view_model_create_with(login_t* alogin) {
   object_t* obj = object_create(&s_login_view_model_vtable);
@@ -91,7 +89,11 @@ view_model_t* login_view_model_create_with(login_t* alogin) {
   return_value_if_fail(vm != NULL, NULL);
 
   login_view_model->alogin = alogin;
-  
+
+  user_repository_on(app_globals_get_user_repository(), EVT_PROP_CHANGED,
+                     (event_func_t)emitter_dispatch, vm);
+  emitter_on(EMITTER(app_globals_get_user_repository()), EVT_ITEMS_CHANGED, dispatch_props_changed,
+             vm);
 
   return vm;
 }

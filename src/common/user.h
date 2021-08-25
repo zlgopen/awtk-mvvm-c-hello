@@ -23,8 +23,7 @@
 #define TK_USER_H
 
 #include "tkc/str.h"
-#include "tkc/mem.h"
-#include "tkc/utils.h"
+#include "tkc/object.h"
 
 BEGIN_C_DECLS
 
@@ -35,6 +34,7 @@ BEGIN_C_DECLS
  * user info
  */
 typedef struct _user_t {
+  object_t obj;
   /**
    * @property {str_t} name
    * @annotation ["readable", "writable"]
@@ -65,42 +65,54 @@ typedef struct _user_t {
    * 最后登录时间。
    */
   time_t last_login_time;
-  
   /**
    * @property {bool_t} selected
    * @annotation ["readable", "writable"]
    * 是否被选中。
    */
-   bool_t selected;
+  bool_t selected;
+
+  /*private*/
+  uint32_t event_id;
 } user_t;
 
 /**
  * @method user_create
- * 创建user对象。
+ * 创建user的obj对象。
  *
  * @annotation ["constructor"]
- * @return {user_t*} 返回user对象。
+ * @return {object_t*} 返回user的obj对象。
  */
-user_t* user_create(void);
+object_t* user_create(void);
 
 /**
- * @method user_destroy
- * 销毁user对象。
+ * @method user_cast
+ * 转换为user对象。
  *
- * @annotation ["destructor"]
- * @param {user_t*} user user对象。
+ * @annotation ["cast"]
+ * @param {object_t*} obj object。
  *
- * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
+ * @return {user_t*} 返回user对象。
  */
-ret_t user_destroy(user_t* user);
+user_t* user_cast(object_t* obj);
 
-user_t* user_copy(user_t* user, const user_t* other);
-user_t* user_dup(const user_t* user);
+#define USER(obj) user_cast(obj)
 
-ret_t user_auth(user_t* user, const char* password);
-bool_t user_equal(user_t* user, user_t* other);
-int user_cmp(user_t* a, user_t* b);
-bool_t user_is_admin(user_t* user);
+/**
+ * @method user_copy
+ * export for test only
+ */
+object_t* user_copy(object_t* user, const object_t* other);
+
+/**
+ * @method user_equal
+ * export for test only
+ */
+bool_t user_equal(object_t* user, object_t* other);
+
+object_t* user_dup(const object_t* user);
+ret_t user_auth(object_t* user, const char* password);
+bool_t user_is_admin(object_t* user);
 
 END_C_DECLS
 

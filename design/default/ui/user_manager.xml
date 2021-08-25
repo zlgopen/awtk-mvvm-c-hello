@@ -1,8 +1,8 @@
-<window anim_hint="htranslate" v-model="users" text="User Manager">
- <row children_layout="default(rows=1,cols=0,s=4,m=2)", x="0" y="0" w="100%" h="30">
+<window v-model="users" anim_hint="htranslate" text="User Manager">
+ <row children_layout="default(rows=1,cols=0,s=4,m=2)" x="0" y="0" w="100%" h="30">
    <edit name="filter" w="40%"  v-data:text="{filter, Trigger=Changing}" tips="filter"/>
    <check_button name="ascending" w="35%" text="ascending" v-data:value="{ascending}"/>
-   <label name="items" w="15%" v-data:text="{items}"/>
+   <label name="items" w="15%" v-data:text="{items.size}"/>
  </row>
 
   <table_view x="0" y="32" w="100%" h="-80">
@@ -11,16 +11,16 @@
       <label w="80%" text="Name"/>
     </table_header>
 
-    <table_client name="table_client" x="0"  y="30" w="-12" h="-30" row_height="40" v-data:rows="{items}">
-      <table_row w="100%" h="40" children_layout="default(rows=1,cols=0,s=4)">
+    <table_client name="table_client" x="0"  y="30" w="-12" h="-30" row_height="40">
+      <table_row v-for="items" w="100%" h="40" children_layout="default(rows=1,cols=0,s=4)">
         <slidable_row  w="100%" h="100%">
          <column children_layout="default(rows=1,cols=0,s=4)">
           <check_button w="40" v-data:value="{item.selected}"/>
           <label w="80" v-data:text="{index}"/>
           <label w="-120" v-data:text="{item.name}"/>
          </column>
-         <button w="80" text="Detail" v-on:click="{detail}"/>
-         <confirmable_button w="80" v-on:click="{remove}" style="remove" tr_text="Remove" popup_win_w="200"/>
+         <button w="80" text="Detail" v-on:click="{detail, Args=fscript?index=index}"/>
+         <confirmable_button w="80" v-on:click="{remove, Args=fscript?index=index}" style="remove" tr_text="Remove" popup_win_w="200"/>
        </slidable_row>
       </table_row>
     </table_client>
