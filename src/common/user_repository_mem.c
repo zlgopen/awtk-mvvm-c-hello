@@ -19,6 +19,7 @@
  *
  */
 #include <time.h>
+#include "tkc/utils.h"
 #include "user_repository_mem.h"
 
 static ret_t user_repository_mem_save(user_repository_t* repo) {

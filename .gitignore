@@ -30,3 +30,6 @@ bin/hello*
 .vscode
 .vs
 res
+*.os
+src/app_base.def
+idl
