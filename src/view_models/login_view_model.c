@@ -90,10 +90,9 @@ view_model_t* login_view_model_create_with(login_t* alogin) {
 
   login_view_model->alogin = alogin;
 
-  user_repository_on(app_globals_get_user_repository(), EVT_PROP_CHANGED,
-                     (event_func_t)emitter_dispatch, vm);
-  emitter_on(EMITTER(app_globals_get_user_repository()), EVT_ITEMS_CHANGED, dispatch_props_changed,
-             vm);
+  user_repository_on(app_globals_get_user_repository(), EVT_ITEMS_CHANGED, emitter_forward, vm);
+  user_repository_on(app_globals_get_user_repository(), EVT_PROPS_CHANGED, emitter_forward, vm);
+  user_repository_on(app_globals_get_user_repository(), EVT_PROP_CHANGED, emitter_forward, vm);
 
   return vm;
 }

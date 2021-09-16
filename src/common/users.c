@@ -44,8 +44,7 @@ static ret_t users_user_init(void* ctx, const void* data) {
   user->selected = FALSE;
 
   if (user->event_id == 0) {
-    user->event_id =
-        emitter_on(EMITTER(user), EVT_PROP_CHANGED, (event_func_t)emitter_dispatch, users);
+    user->event_id = emitter_on(EMITTER(user), EVT_PROP_CHANGED, emitter_forward, users);
   }
 
   return RET_OK;
@@ -199,8 +198,14 @@ static ret_t users_destroy(object_t* obj) {
 
 static ret_t users_get_prop(object_t* obj, const char* name, value_t* v) {
   int32_t index = -1;
+  object_t* sub = NULL;
   users_t* users = USERS(obj);
   return_value_if_fail(users != NULL, RET_BAD_PARAMS);
+
+  sub = object_get_child_object(obj, name, &name);
+  if (sub != NULL) {
+    return object_get_prop(sub, name, v);
+  }
 
   if (tk_str_ieq("filter", name)) {
     value_set_str(v, users->filter.str);
@@ -236,8 +241,14 @@ static ret_t users_get_prop(object_t* obj, const char* name, value_t* v) {
 
 static ret_t users_set_prop(object_t* obj, const char* name, const value_t* v) {
   int32_t index = -1;
+  object_t* sub = NULL;
   users_t* users = USERS(obj);
   return_value_if_fail(users != NULL, RET_BAD_PARAMS);
+
+  sub = object_get_child_object(obj, name, &name);
+  if (sub != NULL) {
+    return object_set_prop(sub, name, v);
+  }
 
   if (tk_str_ieq("filter", name)) {
     return users_set_filter(obj, value_str(v));
@@ -254,8 +265,14 @@ static ret_t users_set_prop(object_t* obj, const char* name, const value_t* v) {
 
 static bool_t users_can_exec(object_t* obj, const char* name, const char* args) {
   int32_t index = -1;
+  object_t* sub = NULL;
   users_t* users = USERS(obj);
   return_value_if_fail(users != NULL, RET_BAD_PARAMS);
+
+  sub = object_get_child_object(obj, name, &name);
+  if (sub != NULL) {
+    return object_can_exec(sub, name, args);
+  }
 
   if (args != NULL) {
     object_t* a = object_default_create();
@@ -281,8 +298,14 @@ static bool_t users_can_exec(object_t* obj, const char* name, const char* args) 
 
 static ret_t users_exec(object_t* obj, const char* name, const char* args) {
   int32_t index = -1;
+  object_t* sub = NULL;
   users_t* users = USERS(obj);
   return_value_if_fail(users != NULL, RET_BAD_PARAMS);
+
+  sub = object_get_child_object(obj, name, &name);
+  if (sub != NULL) {
+    return object_exec(sub, name, args);
+  }
 
   if (args && strstr(args, "index")) {
     object_t* a = object_default_create();

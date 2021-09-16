@@ -27,7 +27,9 @@ view_model_t* users_view_model_create(navigator_request_t* req) {
   return_value_if_fail(users != NULL, NULL);
   view_model_t* vm = view_model_object_wrapper_create(users);
 
-  emitter_on(EMITTER(users), EVT_ITEMS_CHANGED, (event_func_t)emitter_dispatch, vm);
+  emitter_on(EMITTER(users), EVT_ITEMS_CHANGED, emitter_forward, vm);
+  emitter_on(EMITTER(users), EVT_PROPS_CHANGED, emitter_forward, vm);
+  emitter_on(EMITTER(users), EVT_PROP_CHANGED, emitter_forward, vm);
 
   users_reload(users);
 
