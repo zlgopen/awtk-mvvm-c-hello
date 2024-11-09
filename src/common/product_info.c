@@ -6,6 +6,11 @@
 product_info_t* product_info_create(void) {
   product_info_t* product_info = TKMEM_ZALLOC(product_info_t);
   return_value_if_fail(product_info != NULL, NULL);
+  
+  str_init(&(product_info->name), 32);
+  str_init(&(product_info->version), 32);
+  str_init(&(product_info->model), 32);
+  str_init(&(product_info->serial_no), 32);
 
   str_set(&(product_info->name), "awtk-mvvm-demo");
   str_set(&(product_info->version), "1.0.0");

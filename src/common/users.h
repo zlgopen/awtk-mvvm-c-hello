@@ -14,9 +14,8 @@ BEGIN_C_DECLS
 
 /**
  * @class users_t
- * @parent emitter_t
+ * @parent object_t
  * 用户管理。
- * @annotation ["collection:user_t", "model"]
  *
  */
 typedef struct _users_t {

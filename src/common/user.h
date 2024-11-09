@@ -29,8 +29,7 @@ BEGIN_C_DECLS
 
 /**
  * @class user_t
- *
- * @annotation ["model"]
+ * @parent object_t
  * user info
  */
 typedef struct _user_t {

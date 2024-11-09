@@ -6,59 +6,59 @@
 #include "mvvm/base/utils.h"
 #include "product_info_view_model.h"
 
-static ret_t product_info_view_model_set_prop(object_t* obj, const char* name, const value_t* v) {
+static ret_t product_info_view_model_set_prop(tk_object_t* obj, const char* name, const value_t* v) {
   product_info_t* aproduct_info = ((product_info_view_model_t*)(obj))->aproduct_info;
 
   if (tk_str_ieq("name", name)) {
-     
-     return RET_OK;
+    
+    return RET_OK;
   } else if (tk_str_ieq("version", name)) {
-     
-     return RET_OK;
+    
+    return RET_OK;
   } else if (tk_str_ieq("model", name)) {
-     
-     return RET_OK;
+    
+    return RET_OK;
   } else if (tk_str_ieq("serial_no", name)) {
-     
-     return RET_OK;
+    
+    return RET_OK;
   }
   
   return RET_NOT_FOUND;
 }
 
 
-static ret_t product_info_view_model_get_prop(object_t* obj, const char* name, value_t* v) {
+static ret_t product_info_view_model_get_prop(tk_object_t* obj, const char* name, value_t* v) {
   product_info_t* aproduct_info = ((product_info_view_model_t*)(obj))->aproduct_info;
 
   if (tk_str_ieq("name", name)) {
-     value_set_str(v, aproduct_info->name.str);
-     return RET_OK;
+    value_set_str(v, aproduct_info->name.str);
+    return RET_OK;
   } else if (tk_str_ieq("version", name)) {
-     value_set_str(v, aproduct_info->version.str);
-     return RET_OK;
+    value_set_str(v, aproduct_info->version.str);
+    return RET_OK;
   } else if (tk_str_ieq("model", name)) {
-     value_set_str(v, aproduct_info->model.str);
-     return RET_OK;
+    value_set_str(v, aproduct_info->model.str);
+    return RET_OK;
   } else if (tk_str_ieq("serial_no", name)) {
-     value_set_str(v, aproduct_info->serial_no.str);
-     return RET_OK;
+    value_set_str(v, aproduct_info->serial_no.str);
+    return RET_OK;
   }
 
   return RET_NOT_FOUND;
 }
 
 
-static bool_t product_info_view_model_can_exec(object_t* obj, const char* name, const char* args) {
+static bool_t product_info_view_model_can_exec(tk_object_t* obj, const char* name, const char* args) {
 
   return FALSE;
 }
 
-static ret_t product_info_view_model_exec(object_t* obj, const char* name, const char* args) {
+static ret_t product_info_view_model_exec(tk_object_t* obj, const char* name, const char* args) {
 
   return RET_NOT_FOUND;
 }
 
-static ret_t product_info_view_model_on_destroy(object_t* obj) {
+static ret_t product_info_view_model_on_destroy(tk_object_t* obj) {
   product_info_view_model_t* vm = (product_info_view_model_t*)(obj);
   return_value_if_fail(vm != NULL, RET_BAD_PARAMS);
 
@@ -69,22 +69,26 @@ static ret_t product_info_view_model_on_destroy(object_t* obj) {
 }
 
 static const object_vtable_t s_product_info_view_model_vtable = {
-  "product_info_view_model_t",
-  "product_info_view_model_t",
-  sizeof(product_info_view_model_t),
-  FALSE,
-  product_info_view_model_on_destroy,
-  NULL,
-  product_info_view_model_get_prop,
-  product_info_view_model_set_prop,
-  NULL,
-  NULL,
-  product_info_view_model_can_exec,
-  product_info_view_model_exec
+  .type = "product_info_view_model_t",
+  .desc = "product_info_view_model_t",
+  .size = sizeof(product_info_view_model_t),
+  .is_collection = FALSE,
+  .on_destroy = product_info_view_model_on_destroy,
+  .compare = NULL,
+  .get_prop = product_info_view_model_get_prop,
+  .set_prop = product_info_view_model_set_prop,
+  .remove_prop = NULL,
+  .foreach_prop = NULL,
+  .clear_props = NULL,
+  .find_prop = NULL,
+  .find_props = NULL,
+  .can_exec = product_info_view_model_can_exec,
+  .exec = product_info_view_model_exec,
+  .clone = NULL
 };
 
 view_model_t* product_info_view_model_create_with(product_info_t* aproduct_info) {
-  object_t* obj = object_create(&s_product_info_view_model_vtable);
+  tk_object_t* obj = tk_object_create(&s_product_info_view_model_vtable);
   view_model_t* vm = view_model_init(VIEW_MODEL(obj));
   product_info_view_model_t* product_info_view_model = (product_info_view_model_t*)(vm);
 

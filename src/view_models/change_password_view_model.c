@@ -6,46 +6,46 @@
 #include "mvvm/base/utils.h"
 #include "change_password_view_model.h"
 
-static ret_t change_password_view_model_set_prop(object_t* obj, const char* name, const value_t* v) {
+static ret_t change_password_view_model_set_prop(tk_object_t* obj, const char* name, const value_t* v) {
   change_password_t* achange_password = ((change_password_view_model_t*)(obj))->achange_password;
 
   if (tk_str_ieq("old_password", name)) {
-     str_set(&(achange_password->old_password), value_str(v));
+    str_set(&(achange_password->old_password), value_str(v));
 
-     return RET_OK;
+    return RET_OK;
   } else if (tk_str_ieq("new_password", name)) {
-     str_set(&(achange_password->new_password), value_str(v));
+    str_set(&(achange_password->new_password), value_str(v));
 
-     return RET_OK;
+    return RET_OK;
   } else if (tk_str_ieq("confirm_password", name)) {
-     str_set(&(achange_password->confirm_password), value_str(v));
+    str_set(&(achange_password->confirm_password), value_str(v));
 
-     return RET_OK;
+    return RET_OK;
   }
   
   return RET_NOT_FOUND;
 }
 
 
-static ret_t change_password_view_model_get_prop(object_t* obj, const char* name, value_t* v) {
+static ret_t change_password_view_model_get_prop(tk_object_t* obj, const char* name, value_t* v) {
   change_password_t* achange_password = ((change_password_view_model_t*)(obj))->achange_password;
 
   if (tk_str_ieq("old_password", name)) {
-     value_set_str(v, achange_password->old_password.str);
-     return RET_OK;
+    value_set_str(v, achange_password->old_password.str);
+    return RET_OK;
   } else if (tk_str_ieq("new_password", name)) {
-     value_set_str(v, achange_password->new_password.str);
-     return RET_OK;
+    value_set_str(v, achange_password->new_password.str);
+    return RET_OK;
   } else if (tk_str_ieq("confirm_password", name)) {
-     value_set_str(v, achange_password->confirm_password.str);
-     return RET_OK;
+    value_set_str(v, achange_password->confirm_password.str);
+    return RET_OK;
   }
 
   return RET_NOT_FOUND;
 }
 
 
-static bool_t change_password_view_model_can_exec(object_t* obj, const char* name, const char* args) {
+static bool_t change_password_view_model_can_exec(tk_object_t* obj, const char* name, const char* args) {
  
   change_password_view_model_t* vm = (change_password_view_model_t*)(obj);
   change_password_t* achange_password = vm->achange_password;
@@ -55,7 +55,7 @@ static bool_t change_password_view_model_can_exec(object_t* obj, const char* nam
   return FALSE;
 }
 
-static ret_t change_password_view_model_exec(object_t* obj, const char* name, const char* args) {
+static ret_t change_password_view_model_exec(tk_object_t* obj, const char* name, const char* args) {
  
   change_password_view_model_t* vm = (change_password_view_model_t*)(obj);
   change_password_t* achange_password = vm->achange_password;
@@ -65,7 +65,7 @@ static ret_t change_password_view_model_exec(object_t* obj, const char* name, co
   return RET_NOT_FOUND;
 }
 
-static ret_t change_password_view_model_on_destroy(object_t* obj) {
+static ret_t change_password_view_model_on_destroy(tk_object_t* obj) {
   change_password_view_model_t* vm = (change_password_view_model_t*)(obj);
   return_value_if_fail(vm != NULL, RET_BAD_PARAMS);
 
@@ -76,22 +76,26 @@ static ret_t change_password_view_model_on_destroy(object_t* obj) {
 }
 
 static const object_vtable_t s_change_password_view_model_vtable = {
-  "change_password_view_model_t",
-  "change_password_view_model_t",
-  sizeof(change_password_view_model_t),
-  FALSE,
-  change_password_view_model_on_destroy,
-  NULL,
-  change_password_view_model_get_prop,
-  change_password_view_model_set_prop,
-  NULL,
-  NULL,
-  change_password_view_model_can_exec,
-  change_password_view_model_exec
+  .type = "change_password_view_model_t",
+  .desc = "change_password_view_model_t",
+  .size = sizeof(change_password_view_model_t),
+  .is_collection = FALSE,
+  .on_destroy = change_password_view_model_on_destroy,
+  .compare = NULL,
+  .get_prop = change_password_view_model_get_prop,
+  .set_prop = change_password_view_model_set_prop,
+  .remove_prop = NULL,
+  .foreach_prop = NULL,
+  .clear_props = NULL,
+  .find_prop = NULL,
+  .find_props = NULL,
+  .can_exec = change_password_view_model_can_exec,
+  .exec = change_password_view_model_exec,
+  .clone = NULL
 };
 
 view_model_t* change_password_view_model_create_with(change_password_t* achange_password) {
-  object_t* obj = object_create(&s_change_password_view_model_vtable);
+  tk_object_t* obj = tk_object_create(&s_change_password_view_model_vtable);
   view_model_t* vm = view_model_init(VIEW_MODEL(obj));
   change_password_view_model_t* change_password_view_model = (change_password_view_model_t*)(vm);
 
